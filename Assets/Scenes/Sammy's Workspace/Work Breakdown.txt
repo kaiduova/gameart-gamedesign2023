@@ -1,0 +1,10 @@
+Currently Complete:
+- Tile map system (currently using basic sprites but can be swapped for Wendy and Chloe's work later)
+- Player horizontal movement and state system
+- PLayer Jump with all the bell and whistles
+
+To Do:
+- I will add in a basic enemy that can be "tethered to" and from there we can work in the mini game system
+
+
+- Sammy
