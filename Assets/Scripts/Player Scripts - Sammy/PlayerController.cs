@@ -2,14 +2,14 @@
 using UnityEngine;
 using Input; 
 
-[RequireComponent(typeof(Rigidbody2D))] [RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D))]
 public class PlayerController : InputMonoBehaviour {
 
     /* PascalCase - ClassNames, PublicMemberVariables, ProtectedMemberVariables, Methods & Functions
     camelCase - parameters, arguments, methodVariables, functionVariables
     _camelCase - privateMemberVariables */
 
-    public enum PlayerStates { neutralMovement, hacking };
+    public enum PlayerStates { NeutralMovement, Hacking };
 
     [Header("Internally Referenced Components")]
     [SerializeField] Rigidbody2D _rigidbody2D;
@@ -62,7 +62,7 @@ public class PlayerController : InputMonoBehaviour {
 
     private void Start() {
         initialGravity = new Vector2(0, -Physics2D.gravity.y);
-        PlayerCurrentState = PlayerStates.neutralMovement;
+        PlayerCurrentState = PlayerStates.NeutralMovement;
     }
 
     private void PlayerAnimation() {
@@ -117,36 +117,43 @@ public class PlayerController : InputMonoBehaviour {
             if (_rigidbody2D.velocity.y > 0) _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, (_rigidbody2D.velocity.y * 0.5f));
         }
 
-        if (_rigidbody2D.velocity.y < 0) {
-            _rigidbody2D.velocity -= (initialGravity * _fallGravityMultiplier) * Time.deltaTime;
-            _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, Mathf.Max(_rigidbody2D.velocity.y, -_maxFallSpeed));
-        }
+        if (!(_rigidbody2D.velocity.y < 0)) return;
+        _rigidbody2D.velocity -= (initialGravity * _fallGravityMultiplier) * Time.deltaTime;
+        _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, Mathf.Max(_rigidbody2D.velocity.y, -_maxFallSpeed));
     }
 
     private void ReticleRotation_ProjectileFiring() {
-        /*if (CurrentInput.RightStick.x != 0 || CurrentInput.RightStick.y != 0) playerPivotPoint.gameObject.SetActive(true);
-        else playerPivotPoint.gameObject.SetActive(false);
-        if (playerPivotPoint.gameObject.activeInHierarchy) {
+       
+        if (PlayerCurrentState == PlayerStates.NeutralMovement) {
+            if (CurrentInput.RightStick.x != 0 || CurrentInput.RightStick.y != 0) playerPivotPoint.gameObject.SetActive(true);
+            else playerPivotPoint.gameObject.SetActive(false);
+            if (playerPivotPoint.gameObject.activeInHierarchy) {
+                reticleRotation = new Vector3(CurrentInput.RightStick.x, CurrentInput.RightStick.y);
+                var appliedRotation = Quaternion.LookRotation(Vector3.forward, reticleRotation);
+                playerPivotPoint.rotation = appliedRotation;
+                if (CurrentInput.GetKeyDownRT) Instantiate(playerBullet, playerPivotPoint.position, Quaternion.identity);
+            }
+        }
+        
+        /*if (PlayerCurrentState == PlayerStates.neutralMovement) {
+            playerPivotPoint.gameObject.SetActive(true);
             reticleRotation = new Vector3(CurrentInput.RightStick.x, CurrentInput.RightStick.y);
             var appliedRotation = Quaternion.LookRotation(Vector3.forward, reticleRotation);
             playerPivotPoint.rotation = appliedRotation;
             if (CurrentInput.GetKeyDownRT) Instantiate(playerBullet, playerPivotPoint.position, Quaternion.identity);
         }*/
 
-        reticleRotation = new Vector3(CurrentInput.RightStick.x, CurrentInput.RightStick.y);
-        var appliedRotation = Quaternion.LookRotation(Vector3.forward, reticleRotation);
-        playerPivotPoint.rotation = appliedRotation;
-        if (CurrentInput.GetKeyDownRT) Instantiate(playerBullet, playerPivotPoint.position, Quaternion.identity);
+        if (PlayerCurrentState == PlayerStates.Hacking) playerPivotPoint.gameObject.SetActive(false);
     }
 
     private void FixedUpdate() {
-        if (PlayerCurrentState == PlayerStates.neutralMovement) HorizontalMovement();
+        if (PlayerCurrentState is PlayerStates.NeutralMovement or PlayerStates.Hacking) HorizontalMovement();
     }
 
     private void Update() {
         PlayerAnimation();
 
-        if (PlayerCurrentState == PlayerStates.neutralMovement) {
+        if (PlayerCurrentState is PlayerStates.NeutralMovement or PlayerStates.Hacking) {
             _horizontalInput = CurrentInput.LeftStick.x;
             ReticleRotation_ProjectileFiring();
             UltimateJump();

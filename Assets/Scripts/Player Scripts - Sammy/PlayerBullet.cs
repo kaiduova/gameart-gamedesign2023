@@ -9,7 +9,7 @@ public class PlayerBullet : MonoBehaviour {
     _camelCase - privateMemberVariables */
 
     [Header("Externally Referenced Components")]
-    [SerializeField] GameObject _playerReticle;
+    GameObject _playerReticle;
 
     [Header("Bullet Attributes")]
     Vector2 _currentTrajectory;

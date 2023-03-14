@@ -2,7 +2,8 @@
 using static EnemyDummy_StartsMinigame;
 using UnityEngine;
 using Minigame; 
-using Input; 
+using Input;
+using TMPro;
 
 public class SammyMinigameManager : InputMonoBehaviour, IMinigameManager {
 
@@ -10,7 +11,7 @@ public class SammyMinigameManager : InputMonoBehaviour, IMinigameManager {
     camelCase - parameters, arguments, methodVariables, functionVariables
     _camelCase - privateMemberVariables */
 
-    public enum MinigameStates { playing, gameOver };
+    public enum MinigameStates { Playing, GameOver };
 
     [Header("Externally Referenced Components (Linked Enemy)")]
     public GameObject Enemy;
@@ -19,7 +20,7 @@ public class SammyMinigameManager : InputMonoBehaviour, IMinigameManager {
     [SerializeField] GameObject _enemy;
     [SerializeField] SpriteRenderer _enemyHurtboxSR;
     [SerializeField] SpriteRenderer _playerHitboxSR;
-    [SerializeField] TextMesh _livesAndAlignmentsText, _infoText;
+    [SerializeField] TextMeshPro _livesAndAlignmentsTextPro, _infoTextPro;
 
     [Header("Minigame Attributes")]
     [SerializeField] MinigameStates _minigameCurrentState;
@@ -66,17 +67,17 @@ public class SammyMinigameManager : InputMonoBehaviour, IMinigameManager {
         }
 
         _lives = 3;
-        _minigameCurrentState = MinigameStates.playing;
+        _minigameCurrentState = MinigameStates.Playing;
     }
 
     public void CommunicateWithEnemy() {
-        Enemy.GetComponent<EnemyDummy_StartsMinigame>().EnemyCurrentState = EnemyStates.neutralAggro;
+        Enemy.GetComponent<EnemyDummy_StartsMinigame>().CommunicateWithMinigame();
     }
   
     void Update() {
-        if (_minigameCurrentState == MinigameStates.playing) {
-            _livesAndAlignmentsText.text = "LIVES: " + _lives + "    ALIGNMENTS LEFT: " + _passesToGoal;
-            _infoText.text = "PRESS R3 WHEN ALIGNED";
+        if (_minigameCurrentState == MinigameStates.Playing) {
+            _livesAndAlignmentsTextPro.text = "LIVES: " + _lives + "    ALIGNMENTS LEFT: " + _passesToGoal;
+            _infoTextPro.text = "PRESS R3 WHEN ALIGNED";
 
             //Player does not align the square
             if (_movingRight) {
@@ -103,16 +104,16 @@ public class SammyMinigameManager : InputMonoBehaviour, IMinigameManager {
         }
 
         if (_passesToGoal <= 0 && _lives != 0) { //Win
-            _infoText.text = "HACK COMPLETE";
-            _minigameCurrentState = MinigameStates.gameOver;
+            _infoTextPro.text = "HACK COMPLETE";
+            _minigameCurrentState = MinigameStates.GameOver;
             _enemy.SetActive(false);
-            MinigameModule.Instance.MinigameFinish(true);
             CommunicateWithEnemy();
+            MinigameModule.Instance.MinigameFinish(true);
         }
 
         if (_passesToGoal > 0 && _lives <= 0) { //Loss
-            _infoText.text = "HACK FAILED";
-            _minigameCurrentState = MinigameStates.gameOver;
+            _infoTextPro.text = "HACK FAILED";
+            _minigameCurrentState = MinigameStates.GameOver;
             _enemy.SetActive(false);
             MinigameModule.Instance.MinigameFinish(false); 
         }

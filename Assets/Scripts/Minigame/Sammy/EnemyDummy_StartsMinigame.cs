@@ -1,16 +1,16 @@
 //Written by Sammy
 using UnityEngine;
 using Minigame; 
-using Input; 
+using Input;
 
-[RequireComponent(typeof(BoxCollider2D))] [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(BoxCollider2D),typeof(Animator))]
 public class EnemyDummy_StartsMinigame : InputMonoBehaviour {
 
     /* PascalCase - ClassNames, PublicMemberVariables, ProtectedMemberVariables, Methods & Functions
     camelCase - parameters, arguments, methodVariables, functionVariables
     _camelCase - privateMemberVariables */
 
-    public enum EnemyStates { neutralAggro, currentlyBeingHacked, hackSuccessful}
+    public enum EnemyStates { neutralAggro, currentlyBeingHacked, hackSuccessful }
 
     [Header("Internally Referenced Components")]
     [SerializeField] BoxCollider2D _boxCollider2D;
@@ -30,10 +30,10 @@ public class EnemyDummy_StartsMinigame : InputMonoBehaviour {
             if (Player.transform.position.x < transform.position.x) transform.eulerAngles = new Vector3(0, 180, 0);
             if (Player.transform.position.x > transform.position.x) transform.eulerAngles = new Vector3(0, 0, 0);
         }
-        if (EnemyCurrentState == EnemyStates.neutralAggro) _animator.SetBool("_neutralAggro", true);
+        //if (EnemyCurrentState == EnemyStates.neutralAggro) _animator.SetBool("_neutralAggro", true);
         if (EnemyCurrentState == EnemyStates.currentlyBeingHacked) {
             _animator.SetBool("_currentlyBeingHacked", true);
-            _animator.SetBool("_neutralAggro", false);
+            //_animator.SetBool("_neutralAggro", false);
         }
         if (EnemyCurrentState == EnemyStates.hackSuccessful) {
             _animator.SetBool("_currentlyBeingHacked", false);
@@ -43,8 +43,14 @@ public class EnemyDummy_StartsMinigame : InputMonoBehaviour {
     }
 
     public void StartMinigame() {
-        MinigameModule.Instance.StartMinigame(Minigame.Minigame.Sammy, EnemyID);
         EnemyCurrentState = EnemyStates.currentlyBeingHacked;
+        Player.GetComponent<PlayerController>().PlayerCurrentState = PlayerController.PlayerStates.Hacking;
+        MinigameModule.Instance.StartMinigame(Minigame.Minigame.Sammy, EnemyID);
+    }
+
+    public void CommunicateWithMinigame() {
+        EnemyCurrentState = EnemyStates.hackSuccessful;
+        Player.GetComponent<PlayerController>().PlayerCurrentState = PlayerController.PlayerStates.NeutralMovement;
     }
 
     private void SetBodyToPlatform() {
@@ -64,5 +70,6 @@ public class EnemyDummy_StartsMinigame : InputMonoBehaviour {
 
     void Update() {
         EnemyAnimation();
+
     }
 }
