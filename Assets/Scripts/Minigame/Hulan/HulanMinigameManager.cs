@@ -1,14 +1,11 @@
+using Input;
 using Minigame;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HulanMinigameManager : MonoBehaviour, IMinigameManager
+public class HulanMinigameManager : InputMonoBehaviour
 {
-    public void StartMinigame(int difficulty)
-    {
-        throw new System.NotImplementedException();
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +16,9 @@ public class HulanMinigameManager : MonoBehaviour, IMinigameManager
     // Update is called once per frame
     void Update()
     {
-        
+        if (CurrentInput.GetKeyLeftStickPress)
+        {
+            MinigameModule.Instance.StartMinigame(Minigame.Minigame.Hulan, 1);
+        }
     }
 }
