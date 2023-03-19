@@ -6,18 +6,24 @@ using UnityEngine;
 
 public class HulanMiniGame : InputMonoBehaviour, IMinigameManager 
 {
-    public GameObject square, circle, hexagon, triangle;
+
+    /* PascalCase - ClassNames, PublicMemberVariables, ProtectedMemberVariables, Methods & Functions
+camelCase - parameters, arguments, methodVariables, functionVariables
+_camelCase - privateMemberVariables */
+
+    public GameObject Square, Circle, Hexagon, Triangle;
     GameObject spawnPoint;
     GameObject player;
     GameObject toSpawn;
-    public int shapes, timer, framerate, shapeID;
+    public int shapes, timer, shapeID;
+    public float shapeTimer;
     public int PlayerChoice, shape, Correct;
 
     public void StartMinigame(int difficulty)
     {
         player = GameObject.Find("Player");
         spawnPoint = GameObject.Find("Spawn");
-        framerate = 60;
+        shapeTimer = 60;
         timer = 10;
         shapeID = 1;
         shape = 0;
@@ -32,19 +38,19 @@ public class HulanMiniGame : InputMonoBehaviour, IMinigameManager
         switch (shapes)
         {
             case 1:
-                toSpawn = square;
+                //toSpawn = square;
                 shape = 2;
                 break;
             case 2:
-                toSpawn = circle;
+               // toSpawn = circle;
                 shape = 1;
                 break;
             case 3:
-                toSpawn = hexagon;
+                //toSpawn = hexagon;
                 shape = 3;
                 break;
             case 4:
-                toSpawn = triangle;
+                //toSpawn = triangle;
                 shape = 4;
                 break;
         }
@@ -53,11 +59,14 @@ public class HulanMiniGame : InputMonoBehaviour, IMinigameManager
     // Update is called once per frame
     void Update()
     {
-        framerate--;
-        if (framerate < 0)
+        //randomise the position of the spawned in shapes
+
+
+        shapeTimer -= Time.deltaTime;
+        /*if (shapeTimer < 0)
         {
             timer--;
-            framerate = 60;
+            shapeTimer = 60;
             if (timer < 0)
             {
                 ShapePick();
@@ -65,9 +74,9 @@ public class HulanMiniGame : InputMonoBehaviour, IMinigameManager
                 game.name = shapeID.ToString();
                 shapeID++;
                 timer = 10;
-                framerate = 60;
+                shapeTimer = 60;
             }
-        }
+        }*/
 
         if (CurrentInput.RightStick.x < -0.5f)
         {
