@@ -10,7 +10,25 @@ namespace Minigame
         Sammy,
         Hulan,
         Skenat,
-        Kai
+        Kai,
+
+
+        /*Added by Sammy - Hopefully it doesn't break anything!
+        We can name our minigames and put the states under 
+        under our names to keep it more organised*/
+
+        //Sammy
+        TopDownProjectileDodge,
+        SequenceCallAndResponce,
+        ButtonMasher,
+        InputTiming,
+        CoilWinder
+
+        //Hulan
+
+        //Junyi
+
+        //Kai
     }
     
     public class MinigameModule : MonoBehaviour

@@ -45,7 +45,7 @@ public class EnemyDummy_StartsMinigame : InputMonoBehaviour {
     public void StartMinigame() {
         EnemyCurrentState = EnemyStates.currentlyBeingHacked;
         Player.GetComponent<PlayerController>().PlayerCurrentState = PlayerController.PlayerStates.Hacking;
-        MinigameModule.Instance.StartMinigame(Minigame.Minigame.Sammy, EnemyID);
+        MinigameModule.Instance.StartMinigame(Minigame.Minigame.InputTiming, EnemyID);
     }
 
     public void CommunicateWithMinigame() {

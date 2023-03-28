@@ -5,7 +5,7 @@ using Minigame;
 using Input;
 using TMPro;
 
-public class SammyMinigameManager : InputMonoBehaviour, IMinigameManager {
+public class InputTimingMinigameManager : InputMonoBehaviour, IMinigameManager {
 
     /* PascalCase - ClassNames, PublicMemberVariables, ProtectedMemberVariables, Methods & Functions
     camelCase - parameters, arguments, methodVariables, functionVariables
@@ -48,7 +48,7 @@ public class SammyMinigameManager : InputMonoBehaviour, IMinigameManager {
             } break;
             case 3: {
                 _passesToGoal = 7;
-                _enemySpeed = 5f;
+                _enemySpeed = 6f;
             } break;
         }
 
@@ -74,7 +74,7 @@ public class SammyMinigameManager : InputMonoBehaviour, IMinigameManager {
         Enemy.GetComponent<EnemyDummy_StartsMinigame>().CommunicateWithMinigame();
     }
   
-    void Update() {
+    private void Update() {
         if (_minigameCurrentState == MinigameStates.Playing) {
             _livesAndAlignmentsTextPro.text = "LIVES: " + _lives + "    ALIGNMENTS LEFT: " + _passesToGoal;
             _infoTextPro.text = "PRESS R3 WHEN ALIGNED";
@@ -83,23 +83,21 @@ public class SammyMinigameManager : InputMonoBehaviour, IMinigameManager {
             if (_movingRight) {
                 _enemy.transform.position -= new Vector3(_enemySpeed, 0) * Time.deltaTime;
                 if (_enemy.transform.position.x <= -2.75f) {
-                    _enemy.transform.position = new Vector3(2.75f, _enemy.transform.position.y);
-                    _lives--;
+                    _movingLeft = true;
+                    _movingRight = false;
                 }
             } else if (_movingLeft) {
                 _enemy.transform.position += new Vector3(_enemySpeed, 0) * Time.deltaTime;
                 if (_enemy.transform.position.x >= 2.75f) {
-                    _enemy.transform.position = new Vector3(-2.75f, _enemy.transform.position.y);
-                    _lives--;
+                    _movingRight = true;
+                    _movingLeft = false;
                 }
             }
 
             if (CurrentInput.GetKeyDownRightStickPress) { //Player aligns the square
                 if (_playerHitboxSR.bounds.Intersects(_enemyHurtboxSR.bounds)) {
                     _passesToGoal--;
-                    if (_movingRight) _enemy.transform.position = new Vector3(2.75f, _enemy.transform.position.y);
-                    else if (_movingLeft) _enemy.transform.position = new Vector3(-2.75f, _enemy.transform.position.y);
-                }
+                } else _lives--;
             }
         }
 
