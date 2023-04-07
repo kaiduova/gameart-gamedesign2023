@@ -59,8 +59,8 @@ namespace Minigame
             var game = _minigameInstances.First(instance => instance.thisMinigame == CurrentMinigame);
             game.gameObject.SetActive(false);
             print(CurrentMinigame + " finished and win is " + isWon);
-            CurrentMinigame = Minigame.None;
             //do something
+            CurrentMinigame = Minigame.None;
         }
     }
 }
