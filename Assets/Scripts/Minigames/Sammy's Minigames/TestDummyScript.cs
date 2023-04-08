@@ -14,7 +14,7 @@ public class TestDummyScript : InputMonoBehaviour {
     public int MinigameDifficulty;
 
     public void StartMinigame() {
-        MinigameModule.Instance.StartMinigame(Minigame.Minigame.SequenceCallAndResponce, MinigameDifficulty);
+        MinigameModule.Instance.StartMinigame(Minigame.Minigame.InputTiming, MinigameDifficulty);
     }
 
     void Update() {

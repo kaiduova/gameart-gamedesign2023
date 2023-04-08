@@ -11,6 +11,9 @@ public class SequenceCallAndResponceMinigameManager : InputMonoBehaviour, IMinig
 
     public enum MinigameStates { Playing, Win, Lose, GameOver };
 
+    [Header("Externally Referenced Components (Linked Enemy)")]
+    public GameObject Enemy;
+
     [Header("Minigame Components")]
     public SpriteRenderer space1;
     Sprite space1Correct, space1Incorrect, space1Default;
@@ -615,6 +618,10 @@ public class SequenceCallAndResponceMinigameManager : InputMonoBehaviour, IMinig
         if (flashTimer < 0.2f) AnimationIncorrect();
     }
 
+    public void CommunicateWithEnemy() {
+        Enemy.GetComponent<EnemyDummy_StartsMinigame>().CommunicateWithMinigame();
+    }
+
     private void Update() {
         LivesTextPro.text = "LIVES: " + _lives;
         if (_minigameCurrentState == MinigameStates.Playing) {
@@ -634,6 +641,9 @@ public class SequenceCallAndResponceMinigameManager : InputMonoBehaviour, IMinig
 
         if (_minigameCurrentState == MinigameStates.Win) WinAnimation();
         if (_minigameCurrentState == MinigameStates.Lose) LoseAnimation();
-        if (_minigameCurrentState == MinigameStates.GameOver) { }
+        if (_minigameCurrentState == MinigameStates.GameOver) {
+            CommunicateWithEnemy();
+            MinigameModule.Instance.MinigameFinish(true);
+        }
     }
 }
