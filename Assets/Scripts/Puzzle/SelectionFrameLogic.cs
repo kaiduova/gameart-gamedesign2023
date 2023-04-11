@@ -5,10 +5,14 @@ using Input;
 
 public class SelectionFrameLogic : InputMonoBehaviour
 {
+    [Header("Minigame Components")]
+    [SerializeField] Transform _myArrow;
     [Header("Minigame Variables:")]
-    [SerializeField] public int PositionNumber;
+    public int PositionNumber;
+    public bool ShouldArrowOnAble;
     [SerializeField] int _positionCache;
-    [SerializeField] PlayerBlankSquareLogic refToPlayerBlankSquareLogic;
+    [SerializeField] PlayerBlankSquareLogic _refToPlayerBlankSquareLogic;
+
 
     bool _isMoving;
     void Start()
@@ -79,9 +83,42 @@ public class SelectionFrameLogic : InputMonoBehaviour
         {
             _isMoving = false;
         }
-        if (PositionNumber == refToPlayerBlankSquareLogic.PositionNumber)
+        if (PositionNumber == _refToPlayerBlankSquareLogic.PositionNumber)
         {
             PositionNumber = _positionCache;
         }
+
+        ShouldArrowOnAble = true;
+
+        if (ShouldArrowOnAble)
+        {
+            //if(_refToPlayerBlankSquareLogic.PositionNumber + 4 == PositionNumber ||
+            //        _refToPlayerBlankSquareLogic.PositionNumber - 4 == _positionNumber ||
+            //        _refToPlayerBlankSquareLogic.PositionNumber - 1 == _positionNumber ||
+            //        _refToPlayerBlankSquareLogic.PositionNumber + 1 == _positionNumber)
+            //{
+
+        }
+        if (_refToPlayerBlankSquareLogic.PositionNumber + 4 == PositionNumber)
+        {
+            _myArrow.localEulerAngles=new Vector3(0, 0, 0);
+
+
+        }
+        else if (_refToPlayerBlankSquareLogic.PositionNumber - 4 == PositionNumber)
+        {
+            _myArrow.localEulerAngles=new Vector3(0, 0, 180);
+        }
+        else if(_refToPlayerBlankSquareLogic.PositionNumber - 1 == PositionNumber)
+        {
+            _myArrow.localEulerAngles = new Vector3(0, 0, -90);
+        }
+        else if (_refToPlayerBlankSquareLogic.PositionNumber + 1 == PositionNumber)
+        {
+            _myArrow.localEulerAngles = new Vector3(0, 0, 90);
+        }
+
     }
+
 }
+

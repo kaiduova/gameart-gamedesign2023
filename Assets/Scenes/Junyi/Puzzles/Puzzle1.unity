@@ -220,15 +220,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524fcef6978111d4096c53cecb3c4f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refToPlayerBlankSquareLogic: {fileID: 332972875}
-  refToSelectionFrame: {fileID: 1755076280}
+  _refToPlayerBlankSquareLogic: {fileID: 332972875}
+  _refToSelectionFrame: {fileID: 1755076280}
   IsMyColorBlack: 0
   _isMoving: 0
   _movingUp: 0
   _movingDown: 0
   _movingLeft: 0
   _movingRight: 0
-  positionNumber: 0
+  _positionNumber: 0
 --- !u!1 &102924199
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,7 +244,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &102924200
 Transform:
   m_ObjectHideFlags: 0
@@ -443,15 +443,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524fcef6978111d4096c53cecb3c4f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refToPlayerBlankSquareLogic: {fileID: 332972875}
-  refToSelectionFrame: {fileID: 1755076280}
+  _refToPlayerBlankSquareLogic: {fileID: 332972875}
+  _refToSelectionFrame: {fileID: 1755076280}
   IsMyColorBlack: 0
   _isMoving: 0
   _movingUp: 0
   _movingDown: 0
   _movingLeft: 0
   _movingRight: 0
-  positionNumber: 0
+  _positionNumber: 0
 --- !u!1 &127312759
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,15 +549,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524fcef6978111d4096c53cecb3c4f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refToPlayerBlankSquareLogic: {fileID: 332972875}
-  refToSelectionFrame: {fileID: 1755076280}
+  _refToPlayerBlankSquareLogic: {fileID: 332972875}
+  _refToSelectionFrame: {fileID: 1755076280}
   IsMyColorBlack: 0
   _isMoving: 0
   _movingUp: 0
   _movingDown: 0
   _movingLeft: 0
   _movingRight: 0
-  positionNumber: 0
+  _positionNumber: 0
 --- !u!1 &131471395
 GameObject:
   m_ObjectHideFlags: 0
@@ -907,15 +907,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524fcef6978111d4096c53cecb3c4f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refToPlayerBlankSquareLogic: {fileID: 332972875}
-  refToSelectionFrame: {fileID: 1755076280}
+  _refToPlayerBlankSquareLogic: {fileID: 332972875}
+  _refToSelectionFrame: {fileID: 1755076280}
   IsMyColorBlack: 0
   _isMoving: 0
   _movingUp: 0
   _movingDown: 0
   _movingLeft: 0
   _movingRight: 0
-  positionNumber: 0
+  _positionNumber: 0
 --- !u!1 &284790711
 GameObject:
   m_ObjectHideFlags: 0
@@ -1159,7 +1159,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0.39245284, b: 0.39245284, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1280,15 +1280,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524fcef6978111d4096c53cecb3c4f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refToPlayerBlankSquareLogic: {fileID: 332972875}
-  refToSelectionFrame: {fileID: 1755076280}
+  _refToPlayerBlankSquareLogic: {fileID: 332972875}
+  _refToSelectionFrame: {fileID: 1755076280}
   IsMyColorBlack: 0
   _isMoving: 0
   _movingUp: 0
   _movingDown: 0
   _movingLeft: 0
   _movingRight: 0
-  positionNumber: 0
+  _positionNumber: 0
 --- !u!1 &437459680
 GameObject:
   m_ObjectHideFlags: 0
@@ -1386,15 +1386,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524fcef6978111d4096c53cecb3c4f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refToPlayerBlankSquareLogic: {fileID: 332972875}
-  refToSelectionFrame: {fileID: 1755076280}
+  _refToPlayerBlankSquareLogic: {fileID: 332972875}
+  _refToSelectionFrame: {fileID: 1755076280}
   IsMyColorBlack: 0
   _isMoving: 0
   _movingUp: 0
   _movingDown: 0
   _movingLeft: 0
   _movingRight: 0
-  positionNumber: 0
+  _positionNumber: 0
 --- !u!1 &446855797
 GameObject:
   m_ObjectHideFlags: 0
@@ -1492,15 +1492,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524fcef6978111d4096c53cecb3c4f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refToPlayerBlankSquareLogic: {fileID: 332972875}
-  refToSelectionFrame: {fileID: 1755076280}
+  _refToPlayerBlankSquareLogic: {fileID: 332972875}
+  _refToSelectionFrame: {fileID: 1755076280}
   IsMyColorBlack: 0
   _isMoving: 0
   _movingUp: 0
   _movingDown: 0
   _movingLeft: 0
   _movingRight: 0
-  positionNumber: 0
+  _positionNumber: 0
 --- !u!1 &502128691
 GameObject:
   m_ObjectHideFlags: 0
@@ -1729,15 +1729,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524fcef6978111d4096c53cecb3c4f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refToPlayerBlankSquareLogic: {fileID: 332972875}
-  refToSelectionFrame: {fileID: 1755076280}
+  _refToPlayerBlankSquareLogic: {fileID: 332972875}
+  _refToSelectionFrame: {fileID: 1755076280}
   IsMyColorBlack: 0
   _isMoving: 0
   _movingUp: 0
   _movingDown: 0
   _movingLeft: 0
   _movingRight: 0
-  positionNumber: 0
+  _positionNumber: 0
 --- !u!1 &759716991
 GameObject:
   m_ObjectHideFlags: 0
@@ -1835,15 +1835,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524fcef6978111d4096c53cecb3c4f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refToPlayerBlankSquareLogic: {fileID: 332972875}
-  refToSelectionFrame: {fileID: 1755076280}
+  _refToPlayerBlankSquareLogic: {fileID: 332972875}
+  _refToSelectionFrame: {fileID: 1755076280}
   IsMyColorBlack: 0
   _isMoving: 0
   _movingUp: 0
   _movingDown: 0
   _movingLeft: 0
   _movingRight: 0
-  positionNumber: 0
+  _positionNumber: 0
 --- !u!1 &762331719
 GameObject:
   m_ObjectHideFlags: 0
@@ -2109,15 +2109,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524fcef6978111d4096c53cecb3c4f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refToPlayerBlankSquareLogic: {fileID: 332972875}
-  refToSelectionFrame: {fileID: 1755076280}
+  _refToPlayerBlankSquareLogic: {fileID: 332972875}
+  _refToSelectionFrame: {fileID: 1755076280}
   IsMyColorBlack: 0
   _isMoving: 0
   _movingUp: 0
   _movingDown: 0
   _movingLeft: 0
   _movingRight: 0
-  positionNumber: 0
+  _positionNumber: 0
 --- !u!1 &810922194
 GameObject:
   m_ObjectHideFlags: 0
@@ -2635,15 +2635,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524fcef6978111d4096c53cecb3c4f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refToPlayerBlankSquareLogic: {fileID: 332972875}
-  refToSelectionFrame: {fileID: 1755076280}
+  _refToPlayerBlankSquareLogic: {fileID: 332972875}
+  _refToSelectionFrame: {fileID: 1755076280}
   IsMyColorBlack: 0
   _isMoving: 0
   _movingUp: 0
   _movingDown: 0
   _movingLeft: 0
   _movingRight: 0
-  positionNumber: 0
+  _positionNumber: 0
 --- !u!1 &1204709326
 GameObject:
   m_ObjectHideFlags: 0
@@ -2741,15 +2741,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524fcef6978111d4096c53cecb3c4f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refToPlayerBlankSquareLogic: {fileID: 332972875}
-  refToSelectionFrame: {fileID: 1755076280}
+  _refToPlayerBlankSquareLogic: {fileID: 332972875}
+  _refToSelectionFrame: {fileID: 1755076280}
   IsMyColorBlack: 0
   _isMoving: 0
   _movingUp: 0
   _movingDown: 0
   _movingLeft: 0
   _movingRight: 0
-  positionNumber: 0
+  _positionNumber: 0
 --- !u!1 &1225581222
 GameObject:
   m_ObjectHideFlags: 0
@@ -3061,7 +3061,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0.43018872, b: 0.43018872, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3482,15 +3482,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524fcef6978111d4096c53cecb3c4f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refToPlayerBlankSquareLogic: {fileID: 332972875}
-  refToSelectionFrame: {fileID: 1755076280}
+  _refToPlayerBlankSquareLogic: {fileID: 332972875}
+  _refToSelectionFrame: {fileID: 1755076280}
   IsMyColorBlack: 0
   _isMoving: 0
   _movingUp: 0
   _movingDown: 0
   _movingLeft: 0
   _movingRight: 0
-  positionNumber: 0
+  _positionNumber: 0
 --- !u!1 &1751338739
 GameObject:
   m_ObjectHideFlags: 0
@@ -3624,9 +3624,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 969d833a79859af4fb66dcc2523661c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _myArrow: {fileID: 102924200}
   PositionNumber: 0
+  ShouldArrowOnAble: 0
   _positionCache: 0
-  refToPlayerBlankSquareLogic: {fileID: 332972875}
+  _refToPlayerBlankSquareLogic: {fileID: 332972875}
 --- !u!1 &1788112830
 GameObject:
   m_ObjectHideFlags: 0
@@ -3724,15 +3726,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524fcef6978111d4096c53cecb3c4f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refToPlayerBlankSquareLogic: {fileID: 332972875}
-  refToSelectionFrame: {fileID: 1755076280}
+  _refToPlayerBlankSquareLogic: {fileID: 332972875}
+  _refToSelectionFrame: {fileID: 1755076280}
   IsMyColorBlack: 0
   _isMoving: 0
   _movingUp: 0
   _movingDown: 0
   _movingLeft: 0
   _movingRight: 0
-  positionNumber: 0
+  _positionNumber: 0
 --- !u!1 &1971370207
 GameObject:
   m_ObjectHideFlags: 0
@@ -3830,15 +3832,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524fcef6978111d4096c53cecb3c4f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refToPlayerBlankSquareLogic: {fileID: 332972875}
-  refToSelectionFrame: {fileID: 1755076280}
+  _refToPlayerBlankSquareLogic: {fileID: 332972875}
+  _refToSelectionFrame: {fileID: 1755076280}
   IsMyColorBlack: 0
   _isMoving: 0
   _movingUp: 0
   _movingDown: 0
   _movingLeft: 0
   _movingRight: 0
-  positionNumber: 0
+  _positionNumber: 0
 --- !u!1 &2135059269
 GameObject:
   m_ObjectHideFlags: 0

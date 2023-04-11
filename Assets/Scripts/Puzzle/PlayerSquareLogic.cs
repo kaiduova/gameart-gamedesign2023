@@ -9,44 +9,45 @@ public class PlayerSquareLogic : InputMonoBehaviour
     //camelCase - parameters, arguments, methodVariables, functionVariables
     //_camelCase - privateMemberVariables
     [Header("Minigame Components:")]
-    [SerializeField] PlayerBlankSquareLogic refToPlayerBlankSquareLogic;
-    [SerializeField] SelectionFrameLogic refToSelectionFrame;
+    [SerializeField] PlayerBlankSquareLogic _refToPlayerBlankSquareLogic;
+    [SerializeField] SelectionFrameLogic _refToSelectionFrame;
     [Header("Minigame Variables:")]
     public bool IsMyColorBlack;
     [SerializeField] bool _isMoving;
     [SerializeField] bool _movingUp, _movingDown, _movingLeft, _movingRight;
-    [SerializeField] int positionNumber;
-    Vector2 positionCache;
-    int numberCache;
+    [SerializeField] int _positionNumber;
+    Vector2 _positionCache;
+    int _numberCache;
 
     void Start()
     {
 
-        positionNumber = int.Parse(this.name.Remove(0, 12));
-        if (positionNumber == 1)
+        _positionNumber = int.Parse(this.name.Remove(0, 12));
+        if (_positionNumber == 1)
         {
-            refToSelectionFrame.transform.position = this.transform.position;
+            _refToSelectionFrame.transform.position = this.transform.position;
         }
     }
 
+
     void Update()
     {
-        if (refToSelectionFrame.PositionNumber == positionNumber)
+        if (_refToSelectionFrame.PositionNumber == _positionNumber)
         {
-            refToSelectionFrame.transform.position = this.transform.position;
+            _refToSelectionFrame.transform.position = this.transform.position;
             if (CurrentInput.GetKeyUpRightStickPress)
             {
 
-                if (refToPlayerBlankSquareLogic.PositionNumber + 4 == positionNumber ||
-                    refToPlayerBlankSquareLogic.PositionNumber - 4 == positionNumber ||
-                    refToPlayerBlankSquareLogic.PositionNumber - 1 == positionNumber ||
-                    refToPlayerBlankSquareLogic.PositionNumber + 1 == positionNumber)
+                if (_refToPlayerBlankSquareLogic.PositionNumber + 4 == _positionNumber ||
+                    _refToPlayerBlankSquareLogic.PositionNumber - 4 == _positionNumber ||
+                    _refToPlayerBlankSquareLogic.PositionNumber - 1 == _positionNumber ||
+                    _refToPlayerBlankSquareLogic.PositionNumber + 1 == _positionNumber)
                 {
-                    if (!refToPlayerBlankSquareLogic.IsMoving)
+                    if (!_refToPlayerBlankSquareLogic.IsMoving)
                     {
                         _isMoving = true;
-                        positionCache = this.transform.position;
-                        numberCache = positionNumber;
+                        _positionCache = this.transform.position;
+                        _numberCache = _positionNumber;
 
                     }
                 }
@@ -54,15 +55,15 @@ public class PlayerSquareLogic : InputMonoBehaviour
             }
             if (_isMoving)
             {
-                this.transform.position = Vector2.MoveTowards(this.transform.position, refToPlayerBlankSquareLogic.transform.position, 0.15f);
-                if (this.transform.position == refToPlayerBlankSquareLogic.transform.position)
+                this.transform.position = Vector2.MoveTowards(this.transform.position, _refToPlayerBlankSquareLogic.transform.position, 0.15f);
+                if (this.transform.position == _refToPlayerBlankSquareLogic.transform.position)
                 {
                     _isMoving = false;
-                    refToPlayerBlankSquareLogic.IsMoving = false;
-                    positionNumber = refToPlayerBlankSquareLogic.PositionNumber;
-                    refToSelectionFrame.PositionNumber = positionNumber;
-                    refToPlayerBlankSquareLogic.PositionNumber = numberCache;
-                    refToPlayerBlankSquareLogic.transform.position = positionCache;
+                    _refToPlayerBlankSquareLogic.IsMoving = false;
+                    _positionNumber = _refToPlayerBlankSquareLogic.PositionNumber;
+                    _refToSelectionFrame.PositionNumber = _positionNumber;
+                    _refToPlayerBlankSquareLogic.PositionNumber = _numberCache;
+                    _refToPlayerBlankSquareLogic.transform.position = _positionCache;
 
                 }
 
