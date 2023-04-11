@@ -255,10 +255,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dae63559efd73c1439e5c48775aba392, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  liveText: {fileID: 0}
   spawnPoint: {fileID: 421309465}
   shapes: 0
   timer: 0
-  shapeID: 0
+  Lives: 0
   shapeTimer: 0
   posX: 0
   posY: 0
@@ -615,6 +616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d087bb7fd2bb2344fb0c514ca11bb0ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 0}
 --- !u!4 &1492508431 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5571110687171119670, guid: c0c7cb2ab9ea9a440ad998f92ef9a0dd, type: 3}
@@ -637,7 +639,7 @@ GameObject:
   - component: {fileID: 1858584582}
   - component: {fileID: 1858584581}
   m_Layer: 0
-  m_Name: New Text
+  m_Name: LivesText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -651,14 +653,14 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1858584580}
-  m_Text: Hello World
+  m_Text: Lives
   m_OffsetZ: 0
-  m_CharacterSize: 1
+  m_CharacterSize: 0.1
   m_LineSpacing: 1
-  m_Anchor: 0
-  m_Alignment: 0
+  m_Anchor: 4
+  m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 0
+  m_FontSize: 100
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
@@ -715,7 +717,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1858584580}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.68069524, y: -0.23413691, z: 0.04245063}
+  m_LocalPosition: {x: 6.09, y: 4.12, z: 0.04245063}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
