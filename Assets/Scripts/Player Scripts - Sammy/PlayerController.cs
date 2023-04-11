@@ -22,7 +22,13 @@ public class PlayerController : InputMonoBehaviour {
     [Header("Internally Referenced Components")]
     [SerializeField] Rigidbody2D _rigidbody2D;
     [SerializeField] BoxCollider2D _boxCollider2D;
+    
+    //Used by bounce pad.
+    public Rigidbody2D Rigidbody2D => _rigidbody2D;
+    public float JumpBufferDuration => _jumpBufferDuration;
+    public float CoyoteTimeDuration => _coyoteTimeDuration;
 
+    
     [Header("Externally Referenced Components")]
     public GameObject playerBullet;
 
