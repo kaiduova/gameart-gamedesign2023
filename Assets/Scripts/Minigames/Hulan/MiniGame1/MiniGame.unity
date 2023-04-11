@@ -255,7 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dae63559efd73c1439e5c48775aba392, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  liveText: {fileID: 0}
+  liveText: {fileID: 1858584581}
   spawnPoint: {fileID: 421309465}
   shapes: 0
   timer: 0
@@ -616,7 +616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d087bb7fd2bb2344fb0c514ca11bb0ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  game: {fileID: 0}
+  game: {fileID: 106065050}
 --- !u!4 &1492508431 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5571110687171119670, guid: c0c7cb2ab9ea9a440ad998f92ef9a0dd, type: 3}
