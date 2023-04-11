@@ -1,27 +1,50 @@
 //Written by Sammy
 using UnityEngine;
-using Input; 
+using UnityEngine.UI;
+using Input;
+using System.Collections;
+using UnityEditor.SceneManagement;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D))]
 public class PlayerController : InputMonoBehaviour {
 
     /* PascalCase - ClassNames, PublicMemberVariables, ProtectedMemberVariables, Methods & Functions
     camelCase - parameters, arguments, methodVariables, functionVariables
     _camelCase - privateMemberVariables */
 
-    public enum PlayerStates { NeutralMovement, Hacking };
+    public enum PlayerStates { 
+        NeutralMovement, 
+        Hacking, 
+        HackingBox,
+        Shockwave,
+        StateDelay
+    };
 
     [Header("Internally Referenced Components")]
     [SerializeField] Rigidbody2D _rigidbody2D;
     [SerializeField] BoxCollider2D _boxCollider2D;
+    
+    //Used by bounce pad.
+    public Rigidbody2D Rigidbody2D => _rigidbody2D;
+    public float JumpBufferDuration => _jumpBufferDuration;
+    public float CoyoteTimeDuration => _coyoteTimeDuration;
 
+    
     [Header("Externally Referenced Components")]
     public GameObject playerBullet;
 
     [Header("Current State")]
     public PlayerStates PlayerCurrentState;
 
-    [Header("Ground Check Attributes")]
+
+    [Header("Player Health Components")]
+    [SerializeField] Image _heart1Image;
+    [SerializeField] Image _heart2Image;
+    [SerializeField] Image _heart3Image;
+
+    [SerializeField] Sprite _heartFull;
+    [SerializeField] Sprite _heartEmpty;
+
+    [Header("Ground Check")]
     [SerializeField] Transform groundCheck;
     [SerializeField] Vector2 groundCheckSize = new Vector2(0.8f, 0.2f);
     [SerializeField] LayerMask groundLayer;
@@ -34,6 +57,7 @@ public class PlayerController : InputMonoBehaviour {
     [SerializeField] float _deccelerationIntensity = 20; //Change to a higher number if you want ice physics
     float _movementPower = 1; //Do not change
     float _horizontalInput; //Make public if having issues with horizontal movement
+    float _verticalInput; //Make public if having issues with horizontal movement
 
     [Header("Jump Attributes")]
     [SerializeField] float _jumpForce = 12.5f;
@@ -54,6 +78,21 @@ public class PlayerController : InputMonoBehaviour {
     public GameObject playerReticle;
     Vector3 reticleRotation;
 
+
+    //Health
+    public int PlayerHealth;
+    public float PlayerRespawnDelay;
+
+    //Shockwave
+    public GameObject Shockwave;
+    public Slider ShockwaveCharge;
+
+    //Boxes
+    public GameObject currentHackedBox;
+
+
+    public PhysicsMaterial2D PhysicsMaterial2D;
+
     private void Awake() {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _boxCollider2D = GetComponent<BoxCollider2D>();
@@ -62,6 +101,10 @@ public class PlayerController : InputMonoBehaviour {
 
     private void Start() {
         initialGravity = new Vector2(0, -Physics2D.gravity.y);
+
+        PlayerHealth = 3;
+        Shockwave.SetActive(false);
+
         PlayerCurrentState = PlayerStates.NeutralMovement;
     }
 
@@ -78,7 +121,7 @@ public class PlayerController : InputMonoBehaviour {
         _rigidbody2D.AddForce(speedApplied * Vector2.right); 
     }
 
-    bool PlayerCurrentlyGrounded() { 
+    public bool PlayerCurrentlyGrounded() { 
         return Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0, groundLayer);
     }
 
@@ -146,6 +189,78 @@ public class PlayerController : InputMonoBehaviour {
         if (PlayerCurrentState == PlayerStates.Hacking) playerPivotPoint.gameObject.SetActive(false);
     }
 
+    private void PlayerHealthSystem() {
+        if (PlayerHealth > 3) PlayerHealth = 3;
+        else if (PlayerHealth < 1) PlayerHealth = 0;
+
+        switch (PlayerHealth) {
+            case 3: {
+                _heart3Image.sprite = _heartFull;
+                _heart2Image.sprite = _heartFull;
+                _heart1Image.sprite = _heartFull;
+            } break;
+            case 2: {
+                _heart3Image.sprite = _heartEmpty;
+                _heart2Image.sprite = _heartFull;
+                _heart1Image.sprite = _heartFull;
+            } break;
+            case 1: {
+                _heart3Image.sprite = _heartEmpty;
+                _heart2Image.sprite = _heartEmpty;
+                _heart1Image.sprite = _heartFull;
+            } break;
+            case 0:{
+                _heart3Image.sprite = _heartEmpty;
+                _heart2Image.sprite = _heartEmpty;
+                _heart1Image.sprite = _heartEmpty;
+            } break; 
+        }
+    }
+
+    public void ShockwaveReset() {
+        Shockwave.SetActive(false);
+        _rigidbody2D.gravityScale = 3;
+        PlayerCurrentState = PlayerController.PlayerStates.NeutralMovement;
+    }
+
+
+    private void ControllerHackedBlock(GameObject currentHackedBlock) {
+
+        Rigidbody2D currentHackedBlockRigidBody2D = currentHackedBlock.GetComponent<Rigidbody2D>();
+        currentHackedBlockRigidBody2D.gravityScale = 0;
+
+        float horizontalMaxSpeed = _horizontalInput * (_movementSpeed * 2);
+        float horizontalSpeedDifference = horizontalMaxSpeed - currentHackedBlockRigidBody2D.velocity.x;
+        float horizontalAccelerationRate = (Mathf.Abs(horizontalMaxSpeed) > 0.01f) ? _accelerationIntensity : _deccelerationIntensity;
+        float horizontalSpeedApplied = Mathf.Pow(Mathf.Abs(horizontalSpeedDifference) * horizontalAccelerationRate, _movementPower) * Mathf.Sign(horizontalSpeedDifference);
+        currentHackedBlockRigidBody2D.AddForce(horizontalSpeedApplied * Vector2.right);
+
+        float verticalMaxSpeed = _verticalInput * (_movementSpeed *2);
+        float verticalSpeedDifference = verticalMaxSpeed - currentHackedBlockRigidBody2D.velocity.y;
+        float verticalAccelerationRate = (Mathf.Abs(verticalMaxSpeed) > 0.01f) ? _accelerationIntensity : _deccelerationIntensity;
+        float verticalSpeedApplied = Mathf.Pow(Mathf.Abs(verticalSpeedDifference) * verticalAccelerationRate, _movementPower) * Mathf.Sign(verticalSpeedDifference);
+        currentHackedBlockRigidBody2D.AddForce(verticalSpeedApplied * Vector2.up);
+
+        if (CurrentInput.GetKeyDownB) {
+            currentHackedBlockRigidBody2D.gravityScale = 3;
+            currentHackedBox = null;
+
+            gameObject.AddComponent<Rigidbody2D>();
+            _rigidbody2D = GetComponent<Rigidbody2D>();
+
+            _rigidbody2D.sharedMaterial = PhysicsMaterial2D;
+            _rigidbody2D.simulated = true;
+            _rigidbody2D.gravityScale = 3;
+            _rigidbody2D.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+            _rigidbody2D.interpolation = RigidbodyInterpolation2D.Interpolate;
+            _rigidbody2D.freezeRotation = true;
+            
+            PlayerCurrentState = PlayerStates.NeutralMovement;
+        }
+    }
+
+
+
     private void FixedUpdate() {
         if (PlayerCurrentState is PlayerStates.NeutralMovement or PlayerStates.Hacking) HorizontalMovement();
     }
@@ -153,10 +268,56 @@ public class PlayerController : InputMonoBehaviour {
     private void Update() {
         PlayerAnimation();
 
+        PlayerHealthSystem();
+
         if (PlayerCurrentState is PlayerStates.NeutralMovement or PlayerStates.Hacking) {
             _horizontalInput = CurrentInput.LeftStick.x;
             ReticleRotation_ProjectileFiring();
             UltimateJump();
+        }
+
+
+        if (PlayerCurrentState == PlayerStates.NeutralMovement) {
+
+            if (CurrentInput.GetKeyDownY)
+            {
+                PlayerCurrentState = PlayerStates.Shockwave;
+            }
+        }
+
+        if (PlayerCurrentState == PlayerStates.Shockwave)
+        {
+            Shockwave.SetActive(true);
+
+            _horizontalInput = 0;
+            _rigidbody2D.gravityScale = 0;
+            _rigidbody2D.velocity = new Vector2(0, 0);
+
+        }
+
+
+       if (PlayerCurrentState == PlayerStates.HackingBox)
+        {
+
+
+            _horizontalInput = CurrentInput.LeftStick.x;
+            _verticalInput = CurrentInput.LeftStick.y;
+
+
+            ControllerHackedBlock(currentHackedBox);
+        }
+
+
+
+
+        if (PlayerCurrentState == PlayerStates.StateDelay) {
+            _horizontalInput = 0;
+            _rigidbody2D.velocity = new Vector2(0, 0);
+            PlayerRespawnDelay -= Time.deltaTime;
+            if (PlayerRespawnDelay < 0) {
+                PlayerRespawnDelay = 0;
+                PlayerCurrentState = PlayerStates.NeutralMovement;
+            }
         }
     }
 }
