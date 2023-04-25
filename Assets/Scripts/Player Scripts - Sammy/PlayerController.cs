@@ -16,7 +16,14 @@ public class PlayerController : InputMonoBehaviour {
         Hacking, 
         HackingBox,
         Shockwave,
-        StateDelay
+        StateDelay,
+
+        SummoningGhostHand,
+        GhostHandMode,
+        DismissingGhostHand,
+        GhostHandBufferIntro,
+        GhostHandBufferOutro,
+        GhostHandGeneralBuffer
     };
 
     [Header("Internally Referenced Components")]
@@ -50,9 +57,9 @@ public class PlayerController : InputMonoBehaviour {
     [SerializeField] LayerMask groundLayer;
 
     [Header("Horizontal Movement Attributes")]
+    [SerializeField] float _currentMovementSpeed;
     [SerializeField] float _movementSpeed = 5;
     [SerializeField] float _jumpPeakMovementSpeed = 7.5f;
-    [SerializeField] float _currentMovementSpeed;
     [SerializeField] float _accelerationIntensity = 10; //Change to a lower number if you want ice physics
     [SerializeField] float _deccelerationIntensity = 20; //Change to a higher number if you want ice physics
     float _movementPower = 1; //Do not change
@@ -89,9 +96,28 @@ public class PlayerController : InputMonoBehaviour {
 
     //Boxes
     public GameObject currentHackedBox;
-
-
     public PhysicsMaterial2D PhysicsMaterial2D;
+
+
+    //Ghost Hand 
+    public GhostHand ghostHand;
+
+    public GameObject PlayerCanvas, GhostHandObject;
+    public Image GaugeFill;
+    public float GhostHandMovementSpeed; //Affects player not hand
+
+    public float SummonDuration;
+    public float SummonInputDuration;
+
+
+    private float _ghostHandBufferOutroDuration;
+    [SerializeField] float _ghostHandBufferOutroDurationReset;
+
+    private float _ghostHandBufferIntroDuration;
+    [SerializeField] float _ghostHandBufferIntroDurationReset;
+
+    public  float _ghostHandInputBufferDuration;
+    [SerializeField] float _ghostHandInputBufferDurationReset;
 
     private void Awake() {
         _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -104,6 +130,7 @@ public class PlayerController : InputMonoBehaviour {
 
         PlayerHealth = 3;
         Shockwave.SetActive(false);
+        PlayerCanvas.SetActive(false);
 
         PlayerCurrentState = PlayerStates.NeutralMovement;
     }
@@ -111,6 +138,9 @@ public class PlayerController : InputMonoBehaviour {
     private void PlayerAnimation() {
         if (_horizontalInput < 0) transform.eulerAngles = new Vector3(0, 180, 0);
         if (_horizontalInput > 0) transform.eulerAngles = new Vector3(0, 0, 0);
+
+        if (!(PlayerCanvas.activeInHierarchy)) return;
+        PlayerCanvas.transform.eulerAngles = new Vector3(0, 0, 0);
     }
 
     private void HorizontalMovement() {
@@ -166,7 +196,6 @@ public class PlayerController : InputMonoBehaviour {
     }
 
     private void ReticleRotation_ProjectileFiring() {
-       
         if (PlayerCurrentState == PlayerStates.NeutralMovement) {
             if (CurrentInput.RightStick.x != 0 || CurrentInput.RightStick.y != 0) playerPivotPoint.gameObject.SetActive(true);
             else playerPivotPoint.gameObject.SetActive(false);
@@ -223,9 +252,7 @@ public class PlayerController : InputMonoBehaviour {
         PlayerCurrentState = PlayerController.PlayerStates.NeutralMovement;
     }
 
-
     private void ControllerHackedBlock(GameObject currentHackedBlock) {
-
         Rigidbody2D currentHackedBlockRigidBody2D = currentHackedBlock.GetComponent<Rigidbody2D>();
         currentHackedBlockRigidBody2D.gravityScale = 0;
 
@@ -259,56 +286,138 @@ public class PlayerController : InputMonoBehaviour {
         }
     }
 
-
-
     private void FixedUpdate() {
-        if (PlayerCurrentState is PlayerStates.NeutralMovement or PlayerStates.Hacking) HorizontalMovement();
+        if (PlayerCurrentState 
+            is PlayerStates.NeutralMovement
+            or PlayerStates.Hacking
+            or PlayerStates.SummoningGhostHand
+            or PlayerStates.GhostHandMode
+            or PlayerStates.DismissingGhostHand) {
+            HorizontalMovement();
+        }
     }
 
     private void Update() {
         PlayerAnimation();
-
         PlayerHealthSystem();
 
-        if (PlayerCurrentState is PlayerStates.NeutralMovement or PlayerStates.Hacking) {
-            _horizontalInput = CurrentInput.LeftStick.x;
+        if (PlayerCurrentState == PlayerStates.NeutralMovement
+            || PlayerCurrentState == PlayerStates.Hacking
+            || PlayerCurrentState == PlayerStates.SummoningGhostHand
+            || PlayerCurrentState == PlayerStates.GhostHandMode
+            || PlayerCurrentState == PlayerStates.DismissingGhostHand)
+        { _horizontalInput = CurrentInput.LeftStick.x; }
+
+        if (PlayerCurrentState is PlayerStates.NeutralMovement or PlayerStates.Hacking or PlayerStates.SummoningGhostHand) {
             ReticleRotation_ProjectileFiring();
             UltimateJump();
         }
-
-
         if (PlayerCurrentState == PlayerStates.NeutralMovement) {
+            _currentMovementSpeed = _movementSpeed;
+            if (CurrentInput.GetKeyDownY) PlayerCurrentState = PlayerStates.Shockwave;
 
-            if (CurrentInput.GetKeyDownY)
-            {
-                PlayerCurrentState = PlayerStates.Shockwave;
+            SummonInputDuration = 0;
+            PlayerCanvas.SetActive(false);
+
+            if (PlayerCurrentlyGrounded()) if (CurrentInput.GetKeyRB) {
+                PlayerCanvas.SetActive(true);
+                PlayerCurrentState = PlayerStates.SummoningGhostHand;
             }
         }
 
-        if (PlayerCurrentState == PlayerStates.Shockwave)
-        {
+        if (PlayerCurrentState == PlayerStates.SummoningGhostHand) {
+            PlayerCanvas.SetActive(true);
+            GaugeFill.fillAmount = SummonInputDuration;
+            _currentMovementSpeed = GhostHandMovementSpeed;
+
+            if (CurrentInput.GetKeyUpRB || !PlayerCurrentlyGrounded())  PlayerCurrentState = PlayerStates.NeutralMovement;
+            
+            if (CurrentInput.GetKeyRB) {
+                SummonInputDuration += Time.deltaTime;
+                if (SummonInputDuration > 1) {
+                    SummonInputDuration = 0;
+                    GhostHandObject.SetActive(true);
+                    ghostHand.CurrentState = GhostHand.GhostHandStates.Summoning;
+                    PlayerCurrentState = PlayerStates.GhostHandBufferIntro;
+                }
+            }
+        }
+
+        if (PlayerCurrentState == PlayerStates.GhostHandMode) {
+            SummonInputDuration = 0;
+            PlayerCanvas.SetActive(false);
+            _currentMovementSpeed = GhostHandMovementSpeed;
+
+            if (PlayerCurrentlyGrounded() && CurrentInput.GetKeyRB) {
+                _ghostHandInputBufferDuration += Time.deltaTime;
+                if (_ghostHandInputBufferDuration >= _ghostHandInputBufferDurationReset) {
+                    PlayerCanvas.SetActive(true);
+                    PlayerCurrentState = PlayerStates.DismissingGhostHand;
+                    if (ghostHand.currentBlock != null) ghostHand.CurrentState = GhostHand.GhostHandStates.DroppingBlock;
+                }
+            } else _ghostHandInputBufferDuration = 0;
+        }
+
+        if (PlayerCurrentState == PlayerStates.DismissingGhostHand) {
+            PlayerCanvas.SetActive(true);
+            _currentMovementSpeed = GhostHandMovementSpeed;
+            GaugeFill.fillAmount = SummonInputDuration;
+
+            if (CurrentInput.GetKeyUpRB || !PlayerCurrentlyGrounded()) PlayerCurrentState = PlayerStates.GhostHandMode;
+
+            if (CurrentInput.GetKeyRB) {
+                SummonInputDuration += Time.deltaTime;
+                if (SummonInputDuration > 1) {
+                    SummonInputDuration = 0;
+                    ghostHand.CurrentState = GhostHand.GhostHandStates.Dismissing;
+                    PlayerCurrentState = PlayerStates.GhostHandBufferOutro;
+                }
+            }
+        }
+
+        if (PlayerCurrentState == PlayerStates.GhostHandBufferIntro) {
+            _horizontalInput = 0;
+            _rigidbody2D.velocity = new Vector2(0, 0);
+
+            SummonInputDuration = 0;
+            PlayerCanvas.SetActive(false);
+
+            _ghostHandBufferIntroDuration += Time.deltaTime;
+            if(_ghostHandBufferIntroDuration >= _ghostHandBufferIntroDurationReset) {
+                _ghostHandBufferIntroDuration = 0;
+                ghostHand.CurrentState = GhostHand.GhostHandStates.SearchingForBlock;
+                PlayerCurrentState = PlayerStates.GhostHandMode;
+            }
+        }
+
+        if (PlayerCurrentState == PlayerStates.GhostHandBufferOutro) {
+            _horizontalInput = 0;
+            _rigidbody2D.velocity = new Vector2(0, 0);
+
+            SummonInputDuration = 0;
+            PlayerCanvas.SetActive(false);
+
+            _ghostHandBufferOutroDuration += Time.deltaTime;
+            if (_ghostHandBufferOutroDuration >= _ghostHandBufferOutroDurationReset) {
+                _ghostHandBufferOutroDuration = 0;
+                GhostHandObject.SetActive(false);
+                PlayerCurrentState = PlayerStates.NeutralMovement;
+            }
+        }
+
+        if (PlayerCurrentState == PlayerStates.Shockwave) {
             Shockwave.SetActive(true);
 
             _horizontalInput = 0;
             _rigidbody2D.gravityScale = 0;
             _rigidbody2D.velocity = new Vector2(0, 0);
-
         }
 
-
-       if (PlayerCurrentState == PlayerStates.HackingBox)
-        {
-
-
+        if (PlayerCurrentState == PlayerStates.HackingBox) {
             _horizontalInput = CurrentInput.LeftStick.x;
             _verticalInput = CurrentInput.LeftStick.y;
-
-
             ControllerHackedBlock(currentHackedBox);
         }
-
-
-
 
         if (PlayerCurrentState == PlayerStates.StateDelay) {
             _horizontalInput = 0;
