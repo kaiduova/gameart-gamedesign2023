@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89052df8621540ad832c31b89c7aea26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  postBounceSpeedMultiplier: 2
+  postBounceSpeedMultiplier: 5
   lifetime: 10
   additionalLifetimeOnBounce: 10
 --- !u!50 &7876408587777872137
