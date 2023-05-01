@@ -44,13 +44,13 @@ public class EnemyDummy_StartsMinigame : InputMonoBehaviour {
 
     public void StartMinigame() {
         EnemyCurrentState = EnemyStates.currentlyBeingHacked;
-        Player.GetComponent<PlayerController>().PlayerCurrentState = PlayerController.PlayerStates.Hacking;
+        Player.GetComponent<PlayerController>().CurrentState = PlayerController.PlayerStates.Hacking;
         MinigameModule.Instance.StartMinigame(Minigame.Minigame.SequenceCallAndResponce, EnemyID);
     }
 
     public void CommunicateWithMinigame() {
         EnemyCurrentState = EnemyStates.hackSuccessful;
-        Player.GetComponent<PlayerController>().PlayerCurrentState = PlayerController.PlayerStates.NeutralMovement;
+        Player.GetComponent<PlayerController>().CurrentState = PlayerController.PlayerStates.NeutralMovement;
     }
 
     private void SetBodyToPlatform() {
