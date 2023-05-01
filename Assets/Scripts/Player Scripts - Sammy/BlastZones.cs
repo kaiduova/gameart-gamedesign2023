@@ -14,7 +14,7 @@ public class BlastZones : MonoBehaviour
     {
         if (collision.gameObject.layer == 6) { //Collides with player
             collision.gameObject.transform.position = LinkedSpawnPoint.position;
-            collision.gameObject.GetComponent<PlayerController>().PlayerCurrentState = PlayerController.PlayerStates.StateDelay;
+            collision.gameObject.GetComponent<PlayerController>().CurrentState = PlayerController.PlayerStates.StateDelay;
             collision.gameObject.GetComponent<PlayerController>().PlayerRespawnDelay = _respawnDelay;
             collision.gameObject.GetComponent<PlayerController>().PlayerHealth--;
         }

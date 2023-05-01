@@ -24,6 +24,6 @@ public class BreakableChain : MonoBehaviour {
     }
 
     private void Update() {
-        if (_healthSystem.CurrentHealth <= 0) _linkedChainBlockScript.CurrentState = ChainBlock.ChainBlockStates.FreeFall;
+        if (_healthSystem.CurrentHealth <= 0 && _linkedChainBlockScript.CurrentState == ChainBlockStates.Chained) _linkedChainBlockScript.CurrentState = ChainBlockStates.FreeFall;
     }
 }
