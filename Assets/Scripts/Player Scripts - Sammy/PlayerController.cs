@@ -2,8 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Input;
-using System.Collections;
-using UnityEditor.SceneManagement;
 
 public class PlayerController : InputMonoBehaviour {
 

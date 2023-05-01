@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Enemy
   - HackableBlock
+  - PlayerBullet
+  - GhostHand
   layers:
   - Default
   - TransparentFX
@@ -21,8 +23,8 @@ TagManager:
   - 
   - 
   - Deflecting
-  - 
-  - 
+  - CameraBounds
+  - CameraTrigger
   - 
   - 
   - 

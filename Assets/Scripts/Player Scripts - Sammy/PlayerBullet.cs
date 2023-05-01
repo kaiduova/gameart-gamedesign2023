@@ -1,7 +1,6 @@
 //Written by Sammy
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider2D))]
 public class PlayerBullet : MonoBehaviour {
 
     /* PascalCase - ClassNames, PublicMemberVariables, ProtectedMemberVariables, Methods & Functions
@@ -14,6 +13,7 @@ public class PlayerBullet : MonoBehaviour {
     GameObject _playerReticle;
 
     [Header("Bullet Attributes")]
+    public float DamageValue;
     Vector2 _currentTrajectory;
     float _projectileSpeed = 0.25f;
 

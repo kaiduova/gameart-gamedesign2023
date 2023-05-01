@@ -11,7 +11,7 @@ public class UniversalHealthSystem : MonoBehaviour {
     public float MaxHealth;
     public bool Dead;
 
-    private void TakeDamage(float damageRecieved) {
+    public void TakeDamage(float damageRecieved) {
         CurrentHealth -= damageRecieved;
     }
 
