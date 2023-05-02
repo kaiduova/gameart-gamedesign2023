@@ -71,10 +71,11 @@ public class GhostHand : InputMonoBehaviour {
         _ghostHandHeight = _spriteRenderer.bounds.extents.y;
     }
 
-    /*private void OnEnable() { //Kai help please - this messes with your input stuff but otherwise works
+    protected override void OnEnable() { //Kai help please - this messes with your input stuff but otherwise works
+        base.OnEnable(); //Sammy don't delete this you stupid cretin
         GhostHandAnimation();
         transform.position = SummonPoint.position;
-    }*/
+    }
 
     private void GhostHandAnimation() {
         if (_rightStickHorizontalInput < 0) transform.eulerAngles = new Vector3(0, 180, 0);

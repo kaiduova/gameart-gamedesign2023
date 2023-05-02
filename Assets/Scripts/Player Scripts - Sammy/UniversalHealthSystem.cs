@@ -25,4 +25,12 @@ public class UniversalHealthSystem : MonoBehaviour {
             Dead = true;
         }
     }
+
+    public static void TryDealDamage(GameObject go, float value)
+    {
+        if (go.TryGetComponent<UniversalHealthSystem>(out var health))
+        {
+            health.TakeDamage(value);
+        }
+    }
 }

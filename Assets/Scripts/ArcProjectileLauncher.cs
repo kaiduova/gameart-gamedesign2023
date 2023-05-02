@@ -10,7 +10,11 @@ public class ArcProjectileLauncher : InputMonoBehaviour
 
     [SerializeField]
     private Rigidbody2D controlledProjectile;
-    
+
+
+    [SerializeField]
+    private GameObject spawnObject;
+
     public Rigidbody2D ControlledProjectile { get => controlledProjectile; set => controlledProjectile = value; }
 
     public static ArcProjectileLauncher Instance { get; private set; }
@@ -32,11 +36,13 @@ public class ArcProjectileLauncher : InputMonoBehaviour
     {
         if (controlledProjectile == null && CurrentInput.GetKeyDownRT && CurrentInput.RightStick != Vector2.zero)
         {
-            controlledProjectile = Fire(transform.position, CurrentInput.RightStick);
+            controlledProjectile = Fire(spawnObject.transform.position, CurrentInput.RightStick);
         }
 
         if (CurrentInput.GetKeyUpRT)
         {
+            if (controlledProjectile != null)
+            controlledProjectile.gameObject.GetComponent<LineRenderer>().enabled = false;
             controlledProjectile = null;
         }
     }
