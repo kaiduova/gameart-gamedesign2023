@@ -20,6 +20,10 @@ public class ChainBlock : MonoBehaviour {
     [Header("Chain Block Attributes")]
     [SerializeField] private float yStoppingPoint;
 
+    [Header("Linked Camera Trigger Attributes")]
+    [SerializeField] private GameObject _linkedCameraTrigger;
+    [SerializeField] private float _triggerDisableDelay;
+
     private void InitialiseRigidbody2D() {
         _rigidbody2D.sharedMaterial = _chainBlockPhysicsMaterial2D;
         _rigidbody2D.simulated = true;
@@ -59,6 +63,13 @@ public class ChainBlock : MonoBehaviour {
         }
 
         if (CurrentState == ChainBlockStates.Static) {
+            if (_linkedCameraTrigger != null) {
+                _triggerDisableDelay -= Time.deltaTime;
+                if (_triggerDisableDelay <= 0) {
+                    _linkedCameraTrigger.SetActive(false);
+                    _triggerDisableDelay = 0;
+                }
+            }
             transform.position = new Vector3(transform.position.x, yStoppingPoint);
             if (!(_rigidbody2D != null)) return;
             Destroy(_rigidbody2D);

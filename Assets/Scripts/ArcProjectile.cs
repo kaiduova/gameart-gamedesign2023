@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Input;
 using UnityEngine;
@@ -7,12 +6,13 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D))]
 public class ArcProjectile : InputMonoBehaviour
 {
+
     private bool _bounced;
 
     [SerializeField]
-    private float postBounceSpeedMultiplier, lifetime, additionalLifetimeOnBounce;
+    private float postBounceSpeedMultiplier, lifetime, additionalLifetimeOnBounce, damage;
 
-    private Rigidbody2D _rb;
+    private Rigidbody2D _rigidbody;
 
     private LineRenderer _lineRenderer;
 
@@ -25,7 +25,7 @@ public class ArcProjectile : InputMonoBehaviour
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        _rigidbody = GetComponent<Rigidbody2D>();
         _lineRenderer = GetComponent<LineRenderer>();
         _collider = GetComponent<CircleCollider2D>();
     }
@@ -41,7 +41,7 @@ public class ArcProjectile : InputMonoBehaviour
         _predictedTrajectoryPoints.Clear();
         var position = transform.position;
         Vector2 iterationOrigin = position;
-        var iterationDirection = _rb.velocity.normalized;
+        var iterationDirection = _rigidbody.velocity.normalized;
         _predictedTrajectoryPoints.Add(position);
         for (var i = 0; i < 10; i++)
         {
@@ -56,7 +56,6 @@ public class ArcProjectile : InputMonoBehaviour
             if (!hit.collider.gameObject.TryGetComponent<DeflectingBlock>(out _)) break;
             iterationOrigin = hit.centroid;
             iterationDirection = Vector2.Reflect(iterationDirection, hit.normal);
-            print(iterationOrigin + "/" + iterationDirection);
         }
 
         _lineRenderer.positionCount = _predictedTrajectoryPoints.Count;
@@ -73,11 +72,17 @@ public class ArcProjectile : InputMonoBehaviour
     
     private void FixedUpdate()
     {
-        _cachedVelocities.Enqueue(_rb.velocity);
+        _cachedVelocities.Enqueue(_rigidbody.velocity);
         if (_cachedVelocities.Count > 2)
         {
             _lateVelocity = _cachedVelocities.Dequeue();
         }
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        UniversalHealthSystem.TryDealDamage(col.gameObject, damage);
     }
 
     private void OnCollisionEnter2D(Collision2D col)
@@ -105,7 +110,7 @@ public class ArcProjectile : InputMonoBehaviour
         }
         
         _lateVelocity = Vector2.Reflect(_lateVelocity, col.GetContact(0).normal).normalized * _lateVelocity.magnitude;
-        _rb.velocity = _lateVelocity;
+        _rigidbody.velocity = _lateVelocity;
     }
 
     private static Vector3[] Vector2ToVector3Array(IEnumerable<Vector2> input)

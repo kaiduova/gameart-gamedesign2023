@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6968081164900119493}
   m_Layer: 0
   m_Name: PlayerBullet2
-  m_TagString: Untagged
+  m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -255,3 +255,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94eef59b2683be44ebb54791f4b564e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DamageValue: 5

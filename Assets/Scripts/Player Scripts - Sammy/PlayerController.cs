@@ -2,8 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Input;
-using System.Collections;
-using UnityEditor.SceneManagement;
 
 public class PlayerController : InputMonoBehaviour {
 
@@ -203,7 +201,7 @@ public class PlayerController : InputMonoBehaviour {
                 reticleRotation = new Vector3(CurrentInput.RightStick.x, CurrentInput.RightStick.y);
                 var appliedRotation = Quaternion.LookRotation(Vector3.forward, reticleRotation);
                 playerPivotPoint.rotation = appliedRotation;
-                if (CurrentInput.GetKeyDownRT) Instantiate(playerBullet, playerPivotPoint.position, Quaternion.identity);
+                //if (CurrentInput.GetKeyDownRT) Instantiate(playerBullet, playerPivotPoint.position, Quaternion.identity);
             }
         }
         

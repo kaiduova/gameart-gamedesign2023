@@ -11,7 +11,7 @@ public class UniversalHealthSystem : MonoBehaviour {
     public float MaxHealth;
     public bool Dead;
 
-    private void TakeDamage(float damageRecieved) {
+    public void TakeDamage(float damageRecieved) {
         CurrentHealth -= damageRecieved;
     }
 
@@ -23,6 +23,14 @@ public class UniversalHealthSystem : MonoBehaviour {
         if (CurrentHealth <= 0) {
             CurrentHealth = 0;
             Dead = true;
+        }
+    }
+
+    public static void TryDealDamage(GameObject go, float value)
+    {
+        if (go.TryGetComponent<UniversalHealthSystem>(out var health))
+        {
+            health.TakeDamage(value);
         }
     }
 }
