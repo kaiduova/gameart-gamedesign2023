@@ -4,23 +4,18 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class BouncePad : MonoBehaviour
 {
-    private BoxCollider2D _collider;
-    
+
     [SerializeField]
-    private float normalBounceForce, additionalJumpBounceForce;
+    private float normalBounceForce;
 
-    private void Awake()
+    [HideInInspector]
+    public bool canBounce;
+    
+    private void OnCollisionStay2D(Collision2D col)
     {
-        _collider = GetComponent<BoxCollider2D>();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!other.TryGetComponent<PlayerController>(out var playerController)) return;
+        if (!col.gameObject.TryGetComponent<PlayerController>(out var playerController)) return;
+        if (col.GetContact(0).normal.y > -0.9f) return;
+        if (!canBounce) return;
         playerController.Rigidbody2D.velocity += new Vector2(0, normalBounceForce);
-        if (playerController.JumpBufferDuration > 0 && playerController.CoyoteTimeDuration > 0)
-        {
-            playerController.Rigidbody2D.velocity += new Vector2(0, additionalJumpBounceForce);
-        }
     }
 }

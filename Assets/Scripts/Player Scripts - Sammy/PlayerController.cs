@@ -116,6 +116,10 @@ public class PlayerController : InputMonoBehaviour {
 
     public  float _ghostHandInputBufferDuration;
     [SerializeField] float _ghostHandInputBufferDurationReset;
+    
+    private bool _nextJumpBoosted;
+    
+    [SerializeField] private float additionalJumpBounceForce;
 
     private void Awake() {
         _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -150,21 +154,36 @@ public class PlayerController : InputMonoBehaviour {
     }
 
     public bool PlayerCurrentlyGrounded() { 
+        RaycastHit2D hit = Physics2D.BoxCast(groundCheck.position, groundCheckSize, 0f, Vector2.zero, 0f, groundLayer);
+        if (hit.collider != null && hit.collider.TryGetComponent<BouncePad>(out var bouncePad) && bouncePad.canBounce)
+        {
+            _nextJumpBoosted = true;
+        }
         return Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0, groundLayer);
     }
 
     private void UltimateJump() {
+
         if (PlayerCurrentlyGrounded()) {
             _currentMovementSpeed = _movementSpeed;
             _coyoteTimeDuration = _coyoteTimeWindow;
         }
         else _coyoteTimeDuration -= Time.deltaTime;
-        
+
         if ((CurrentInput.GetKeyDownA || CurrentInput.GetKeyDownLT)) _jumpBufferDuration = _jumpBufferWindow;
         else _jumpBufferDuration -= Time.deltaTime;
         
-        if (_jumpBufferDuration > 0 && _coyoteTimeDuration > 0) {
-            _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _jumpForce);
+        if (_jumpBufferDuration > 0 && _coyoteTimeDuration > 0)
+        {
+            if (_nextJumpBoosted)
+            {
+                _rigidbody2D.velocity += new Vector2(0, additionalJumpBounceForce + _jumpForce);
+            }
+            else
+            {
+                _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _jumpForce);
+            }
+
             _currentlyJumping = true;
             _jumpBufferDuration = 0;
             _jumpDuration = 0;
@@ -182,6 +201,7 @@ public class PlayerController : InputMonoBehaviour {
 
         if ((CurrentInput.GetKeyUpA || CurrentInput.GetKeyUpLT)) {
             _currentlyJumping = false;
+            _nextJumpBoosted = false;
             _coyoteTimeDuration = 0;
             _jumpBufferDuration = 0;
             _jumpDuration = 0;
