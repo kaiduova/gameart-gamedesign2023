@@ -112,7 +112,7 @@ public class GhostHand : InputMonoBehaviour {
     }
 
     private void Update() {
-        ScreenBoundaries();
+        //ScreenBoundaries();
 
         if (CurrentState == GhostHandStates.Summoning || CurrentState == GhostHandStates.Dismissing) {
             _rightStickHorizontalInput = 0;
