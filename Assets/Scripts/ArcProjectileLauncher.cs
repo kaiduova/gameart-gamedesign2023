@@ -53,7 +53,10 @@ public class ArcProjectileLauncher : InputMonoBehaviour
         if (controlledProjectile != null)
         {
             if ((controlledProjectile.transform.position - transform.position).sqrMagnitude > maxRange * maxRange)
+            {
+                controlledProjectile.gameObject.GetComponent<LineRenderer>().enabled = false;
                 controlledProjectile = null;
+            }
         }
     }
 
