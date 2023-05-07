@@ -6,7 +6,7 @@ public class ArcProjectileLauncher : InputMonoBehaviour
 {
     [SerializeField] private GameObject projectile;
 
-    [SerializeField] private float expectedVelocity, turnRate;
+    [SerializeField] private float expectedVelocity, turnRate, cooldown, maxRange;
 
     [SerializeField]
     private Rigidbody2D controlledProjectile;
@@ -14,6 +14,8 @@ public class ArcProjectileLauncher : InputMonoBehaviour
 
     [SerializeField]
     private GameObject spawnObject;
+
+    private float _cooldown;
 
     public Rigidbody2D ControlledProjectile { get => controlledProjectile; set => controlledProjectile = value; }
 
@@ -34,8 +36,10 @@ public class ArcProjectileLauncher : InputMonoBehaviour
 
     private void Update()
     {
-        if (controlledProjectile == null && CurrentInput.GetKeyDownRT && CurrentInput.RightStick != Vector2.zero)
+        _cooldown -= Time.deltaTime;
+        if (controlledProjectile == null && CurrentInput.GetKeyDownRT && CurrentInput.RightStick != Vector2.zero && _cooldown < 0f)
         {
+            _cooldown = cooldown;
             controlledProjectile = Fire(spawnObject.transform.position, CurrentInput.RightStick);
         }
 
@@ -44,6 +48,12 @@ public class ArcProjectileLauncher : InputMonoBehaviour
             if (controlledProjectile != null)
             controlledProjectile.gameObject.GetComponent<LineRenderer>().enabled = false;
             controlledProjectile = null;
+        }
+
+        if (controlledProjectile != null)
+        {
+            if ((controlledProjectile.transform.position - transform.position).sqrMagnitude > maxRange * maxRange)
+                controlledProjectile = null;
         }
     }
 
