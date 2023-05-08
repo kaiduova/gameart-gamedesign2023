@@ -14860,23 +14860,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &991764068 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 289424014014278782, guid: 837f58232350c454b8a65ae079420f5b, type: 3}
-  m_PrefabInstance: {fileID: 1503784130}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &991764073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 991764068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7269ff529c6410584215b7ddb0d0c36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1017501894
 GameObject:
   m_ObjectHideFlags: 0
@@ -30626,6 +30609,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1760296174}
     - target: {fileID: 314506997793441468, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
+      propertyPath: playerBullet
+      value: 
+      objectReference: {fileID: 7323082832646916083, guid: 6328a6a943c95b545b4349dd1e3ecfd8, type: 3}
+    - target: {fileID: 314506997793441468, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
       propertyPath: GhostHandObject
       value: 
       objectReference: {fileID: 1760296172}
@@ -31521,7 +31508,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 289424014014278782, guid: 837f58232350c454b8a65ae079420f5b, type: 3}
       propertyPath: m_Name
-      value: HackableBlock
+      value: GhostBlock
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 837f58232350c454b8a65ae079420f5b, type: 3}

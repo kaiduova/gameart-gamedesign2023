@@ -1,4 +1,6 @@
 using UnityEngine;
+using Cinemachine;
+
 
 public class ChainBlock : MonoBehaviour {
 
@@ -6,7 +8,7 @@ public class ChainBlock : MonoBehaviour {
     camelCase - parameters, arguments, methodVariables, functionVariables
     _camelCase - privateMemberVariables */
 
-    public enum ChainBlockStates { Chained, FreeFall, Static }
+    public enum ChainBlockStates { Chained, FreeFall, Static, Deactivated }
 
     [Header("Internally Referenced Components")]
     [SerializeField] private Rigidbody2D _rigidbody2D;
@@ -23,6 +25,12 @@ public class ChainBlock : MonoBehaviour {
     [Header("Linked Camera Trigger Attributes")]
     [SerializeField] private GameObject _linkedCameraTrigger;
     [SerializeField] private float _triggerDisableDelay;
+
+    public CinemachineImpulseSource ScreenShake;
+
+    private void CallScreenShake() {
+        ScreenShake.GenerateImpulse();
+    }
 
     private void InitialiseRigidbody2D() {
         _rigidbody2D.sharedMaterial = _chainBlockPhysicsMaterial2D;
@@ -63,6 +71,7 @@ public class ChainBlock : MonoBehaviour {
         }
 
         if (CurrentState == ChainBlockStates.Static) {
+            if (ScreenShake != null) CallScreenShake();
             if (_linkedCameraTrigger != null) {
                 _triggerDisableDelay -= Time.deltaTime;
                 if (_triggerDisableDelay <= 0) {
@@ -73,6 +82,7 @@ public class ChainBlock : MonoBehaviour {
             transform.position = new Vector3(transform.position.x, yStoppingPoint);
             if (!(_rigidbody2D != null)) return;
             Destroy(_rigidbody2D);
+            CurrentState = ChainBlockStates.Deactivated;
         }
     }
 }

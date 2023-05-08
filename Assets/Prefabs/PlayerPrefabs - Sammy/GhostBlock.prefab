@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 289424014014278777}
   - component: {fileID: 991269214}
   m_Layer: 3
-  m_Name: HackableBlock
+  m_Name: GhostBlock
   m_TagString: HackableBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

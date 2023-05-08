@@ -34,6 +34,10 @@ public class CameraController : MonoBehaviour {
         _playerPos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
+    private void Start() {
+        VirtualCamera.m_Lens.OrthographicSize = _playerOrthoSize;
+    }
+
     private void CameraResising(float desiredOrthoSize) {
         if (VirtualCamera.m_Lens.OrthographicSize != desiredOrthoSize) {
             if (VirtualCamera.m_Lens.OrthographicSize > desiredOrthoSize) {
