@@ -1,5 +1,4 @@
 using UnityEngine;
-using static GhostHand;
 
 public class UniversalHealthSystem : MonoBehaviour {
 

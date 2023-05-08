@@ -9,6 +9,12 @@ public class PlayerAnimation : MonoBehaviour {
     [SerializeField] private PlayerController _playerController;
     [SerializeField] private Animator _animator;
 
+    public ParticleSystem DustJumpRunEffect;
+
+    public ParticleSystem JumpEffect;
+    public ParticleSystem LandEffect;
+
+
     private void Awake() {
 
 
@@ -22,6 +28,19 @@ public class PlayerAnimation : MonoBehaviour {
     void Start() {
     }
 
+    private void PlayJumpEffect()
+    {
+        JumpEffect.Play();
+    }
+
+
+    private void PlayLandEffect()
+    {
+        LandEffect.Play();
+    }
+
+
+
     void Update()
     {
         if (_playerController.CurrentState 
@@ -31,8 +50,6 @@ public class PlayerAnimation : MonoBehaviour {
 
             if (_playerController.HorizontalInput < 0) transform.eulerAngles = new Vector3(0, 0, 0);
             if (_playerController.HorizontalInput > 0) transform.eulerAngles = new Vector3(0, 180, 0);
-
-
 
             _animator.SetFloat("xVelocity", _playerController.HorizontalInput);
             _animator.SetFloat("yVelocity", _playerController.Rigidbody2D.velocity.y);

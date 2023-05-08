@@ -121,6 +121,9 @@ public class PlayerController : InputMonoBehaviour {
     
     [SerializeField] private float additionalJumpBounceForce;
 
+
+
+
     private void Awake() {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _boxCollider2D = GetComponent<BoxCollider2D>();
@@ -136,6 +139,8 @@ public class PlayerController : InputMonoBehaviour {
 
         CurrentState = PlayerStates.NeutralMovement;
     }
+
+   
 
     private void PlayerAnimation() {
         //if (HorizontalInput < 0) transform.eulerAngles = new Vector3(0, 180, 0);
@@ -317,7 +322,7 @@ public class PlayerController : InputMonoBehaviour {
 
     private void Update() {
         PlayerAnimation();
-        PlayerHealthSystem();
+        //PlayerHealthSystem();
 
         if (CurrentState == PlayerStates.NeutralMovement
             || CurrentState == PlayerStates.Hacking

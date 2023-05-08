@@ -12,12 +12,26 @@ public class ArcProjectileLauncher : InputMonoBehaviour
     private Rigidbody2D controlledProjectile;
 
 
+
+
+
+
+
     [SerializeField]
     private GameObject spawnObject;
 
     public Rigidbody2D ControlledProjectile { get => controlledProjectile; set => controlledProjectile = value; }
 
     public static ArcProjectileLauncher Instance { get; private set; }
+
+
+
+
+
+    [SerializeField] private PlayerController _playerController;
+
+
+
 
     private void Awake()
     {
@@ -34,9 +48,14 @@ public class ArcProjectileLauncher : InputMonoBehaviour
 
     private void Update()
     {
-        if (controlledProjectile == null && CurrentInput.GetKeyDownRT && CurrentInput.RightStick != Vector2.zero)
+
+        if (_playerController.CurrentState == PlayerController.PlayerStates.NeutralMovement)
         {
-            controlledProjectile = Fire(spawnObject.transform.position, CurrentInput.RightStick);
+            if (controlledProjectile == null && CurrentInput.GetKeyDownRT && CurrentInput.RightStick != Vector2.zero)
+            {
+                controlledProjectile = Fire(spawnObject.transform.position, CurrentInput.RightStick);
+            } 
+
         }
 
         if (CurrentInput.GetKeyUpRT)

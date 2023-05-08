@@ -11,7 +11,8 @@ public enum EatingEnemyState
     Bounce
 }
 
-[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(UniversalHealthSystem))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(UniversalHealthSystem))] 
+[RequireComponent(typeof(BouncePad))] 
 public class EatingEnemy : MonoBehaviour
 {
     public EatingEnemyState State { get; set; }

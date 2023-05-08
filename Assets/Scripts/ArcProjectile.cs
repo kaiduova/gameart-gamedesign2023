@@ -83,6 +83,7 @@ public class ArcProjectile : InputMonoBehaviour
     private void OnTriggerEnter2D(Collider2D col)
     {
         UniversalHealthSystem.TryDealDamage(col.gameObject, damage);
+        Destroy(gameObject); //Added by Sammy so bullet can destroy on chain impact
     }
 
     private void OnCollisionEnter2D(Collision2D col)
