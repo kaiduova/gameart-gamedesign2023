@@ -11,28 +11,23 @@ public class BouncePad : MonoBehaviour
     [HideInInspector]
     public bool canBounce;
     
-
-    PlayerController playerController;
-    DeflectingBlock deflectingBlock;
-
-
-
     private void OnCollisionStay2D(Collision2D col)
     {
-        /*if (!col.gameObject.TryGetComponent<PlayerController>(out var playerController)) return;
+        PlayerController playerController;
+        DeflectingBlock deflectingBlock = null;
+        if (!(col.gameObject.TryGetComponent(out playerController) || col.gameObject.TryGetComponent(out deflectingBlock))) return;
         if (col.GetContact(0).normal.y > -0.9f) return;
-        if (!canBounce) return;
-        playerController.Rigidbody2D.velocity += new Vector2(0, normalBounceForce);*/
-
-
-
-        if (!(col.gameObject.TryGetComponent<PlayerController>(out playerController) || col.gameObject.TryGetComponent<DeflectingBlock>(out deflectingBlock))) return;
-
-        if (col.GetContact(0).normal.y > -0.9f) return;
-        if (!canBounce) return;
-
-
-        if (playerController != null) playerController.Rigidbody2D.velocity += new Vector2(0, normalBounceForce);
-        if (deflectingBlock != null) deflectingBlock.Rigidbody2D.velocity += new Vector2(0, normalBounceForce * 10);
+        if (playerController != null)
+        {
+            if (!canBounce) return;
+            playerController.Rigidbody2D.velocity += new Vector2(0, normalBounceForce);
+        }
+        else
+        {
+            if (deflectingBlock != null && deflectingBlock.TryGetComponent<Rigidbody2D>(out var outRigidbody))
+            {
+                outRigidbody.velocity += new Vector2(0, normalBounceForce);
+            }
+        }
     }
 }
