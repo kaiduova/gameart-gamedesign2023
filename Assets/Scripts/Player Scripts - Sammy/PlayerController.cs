@@ -134,6 +134,8 @@ public class PlayerController : InputMonoBehaviour {
         initialGravity = new Vector2(0, -Physics2D.gravity.y);
 
         PlayerHealth = 3;
+
+
         Shockwave.SetActive(false);
         PlayerCanvas.SetActive(false);
 
