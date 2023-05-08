@@ -13627,9 +13627,10 @@ MonoBehaviour:
   projectile: {fileID: 7323082832646916083, guid: 6328a6a943c95b545b4349dd1e3ecfd8, type: 3}
   expectedVelocity: 8
   turnRate: 0.02
+  cooldown: 0
+  maxRange: 0
   controlledProjectile: {fileID: 0}
   spawnObject: {fileID: 1503836948}
-  _playerController: {fileID: 309002466}
 --- !u!1 &328193216
 GameObject:
   m_ObjectHideFlags: 0
@@ -14050,7 +14051,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505078264}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.444416, y: -2.5, z: -10}
+  m_LocalPosition: {x: -2.2374706, y: -2.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -30612,6 +30613,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 314506997793441465, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
+      propertyPath: cooldown
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 314506997793441465, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
+      propertyPath: maxRange
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 314506997793441468, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
       propertyPath: ghostHand
       value: 
@@ -32065,6 +32074,7 @@ MonoBehaviour:
   _grabDurationReset: 0.2
   _dropDurationReset: 0.2
   _screenBoundaries: {x: 0, y: 0}
+  _screenBoundariesOther: {x: 0, y: 0}
   _ghostHandWidth: 0
   _ghostHandHeight: 0
 --- !u!212 &1760296175
