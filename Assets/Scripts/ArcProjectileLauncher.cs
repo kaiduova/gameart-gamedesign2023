@@ -6,32 +6,20 @@ public class ArcProjectileLauncher : InputMonoBehaviour
 {
     [SerializeField] private GameObject projectile;
 
-    [SerializeField] private float expectedVelocity, turnRate;
+    [SerializeField] private float expectedVelocity, turnRate, cooldown, maxRange;
 
     [SerializeField]
     private Rigidbody2D controlledProjectile;
 
 
-
-
-
-
-
     [SerializeField]
     private GameObject spawnObject;
+
+    private float _cooldown;
 
     public Rigidbody2D ControlledProjectile { get => controlledProjectile; set => controlledProjectile = value; }
 
     public static ArcProjectileLauncher Instance { get; private set; }
-
-
-
-
-
-    [SerializeField] private PlayerController _playerController;
-
-
-
 
     private void Awake()
     {
@@ -48,14 +36,11 @@ public class ArcProjectileLauncher : InputMonoBehaviour
 
     private void Update()
     {
-
-        if (_playerController.CurrentState == PlayerController.PlayerStates.NeutralMovement)
+        _cooldown -= Time.deltaTime;
+        if (controlledProjectile == null && CurrentInput.GetKeyDownRT && CurrentInput.RightStick != Vector2.zero && _cooldown < 0f)
         {
-            if (controlledProjectile == null && CurrentInput.GetKeyDownRT && CurrentInput.RightStick != Vector2.zero)
-            {
-                controlledProjectile = Fire(spawnObject.transform.position, CurrentInput.RightStick);
-            } 
-
+            _cooldown = cooldown;
+            controlledProjectile = Fire(spawnObject.transform.position, CurrentInput.RightStick);
         }
 
         if (CurrentInput.GetKeyUpRT)
@@ -63,6 +48,15 @@ public class ArcProjectileLauncher : InputMonoBehaviour
             if (controlledProjectile != null)
             controlledProjectile.gameObject.GetComponent<LineRenderer>().enabled = false;
             controlledProjectile = null;
+        }
+
+        if (controlledProjectile != null)
+        {
+            if ((controlledProjectile.transform.position - transform.position).sqrMagnitude > maxRange * maxRange)
+            {
+                controlledProjectile.gameObject.GetComponent<LineRenderer>().enabled = false;
+                controlledProjectile = null;
+            }
         }
     }
 

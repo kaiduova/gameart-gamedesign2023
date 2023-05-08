@@ -102,6 +102,7 @@ public class ArcProjectile : InputMonoBehaviour
             _lateVelocity *= postBounceSpeedMultiplier;
         }
         _bounced = true;
+        gameObject.GetComponent<LineRenderer>().enabled = false;
         lifetime = additionalLifetimeOnBounce;
         if (ArcProjectileLauncher.Instance.ControlledProjectile != null && 
             ArcProjectileLauncher.Instance.ControlledProjectile.gameObject != null && 
