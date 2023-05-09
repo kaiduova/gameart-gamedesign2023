@@ -32,4 +32,14 @@ public class UniversalHealthSystem : MonoBehaviour {
             health.TakeDamage(value);
         }
     }
+
+    /*private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 7) // player bullet layer
+        {
+            TakeDamage(5);
+            Destroy(collision.gameObject);
+            //TryDealDamage(collision.gameObject, 5);
+        }
+    }*/
 }

@@ -1,6 +1,7 @@
 //Written by Sammy
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Input;
 
 public class PlayerController : InputMonoBehaviour {
@@ -245,7 +246,10 @@ public class PlayerController : InputMonoBehaviour {
 
     private void PlayerHealthSystem() {
         if (PlayerHealth > 3) PlayerHealth = 3;
-        else if (PlayerHealth < 1) PlayerHealth = 0;
+        else if (PlayerHealth < 1) {
+            PlayerHealth = 0;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
 
         switch (PlayerHealth) {
             case 3: {
@@ -324,7 +328,7 @@ public class PlayerController : InputMonoBehaviour {
 
     private void Update() {
         PlayerAnimation();
-        //PlayerHealthSystem();
+        PlayerHealthSystem();
 
         if (CurrentState == PlayerStates.NeutralMovement
             || CurrentState == PlayerStates.Hacking

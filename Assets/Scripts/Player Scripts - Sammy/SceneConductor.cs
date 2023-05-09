@@ -17,17 +17,9 @@ public class SceneConductor : InputMonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("hellodsafd"); 
-        if (collision.gameObject.tag == "Player")
-        {
-
-            print("hello1");
-
+        if (collision.gameObject.tag == "Player") {
             Player.SetActive(false);
-
             LoadNextLevel();
-
-
         }
     }
 
