@@ -23,6 +23,11 @@ public class UniversalHealthSystem : MonoBehaviour {
             CurrentHealth = 0;
             Dead = true;
         }
+
+        if (Dead && CurrentHealth != 0)
+        {
+            Dead = false;
+        }
     }
 
     public static void TryDealDamage(GameObject go, float value)

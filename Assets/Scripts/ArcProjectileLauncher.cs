@@ -21,9 +21,13 @@ public class ArcProjectileLauncher : InputMonoBehaviour
 
     public static ArcProjectileLauncher Instance { get; private set; }
 
+    private PlayerController playerController;
+
     private void Awake()
     {
         Instance = this;
+
+        playerController = GetComponent<PlayerController>();
     }
 
     public Rigidbody2D Fire(Vector3 origin, Vector3 direction)
@@ -37,7 +41,7 @@ public class ArcProjectileLauncher : InputMonoBehaviour
     private void Update()
     {
         _cooldown -= Time.deltaTime;
-        if (controlledProjectile == null && CurrentInput.GetKeyDownRT && CurrentInput.RightStick != Vector2.zero && _cooldown < 0f)
+        if (controlledProjectile == null && CurrentInput.GetKeyDownRT && CurrentInput.RightStick != Vector2.zero && _cooldown < 0f && playerController.CurrentState == PlayerController.PlayerStates.NeutralMovement)
         {
             _cooldown = cooldown;
             controlledProjectile = Fire(spawnObject.transform.position, CurrentInput.RightStick);

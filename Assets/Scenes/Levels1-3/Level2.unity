@@ -13632,7 +13632,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505078264}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.444416, y: -2.5, z: -10}
+  m_LocalPosition: {x: -4.4384403, y: -2.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13872,6 +13872,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 11.9, y: 2}
   m_EdgeRadius: 0
+--- !u!1 &725403921 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2910601152183929564, guid: 3c7e1c1db8e996e47ac3690bae0ed550, type: 3}
+  m_PrefabInstance: {fileID: 3197755608441555552}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &725403927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725403921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7defcbcaf5250504195be12b3ba8372d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &888400129
 GameObject:
   m_ObjectHideFlags: 0
@@ -31360,6 +31377,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2910601152183929563, guid: 3c7e1c1db8e996e47ac3690bae0ed550, type: 3}
+      propertyPath: m_Mass
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2910601152183929564, guid: 3c7e1c1db8e996e47ac3690bae0ed550, type: 3}
       propertyPath: m_Name
       value: SmallGhostBlock
@@ -31432,6 +31453,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 991243821}
     - target: {fileID: 4781276210343158264, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
+      propertyPath: reviveTime
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781276210343158264, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
+      propertyPath: postSwallowCooldown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781276210343158264, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: patrolPathMarkers.Array.data[0]
       value: 
       objectReference: {fileID: 185795297}
@@ -31493,7 +31522,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4781276210343158267, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: normalBounceForce
-      value: 10
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781276210343158271, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
+      propertyPath: Dead
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4781276210343158271, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: MaxHealth
@@ -31609,7 +31642,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 8189444302664550806}
   transitionTime: 1
-  Player: {fileID: 0}
+  Player: {fileID: 991243821}
 --- !u!1 &7921407847007976334
 GameObject:
   m_ObjectHideFlags: 0

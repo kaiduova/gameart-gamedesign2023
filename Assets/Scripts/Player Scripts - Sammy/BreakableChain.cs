@@ -14,6 +14,8 @@ public class BreakableChain : MonoBehaviour {
     public GameObject LinkedChainBlock;
     [SerializeField] private ChainBlock _linkedChainBlockScript;
 
+
+
     private void Awake() {
         _healthSystem = GetComponent<UniversalHealthSystem>();
         _linkedChainBlockScript = LinkedChainBlock.GetComponent<ChainBlock>();

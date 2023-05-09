@@ -185,7 +185,7 @@ public class PlayerController : InputMonoBehaviour {
         {
             if (_nextJumpBoosted)
             {
-                _rigidbody2D.velocity += new Vector2(0, additionalJumpBounceForce + _jumpForce);
+                _rigidbody2D.velocity += new Vector2(0, -_jumpForce);
             }
             else
             {

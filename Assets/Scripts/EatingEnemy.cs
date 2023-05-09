@@ -16,6 +16,8 @@ public enum EatingEnemyState
 public class EatingEnemy : MonoBehaviour
 {
     public EatingEnemyState State { get; set; }
+    public float ReviveTimer { get => _reviveTimer; set => _reviveTimer = value; }
+    public float ReviveTime { get => reviveTime; set => reviveTime = value; }
 
     [SerializeField]
     private GameObject[] patrolPathMarkers, furthestReachablePointMarkers;
@@ -24,7 +26,7 @@ public class EatingEnemy : MonoBehaviour
     private GameObject player;
 
     [SerializeField]
-    private float tolerance, speed, chaseSpeed, swallowDuration, postSwallowCooldown, engagementRange, damage;
+    private float tolerance, speed, chaseSpeed, swallowDuration, postSwallowCooldown, engagementRange, damage, reviveTime;
 
     [SerializeField]
     private int nextPoint;
@@ -38,7 +40,8 @@ public class EatingEnemy : MonoBehaviour
     private UniversalHealthSystem _health;
 
     private BouncePad _bouncePad;
-    
+
+    private float _reviveTimer;
     
 
     private void Start()
@@ -51,6 +54,7 @@ public class EatingEnemy : MonoBehaviour
     private void Update()
     {
         _postSwallowCooldownTimer -= Time.deltaTime;
+        ReviveTimer -= Time.deltaTime;
         _bouncePad.canBounce = false;
 
         if (State != EatingEnemyState.Swallowed)
@@ -76,6 +80,7 @@ public class EatingEnemy : MonoBehaviour
         {
             case EatingEnemyState.Default:
                 gameObject.layer = 8;
+                ReviveTimer = ReviveTime;
                 //Move between patrol path markers.
                 if (transform.position.x > patrolPathMarkers[nextPoint].transform.position.x - tolerance
                     && transform.position.x < patrolPathMarkers[nextPoint].transform.position.x + tolerance)
@@ -91,6 +96,7 @@ public class EatingEnemy : MonoBehaviour
                 break;
             case EatingEnemyState.Attack:
                 gameObject.layer = 8;
+                ReviveTimer = ReviveTime;
                 //Chase within furthest reachable point markers.
                 _rigidbody.velocity = Vector3.zero;
                 if (transform.position.x > furthestReachablePointMarkers.Min(point => point.transform.position.x)
@@ -108,6 +114,7 @@ public class EatingEnemy : MonoBehaviour
                 break;
             case EatingEnemyState.Swallowed:
                 gameObject.layer = 8;
+                ReviveTimer = ReviveTime;
                 //Idle movement and animation.
                 if (_startedSwallowCoroutine) return;
                 StartCoroutine(Swallow(swallowDuration));
@@ -116,6 +123,10 @@ public class EatingEnemy : MonoBehaviour
             case EatingEnemyState.Bounce:
                 gameObject.layer = 3;
                 _rigidbody.velocity = Vector2.zero;
+                if (ReviveTimer <= 0f)
+                {
+                    _health.CurrentHealth = _health.MaxHealth;
+                }
                 break;
         }
     }
@@ -136,7 +147,7 @@ public class EatingEnemy : MonoBehaviour
         yield return new WaitForSeconds(duration);
         player.SetActive(true);
         _startedSwallowCoroutine = false;
-        UniversalHealthSystem.TryDealDamage(player, damage);
+        player.GetComponent<PlayerController>().PlayerHealth--;
         //Play more animations
         State = EatingEnemyState.Default;
         _postSwallowCooldownTimer = postSwallowCooldown;

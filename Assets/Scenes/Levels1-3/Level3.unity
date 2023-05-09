@@ -23263,6 +23263,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BouncePadEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 4781276210343158258, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4781276210343158264, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: speed
       value: 0
@@ -23358,6 +23362,10 @@ PrefabInstance:
     - target: {fileID: 4781276210343158267, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: normalBounceForce
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781276210343158268, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
+      propertyPath: m_Constraints
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4781276210343158271, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: MaxHealth
@@ -23784,6 +23792,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BouncePadEnemy2
       objectReference: {fileID: 0}
+    - target: {fileID: 4781276210343158258, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4781276210343158264, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: speed
       value: 0
@@ -23880,6 +23892,10 @@ PrefabInstance:
       propertyPath: normalBounceForce
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4781276210343158268, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
+      propertyPath: m_Constraints
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4781276210343158271, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: MaxHealth
       value: 0
@@ -23964,7 +23980,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505078264}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.4444304, y: -1.6299903, z: -10}
+  m_LocalPosition: {x: -4.41096, y: -1.6299903, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -57001,6 +57017,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BouncePadEnemy3
       objectReference: {fileID: 0}
+    - target: {fileID: 4781276210343158258, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4781276210343158264, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: speed
       value: 0
@@ -57096,6 +57116,10 @@ PrefabInstance:
     - target: {fileID: 4781276210343158267, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: normalBounceForce
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781276210343158268, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
+      propertyPath: m_Constraints
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4781276210343158271, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: MaxHealth
@@ -57293,6 +57317,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BouncePadEnemy4
       objectReference: {fileID: 0}
+    - target: {fileID: 4781276210343158258, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4781276210343158264, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: speed
       value: 0
@@ -57388,6 +57416,10 @@ PrefabInstance:
     - target: {fileID: 4781276210343158267, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: normalBounceForce
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781276210343158268, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
+      propertyPath: m_Constraints
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4781276210343158271, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: MaxHealth

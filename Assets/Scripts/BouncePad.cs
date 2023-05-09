@@ -10,7 +10,14 @@ public class BouncePad : MonoBehaviour
 
     [HideInInspector]
     public bool canBounce;
-    
+
+    private EatingEnemy _controller;
+
+    private void Awake()
+    {
+        _controller = GetComponent<EatingEnemy>();
+    }
+
     private void OnCollisionStay2D(Collision2D col)
     {
         PlayerController playerController;
@@ -26,6 +33,7 @@ public class BouncePad : MonoBehaviour
         {
             if (deflectingBlock != null && deflectingBlock.TryGetComponent<Rigidbody2D>(out var outRigidbody))
             {
+                _controller.ReviveTimer = _controller.ReviveTime;
                 outRigidbody.velocity += new Vector2(0, normalBounceForce);
             }
         }
