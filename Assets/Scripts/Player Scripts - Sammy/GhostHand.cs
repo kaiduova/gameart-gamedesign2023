@@ -46,8 +46,10 @@ public class GhostHand : InputMonoBehaviour {
 
     [Header("Screen Boundary Attributes")]
     [SerializeField] private Vector2 _screenBoundaries;
+    [SerializeField] private Vector2 _screenBoundariesOther;
     [SerializeField] private float _ghostHandWidth;
     [SerializeField] private float _ghostHandHeight;
+    private Camera _camera;
 
     private void OnTriggerStay2D(Collider2D collision) {
         if (collision.tag == "HackableBlock") {
@@ -65,6 +67,7 @@ public class GhostHand : InputMonoBehaviour {
     }
 
     private void Start() {
+        _camera = Camera.main;
         GhostHandAnimation();
         _spriteRenderer.sprite = _openHand;
         _ghostHandWidth = _spriteRenderer.bounds.extents.x;
@@ -96,10 +99,11 @@ public class GhostHand : InputMonoBehaviour {
     }
 
     private void ScreenBoundaries() {
-        _screenBoundaries = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        _screenBoundaries = _camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0f));
+        _screenBoundariesOther = _camera.ScreenToWorldPoint(Vector3.zero);
         Vector3 viewPos = transform.position;
-        viewPos.x = Mathf.Clamp(viewPos.x, _screenBoundaries.x * -1 + _ghostHandWidth, _screenBoundaries.x - _ghostHandWidth);
-        viewPos.y = Mathf.Clamp(viewPos.y, _screenBoundaries.y * -1 + _ghostHandHeight, _screenBoundaries.y - _ghostHandHeight);
+        viewPos.x = Mathf.Clamp(viewPos.x, _screenBoundariesOther.x + _ghostHandWidth, _screenBoundaries.x - _ghostHandWidth);
+        viewPos.y = Mathf.Clamp(viewPos.y, _screenBoundariesOther.y + _ghostHandHeight, _screenBoundaries.y - _ghostHandHeight);
         transform.position = viewPos;
     }
 

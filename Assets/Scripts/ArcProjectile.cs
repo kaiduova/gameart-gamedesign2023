@@ -79,14 +79,9 @@ public class ArcProjectile : InputMonoBehaviour
         }
     }
 
-
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        UniversalHealthSystem.TryDealDamage(col.gameObject, damage);
-    }
-
     private void OnCollisionEnter2D(Collision2D col)
     {
+        UniversalHealthSystem.TryDealDamage(col.gameObject, damage);
         if (col.collider.gameObject.TryGetComponent<ArcProjectileLauncher>(out _)) return;
         if (!col.collider.gameObject.TryGetComponent<DeflectingBlock>(out _))
         {
@@ -101,6 +96,7 @@ public class ArcProjectile : InputMonoBehaviour
             _lateVelocity *= postBounceSpeedMultiplier;
         }
         _bounced = true;
+        gameObject.GetComponent<LineRenderer>().enabled = false;
         lifetime = additionalLifetimeOnBounce;
         if (ArcProjectileLauncher.Instance.ControlledProjectile != null && 
             ArcProjectileLauncher.Instance.ControlledProjectile.gameObject != null && 

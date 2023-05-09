@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
@@ -7,32 +8,37 @@ public class BlastZones : MonoBehaviour
     [SerializeField] GameObject _player;
     [SerializeField] PlayerController _playerController;
 
-    [SerializeField] float _respawnDelay;
+    [SerializeField] private float _respawnDelay = 1f;
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    public Animator OOBMask;
+
+
+    private IEnumerator ResetScene()
     {
-        if (collision.gameObject.layer == 6) { //Collides with player
-            collision.gameObject.transform.position = LinkedSpawnPoint.position;
-            collision.gameObject.GetComponent<PlayerController>().CurrentState = PlayerController.PlayerStates.StateDelay;
-            collision.gameObject.GetComponent<PlayerController>().PlayerRespawnDelay = _respawnDelay;
-            collision.gameObject.GetComponent<PlayerController>().PlayerHealth--;
-        }
-
-        if (collision.gameObject.layer == 8) { //Collides with enemy
-        }
-
-
-
-
-
-
-
-
+        OOBMask.SetTrigger("OOB");
+        _playerController.PlayerRespawnDelay = _respawnDelay;
+        _playerController.CurrentState = PlayerController.PlayerStates.StateDelay;
+        yield return new WaitForSeconds(1);
+        _player.transform.position = LinkedSpawnPoint.position;
+        _playerController.PlayerHealth--;
     }
 
 
 
+
+
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.layer == 6) { //Collides with player
+            StartCoroutine(ResetScene());
+        }
+
+        if (collision.gameObject.layer == 8) { //Collides with enemy
+            Destroy(collision.gameObject);
+        }
+    }
 
     private void Awake()
     {

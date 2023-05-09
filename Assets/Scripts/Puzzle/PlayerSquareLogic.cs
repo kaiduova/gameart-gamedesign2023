@@ -34,14 +34,16 @@ public class PlayerSquareLogic : InputMonoBehaviour
     {
         if (_refToSelectionFrame.PositionNumber == _positionNumber)
         {
-            _refToSelectionFrame.transform.position = this.transform.position;
-            if (CurrentInput.GetKeyUpRightStickPress)
-            {
 
-                if (_refToPlayerBlankSquareLogic.PositionNumber + 4 == _positionNumber ||
-                    _refToPlayerBlankSquareLogic.PositionNumber - 4 == _positionNumber ||
-                    _refToPlayerBlankSquareLogic.PositionNumber - 1 == _positionNumber ||
-                    _refToPlayerBlankSquareLogic.PositionNumber + 1 == _positionNumber)
+            _refToSelectionFrame.transform.position = this.transform.position;
+
+            if (_refToPlayerBlankSquareLogic.PositionNumber + 4 == _positionNumber ||
+                _refToPlayerBlankSquareLogic.PositionNumber - 4 == _positionNumber ||
+                _refToPlayerBlankSquareLogic.PositionNumber - 1 == _positionNumber ||
+                _refToPlayerBlankSquareLogic.PositionNumber + 1 == _positionNumber)
+            {
+                _refToSelectionFrame.ShouldArrowOnAble = true;
+                if (CurrentInput.GetKeyUpRightStickPress)
                 {
                     if (!_refToPlayerBlankSquareLogic.IsMoving)
                     {
@@ -50,7 +52,13 @@ public class PlayerSquareLogic : InputMonoBehaviour
                         _numberCache = _positionNumber;
 
                     }
+
+
                 }
+            }
+            else
+            {
+                _refToSelectionFrame.ShouldArrowOnAble = false;
 
             }
             if (_isMoving)

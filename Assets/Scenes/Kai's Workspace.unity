@@ -851,7 +851,10 @@ MonoBehaviour:
   projectile: {fileID: 7323082832646916083, guid: 6328a6a943c95b545b4349dd1e3ecfd8, type: 3}
   expectedVelocity: 4
   turnRate: 0.02
+  cooldown: 2
+  maxRange: 2
   controlledProjectile: {fileID: 0}
+  spawnObject: {fileID: 1870111435}
 --- !u!212 &1870111437
 SpriteRenderer:
   m_ObjectHideFlags: 0

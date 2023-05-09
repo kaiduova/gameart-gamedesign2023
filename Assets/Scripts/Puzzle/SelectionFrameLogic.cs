@@ -88,34 +88,34 @@ public class SelectionFrameLogic : InputMonoBehaviour
             PositionNumber = _positionCache;
         }
 
-        ShouldArrowOnAble = true;
 
         if (ShouldArrowOnAble)
         {
-            //if(_refToPlayerBlankSquareLogic.PositionNumber + 4 == PositionNumber ||
-            //        _refToPlayerBlankSquareLogic.PositionNumber - 4 == _positionNumber ||
-            //        _refToPlayerBlankSquareLogic.PositionNumber - 1 == _positionNumber ||
-            //        _refToPlayerBlankSquareLogic.PositionNumber + 1 == _positionNumber)
-            //{
+            _myArrow.gameObject.SetActive(true);
 
-        }
-        if (_refToPlayerBlankSquareLogic.PositionNumber + 4 == PositionNumber)
-        {
-            _myArrow.localEulerAngles=new Vector3(0, 0, 0);
+            if (_refToPlayerBlankSquareLogic.PositionNumber + 4 == PositionNumber)
+            {
+                _myArrow.localEulerAngles = new Vector3(0, 0, 0);
 
 
+            }
+            else if (_refToPlayerBlankSquareLogic.PositionNumber - 4 == PositionNumber)
+            {
+                _myArrow.localEulerAngles = new Vector3(0, 0, 180);
+            }
+            else if (_refToPlayerBlankSquareLogic.PositionNumber - 1 == PositionNumber)
+            {
+                _myArrow.localEulerAngles = new Vector3(0, 0, -90);
+            }
+            else if (_refToPlayerBlankSquareLogic.PositionNumber + 1 == PositionNumber)
+            {
+                _myArrow.localEulerAngles = new Vector3(0, 0, 90);
+            }
+
         }
-        else if (_refToPlayerBlankSquareLogic.PositionNumber - 4 == PositionNumber)
+        else
         {
-            _myArrow.localEulerAngles=new Vector3(0, 0, 180);
-        }
-        else if(_refToPlayerBlankSquareLogic.PositionNumber - 1 == PositionNumber)
-        {
-            _myArrow.localEulerAngles = new Vector3(0, 0, -90);
-        }
-        else if (_refToPlayerBlankSquareLogic.PositionNumber + 1 == PositionNumber)
-        {
-            _myArrow.localEulerAngles = new Vector3(0, 0, 90);
+            _myArrow.gameObject.SetActive(false);
         }
 
     }
