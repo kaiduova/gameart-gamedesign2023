@@ -13849,6 +13849,7 @@ MonoBehaviour:
   _player: {fileID: 309002465}
   _playerController: {fileID: 309002466}
   _respawnDelay: 1
+  OOBMask: {fileID: 0}
 --- !u!61 &414629973
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14385,6 +14386,7 @@ MonoBehaviour:
   yStoppingPoint: -7
   _linkedCameraTrigger: {fileID: 2079169944}
   _triggerDisableDelay: 2
+  ScreenShake: {fileID: 0}
 --- !u!61 &703228895
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -33029,7 +33031,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4781276210343158271, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: MaxHealth
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
