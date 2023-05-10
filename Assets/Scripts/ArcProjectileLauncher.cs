@@ -18,7 +18,7 @@ public class ArcProjectileLauncher : InputMonoBehaviour
 
 
     [SerializeField]
-    private GameObject spawnObject;
+    private GameObject spawnObject, playerAnimation;
 
     private float _cooldown;
 
@@ -63,10 +63,16 @@ public class ArcProjectileLauncher : InputMonoBehaviour
     private void Update()
     {
         _cooldown -= Time.deltaTime;
-        if (controlledProjectile == null && CurrentInput.GetKeyDownRT && CurrentInput.RightStick != Vector2.zero && _cooldown < 0f && _playerController.CurrentState == PlayerController.PlayerStates.NeutralMovement)
+        if (controlledProjectile == null && CurrentInput.GetKeyDownRT && _cooldown < 0f && _playerController.CurrentState == PlayerController.PlayerStates.NeutralMovement)
         {
+            Vector2 direction;
+            direction = CurrentInput.RightStick;
+            if ((CurrentInput.RightStick - Vector2.zero).sqrMagnitude < 0.1f)
+            {
+                direction = playerAnimation.transform.eulerAngles.y == 0f ? Vector2.left : Vector2.right;
+            }
             _cooldown = cooldown;
-            controlledProjectile = Fire(spawnObject.transform.position, CurrentInput.RightStick);
+            controlledProjectile = Fire(spawnObject.transform.position, direction);
         }
 
         if (controlledProjectile != null)
@@ -77,7 +83,7 @@ public class ArcProjectileLauncher : InputMonoBehaviour
             }
         }
 
-        if ((CurrentInput.RightStick - Vector2.zero).sqrMagnitude > 0.2f && !CurrentInput.GetKeyRT)
+        if ((CurrentInput.RightStick - Vector2.zero).sqrMagnitude > 0.2f && !CurrentInput.GetKeyRT && _playerController.CurrentState == PlayerController.PlayerStates.NeutralMovement)
         {
             _lineRenderer.enabled = true;
             Predict();
