@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Input;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D), typeof(LineRenderer))]
 public class ArcProjectile : InputMonoBehaviour
@@ -23,12 +24,21 @@ public class ArcProjectile : InputMonoBehaviour
     private Vector2 _lateVelocity;
 
     private readonly List<Vector2> _predictedTrajectoryPoints = new();
+    
+    [SerializeField]
+    private Image gaugeBg, gaugeFill;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _lineRenderer = GetComponent<LineRenderer>();
         _collider = GetComponent<CircleCollider2D>();
+    }
+
+    private void Start()
+    {
+        gaugeBg.enabled = true;
+        gaugeFill.enabled = true;
     }
 
     private void Update()
@@ -39,6 +49,9 @@ public class ArcProjectile : InputMonoBehaviour
             Destroy(gameObject);
         }
         
+        var decimalRange = (ArcProjectileLauncher.Instance.transform.position - transform.position).magnitude / ArcProjectileLauncher.Instance.MaxRange;
+        gaugeFill.fillAmount = 1 - decimalRange;
+        
         Predict();
     }
 
@@ -46,6 +59,8 @@ public class ArcProjectile : InputMonoBehaviour
     {
         GetComponent<MeshRenderer>().material = uncontrolledMaterial;
         _rigidbody.velocity *= postBounceSpeedMultiplier;
+        gaugeBg.enabled = false;
+        gaugeFill.enabled = false;
     }
 
     private void Predict()
@@ -107,7 +122,7 @@ public class ArcProjectile : InputMonoBehaviour
     private void FixedUpdate()
     {
         _cachedVelocities.Enqueue(_rigidbody.velocity);
-        if (_cachedVelocities.Count > 2)
+        if (_cachedVelocities.Count > 0)
         {
             _lateVelocity = _cachedVelocities.Dequeue();
         }
@@ -125,15 +140,14 @@ public class ArcProjectile : InputMonoBehaviour
         
         gameObject.GetComponent<LineRenderer>().enabled = false;
         lifetime = additionalLifetimeOnBounce;
+        _lateVelocity = Vector2.Reflect(_lateVelocity, col.GetContact(0).normal).normalized * _lateVelocity.magnitude;
+        _rigidbody.velocity = _lateVelocity;
         if (ArcProjectileLauncher.Instance.ControlledProjectile != null && 
             ArcProjectileLauncher.Instance.ControlledProjectile.gameObject != null && 
             ArcProjectileLauncher.Instance.ControlledProjectile.gameObject == gameObject)
         {
             ArcProjectileLauncher.Instance.RemoveControl();
         }
-        
-        _lateVelocity = Vector2.Reflect(_lateVelocity, col.GetContact(0).normal).normalized * _lateVelocity.magnitude;
-        _rigidbody.velocity = _lateVelocity;
     }
 
     private static Vector3[] Vector2ToVector3Array(IEnumerable<Vector2> input)

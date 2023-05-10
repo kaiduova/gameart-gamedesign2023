@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Input;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(LineRenderer))]
 public class ArcProjectileLauncher : InputMonoBehaviour
@@ -13,6 +14,9 @@ public class ArcProjectileLauncher : InputMonoBehaviour
 
     [SerializeField]
     private Rigidbody2D controlledProjectile;
+
+    [SerializeField]
+    private Image gaugeBg, gaugeFill;
     
     private readonly List<Vector2> _predictedTrajectoryPoints = new();
 
@@ -25,6 +29,12 @@ public class ArcProjectileLauncher : InputMonoBehaviour
     public Rigidbody2D ControlledProjectile { get => controlledProjectile; set => controlledProjectile = value; }
 
     public static ArcProjectileLauncher Instance { get; private set; }
+
+    public float MaxRange
+    {
+        get => maxRange;
+        set => maxRange = value;
+    }
 
     private PlayerController _playerController;
     
@@ -50,6 +60,8 @@ public class ArcProjectileLauncher : InputMonoBehaviour
         var instance = Instantiate(projectile);
         _projRad = instance.GetComponent<Collider2D>().bounds.extents.x;
         Destroy(instance);
+        gaugeBg.enabled = false;
+        gaugeFill.enabled = false;
     }
 
     public Rigidbody2D Fire(Vector3 origin, Vector3 direction)
@@ -77,10 +89,20 @@ public class ArcProjectileLauncher : InputMonoBehaviour
 
         if (controlledProjectile != null)
         {
-            if (CurrentInput.GetKeyUpRT || (controlledProjectile.transform.position - transform.position).sqrMagnitude > maxRange * maxRange)
+            var decimalRange = (controlledProjectile.transform.position - transform.position).magnitude / MaxRange;
+            gaugeBg.enabled = true;
+            gaugeFill.enabled = true;
+            gaugeFill.fillAmount = 1 - decimalRange;
+            
+            if (CurrentInput.GetKeyUpRT || (controlledProjectile.transform.position - transform.position).sqrMagnitude > MaxRange * MaxRange)
             {
                 RemoveControl();
             }
+        }
+        else
+        {
+            gaugeBg.enabled = false;
+            gaugeFill.enabled = false;
         }
 
         if ((CurrentInput.RightStick - Vector2.zero).sqrMagnitude > 0.2f && !CurrentInput.GetKeyRT && _playerController.CurrentState == PlayerController.PlayerStates.NeutralMovement)
