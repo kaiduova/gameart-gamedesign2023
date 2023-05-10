@@ -29327,12 +29327,48 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1145840560, guid: d9f61b0b4f0a2af4ba50492fab425040, type: 3}
     - target: {fileID: 5119038805788417198, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5119038805788417198, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5119038805788417198, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
       propertyPath: m_Positions.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5119038805788417198, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7c251f923186f964d853c71e99c34b9a, type: 2}
+    - target: {fileID: 5119038805788417198, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
+      propertyPath: m_Positions.Array.data[1].x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5119038805788417198, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
+      propertyPath: m_Positions.Array.data[1].y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5119038805788417198, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
+      propertyPath: m_Positions.Array.data[1].z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5119038805788417198, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
       propertyPath: m_Parameters.numCornerVertices
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5119038805788417198, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5119038805788417198, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5119038805788417198, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5119038805788417198, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value

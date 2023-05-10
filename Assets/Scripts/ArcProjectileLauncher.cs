@@ -69,19 +69,11 @@ public class ArcProjectileLauncher : InputMonoBehaviour
             controlledProjectile = Fire(spawnObject.transform.position, CurrentInput.RightStick);
         }
 
-        if (CurrentInput.GetKeyUpRT)
-        {
-            if (controlledProjectile != null)
-                controlledProjectile.gameObject.GetComponent<LineRenderer>().enabled = false;
-            controlledProjectile = null;
-        }
-
         if (controlledProjectile != null)
         {
-            if ((controlledProjectile.transform.position - transform.position).sqrMagnitude > maxRange * maxRange)
+            if (CurrentInput.GetKeyUpRT || (controlledProjectile.transform.position - transform.position).sqrMagnitude > maxRange * maxRange)
             {
-                controlledProjectile.gameObject.GetComponent<LineRenderer>().enabled = false;
-                controlledProjectile = null;
+                RemoveControl();
             }
         }
 
@@ -94,10 +86,15 @@ public class ArcProjectileLauncher : InputMonoBehaviour
         {
             _lineRenderer.enabled = false;
         }
-        
-        print(CurrentInput.RightStick);
     }
 
+    public void RemoveControl()
+    {
+        controlledProjectile.gameObject.GetComponent<LineRenderer>().enabled = false;
+        controlledProjectile.gameObject.GetComponent<ArcProjectile>().IncreaseSpeedAndRemoveControl();
+        controlledProjectile = null;
+    }
+    
     private void FixedUpdate()
     {
         if (CurrentInput.GetKeyRT && controlledProjectile != null)

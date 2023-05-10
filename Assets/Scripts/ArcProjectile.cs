@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Input;
 using UnityEngine;
@@ -6,11 +7,11 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D), typeof(LineRenderer))]
 public class ArcProjectile : InputMonoBehaviour
 {
-
-    private bool _bounced;
-
     [SerializeField]
     private float postBounceSpeedMultiplier, lifetime, additionalLifetimeOnBounce, damage;
+
+    [SerializeField]
+    private Material uncontrolledMaterial;
 
     private Rigidbody2D _rigidbody;
 
@@ -39,6 +40,12 @@ public class ArcProjectile : InputMonoBehaviour
         }
         
         Predict();
+    }
+
+    public void IncreaseSpeedAndRemoveControl()
+    {
+        GetComponent<MeshRenderer>().material = uncontrolledMaterial;
+        _rigidbody.velocity *= postBounceSpeedMultiplier;
     }
 
     private void Predict()
@@ -115,21 +122,14 @@ public class ArcProjectile : InputMonoBehaviour
             Destroy(gameObject);
             return;
         }
-
-        var newVelocity = _lateVelocity;
-            
-        if (!_bounced)
-        {
-            _lateVelocity *= postBounceSpeedMultiplier;
-        }
-        _bounced = true;
+        
         gameObject.GetComponent<LineRenderer>().enabled = false;
         lifetime = additionalLifetimeOnBounce;
         if (ArcProjectileLauncher.Instance.ControlledProjectile != null && 
             ArcProjectileLauncher.Instance.ControlledProjectile.gameObject != null && 
             ArcProjectileLauncher.Instance.ControlledProjectile.gameObject == gameObject)
         {
-            ArcProjectileLauncher.Instance.ControlledProjectile = null;
+            ArcProjectileLauncher.Instance.RemoveControl();
         }
         
         _lateVelocity = Vector2.Reflect(_lateVelocity, col.GetContact(0).normal).normalized * _lateVelocity.magnitude;
