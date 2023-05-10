@@ -31512,6 +31512,10 @@ PrefabInstance:
       propertyPath: normalBounceForce
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 4781276210343158268, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
+      propertyPath: m_Mass
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 4781276210343158271, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: Dead
       value: 0

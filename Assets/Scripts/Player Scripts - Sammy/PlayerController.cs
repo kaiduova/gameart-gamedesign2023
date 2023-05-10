@@ -158,7 +158,7 @@ public class PlayerController : InputMonoBehaviour {
         float speedDifference = maxSpeed - _rigidbody2D.velocity.x;
         float accelerationRate = (Mathf.Abs(maxSpeed) > 0.01f) ? _accelerationIntensity : _deccelerationIntensity;
         float speedApplied = Mathf.Pow(Mathf.Abs(speedDifference) * accelerationRate, _movementPower) * Mathf.Sign(speedDifference);
-        _rigidbody2D.AddForce(speedApplied * Vector2.right); 
+        _rigidbody2D.AddForce(speedApplied * Vector2.right * _rigidbody2D.mass); 
     }
 
     public bool PlayerCurrentlyGrounded() { 
@@ -336,6 +336,15 @@ public class PlayerController : InputMonoBehaviour {
             || CurrentState == PlayerStates.GhostHandMode
             || CurrentState == PlayerStates.DismissingGhostHand)
         { HorizontalInput = CurrentInput.LeftStick.x; }
+
+        if (CurrentState != PlayerStates.NeutralMovement)
+        {
+            _rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+        else
+        {
+            _rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
 
         if (CurrentState is PlayerStates.NeutralMovement or PlayerStates.Hacking or PlayerStates.SummoningGhostHand) {
             ReticleRotation_ProjectileFiring();
