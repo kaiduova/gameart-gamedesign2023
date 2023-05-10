@@ -60,7 +60,7 @@ public class ChainBlock : MonoBehaviour {
         }
 
         if (CurrentState == ChainBlockStates.FreeFall) {
-            if (transform.position.y <= yStoppingPoint) {
+            if (transform.position.y <= (yStoppingPoint + 0.1f)) {
                 transform.position = new Vector3(transform.position.x, yStoppingPoint);
                 CurrentState = ChainBlockStates.Static;
             }
@@ -84,5 +84,7 @@ public class ChainBlock : MonoBehaviour {
             Destroy(_rigidbody2D);
             CurrentState = ChainBlockStates.Deactivated;
         }
+
+        if (CurrentState == ChainBlockStates.Deactivated) transform.position = new Vector3(transform.position.x, yStoppingPoint);
     }
 }
