@@ -3,7 +3,7 @@ using System.Linq;
 using Input;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D), typeof(LineRenderer))]
 public class ArcProjectile : InputMonoBehaviour
 {
 
@@ -38,14 +38,36 @@ public class ArcProjectile : InputMonoBehaviour
             Destroy(gameObject);
         }
         
+        Predict();
+    }
+
+    private void Predict()
+    {
         _predictedTrajectoryPoints.Clear();
         var position = transform.position;
         Vector2 iterationOrigin = position;
-        var iterationDirection = _rigidbody.velocity.normalized;
+        var iterationDirection = _rigidbody.velocity.normalized;;
         _predictedTrajectoryPoints.Add(position);
         for (var i = 0; i < 10; i++)
         {
+            TryRaycastNonReflect(iterationOrigin, iterationDirection, out var hitNonReflect);
             TryRaycast(iterationOrigin, iterationDirection, out var hit);
+            if (hit.collider != null && hitNonReflect.collider != null)
+            {
+                if (hit.distance > hitNonReflect.distance)
+                {
+                    var finalTarget = hitNonReflect.point;
+                    _predictedTrajectoryPoints.Add(finalTarget);
+                    break;
+                }
+            }
+            else if (hitNonReflect.collider != null)
+            {
+                var finalTarget = hitNonReflect.point;
+                _predictedTrajectoryPoints.Add(finalTarget);
+                break;
+            }
+            
             if (hit.collider == null)
             {
                 var finalTarget = iterationOrigin + iterationDirection * 500f;
@@ -67,7 +89,12 @@ public class ArcProjectile : InputMonoBehaviour
     {
         var layerMask = LayerMask.GetMask("Deflecting");
         hit = Physics2D.CircleCast(origin + direction * 0.005f, _collider.bounds.extents.x, direction, 500f, layerMask);
-        return;
+    }
+    
+    private void TryRaycastNonReflect(Vector2 origin, Vector2 direction, out RaycastHit2D hit)
+    {
+        var layerMask = LayerMask.GetMask("Ground", "Enemy");
+        hit = Physics2D.CircleCast(origin + direction * 0.005f, _collider.bounds.extents.x, direction, 500f, layerMask);
     }
     
     private void FixedUpdate()
