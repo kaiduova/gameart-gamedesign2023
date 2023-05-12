@@ -13632,7 +13632,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505078264}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.444416, y: -2.5, z: -10}
+  m_LocalPosition: {x: -2.2374706, y: -2.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -29914,14 +29914,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 314506997793441465, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
-      propertyPath: cooldown
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 314506997793441465, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
-      propertyPath: maxRange
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 314506997793441468, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
       propertyPath: ghostHand
       value: 
@@ -29938,10 +29930,6 @@ PrefabInstance:
       propertyPath: _heart3Image
       value: 
       objectReference: {fileID: 1474622776}
-    - target: {fileID: 314506997793441468, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
-      propertyPath: playerBullet
-      value: 
-      objectReference: {fileID: 7323082832646916083, guid: 6328a6a943c95b545b4349dd1e3ecfd8, type: 3}
     - target: {fileID: 314506997793441468, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
       propertyPath: GhostHandObject
       value: 
@@ -31523,6 +31511,10 @@ PrefabInstance:
     - target: {fileID: 4781276210343158267, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: normalBounceForce
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4781276210343158268, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
+      propertyPath: m_Mass
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4781276210343158271, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: Dead

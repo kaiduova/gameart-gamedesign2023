@@ -1,16 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Input;
 using UnityEngine;
+using UnityEngine.UI;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D), typeof(LineRenderer))]
 public class ArcProjectile : InputMonoBehaviour
 {
-
-    private bool _bounced;
-
     [SerializeField]
     private float postBounceSpeedMultiplier, lifetime, additionalLifetimeOnBounce, damage;
+
+    [SerializeField]
+    private Material uncontrolledMaterial;
 
     private Rigidbody2D _rigidbody;
 
@@ -22,12 +24,21 @@ public class ArcProjectile : InputMonoBehaviour
     private Vector2 _lateVelocity;
 
     private readonly List<Vector2> _predictedTrajectoryPoints = new();
+    
+    [SerializeField]
+    private Image gaugeBg, gaugeFill;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _lineRenderer = GetComponent<LineRenderer>();
         _collider = GetComponent<CircleCollider2D>();
+    }
+
+    private void Start()
+    {
+        gaugeBg.enabled = true;
+        gaugeFill.enabled = true;
     }
 
     private void Update()
@@ -38,14 +49,47 @@ public class ArcProjectile : InputMonoBehaviour
             Destroy(gameObject);
         }
         
+        var decimalRange = (ArcProjectileLauncher.Instance.transform.position - transform.position).magnitude / ArcProjectileLauncher.Instance.MaxRange;
+        gaugeFill.fillAmount = 1 - decimalRange;
+        
+        Predict();
+    }
+
+    public void IncreaseSpeedAndRemoveControl()
+    {
+        GetComponent<MeshRenderer>().material = uncontrolledMaterial;
+        _rigidbody.velocity *= postBounceSpeedMultiplier;
+        gaugeBg.enabled = false;
+        gaugeFill.enabled = false;
+    }
+
+    private void Predict()
+    {
         _predictedTrajectoryPoints.Clear();
         var position = transform.position;
         Vector2 iterationOrigin = position;
-        var iterationDirection = _rigidbody.velocity.normalized;
+        var iterationDirection = _rigidbody.velocity.normalized;;
         _predictedTrajectoryPoints.Add(position);
         for (var i = 0; i < 10; i++)
         {
+            TryRaycastNonReflect(iterationOrigin, iterationDirection, out var hitNonReflect);
             TryRaycast(iterationOrigin, iterationDirection, out var hit);
+            if (hit.collider != null && hitNonReflect.collider != null)
+            {
+                if (hit.distance > hitNonReflect.distance)
+                {
+                    var finalTarget = hitNonReflect.point;
+                    _predictedTrajectoryPoints.Add(finalTarget);
+                    break;
+                }
+            }
+            else if (hitNonReflect.collider != null)
+            {
+                var finalTarget = hitNonReflect.point;
+                _predictedTrajectoryPoints.Add(finalTarget);
+                break;
+            }
+            
             if (hit.collider == null)
             {
                 var finalTarget = iterationOrigin + iterationDirection * 500f;
@@ -67,13 +111,18 @@ public class ArcProjectile : InputMonoBehaviour
     {
         var layerMask = LayerMask.GetMask("Deflecting");
         hit = Physics2D.CircleCast(origin + direction * 0.005f, _collider.bounds.extents.x, direction, 500f, layerMask);
-        return;
+    }
+    
+    private void TryRaycastNonReflect(Vector2 origin, Vector2 direction, out RaycastHit2D hit)
+    {
+        var layerMask = LayerMask.GetMask("Ground", "Enemy");
+        hit = Physics2D.CircleCast(origin + direction * 0.005f, _collider.bounds.extents.x, direction, 500f, layerMask);
     }
     
     private void FixedUpdate()
     {
         _cachedVelocities.Enqueue(_rigidbody.velocity);
-        if (_cachedVelocities.Count > 2)
+        if (_cachedVelocities.Count > 0)
         {
             _lateVelocity = _cachedVelocities.Dequeue();
         }
@@ -88,25 +137,17 @@ public class ArcProjectile : InputMonoBehaviour
             Destroy(gameObject);
             return;
         }
-
-        var newVelocity = _lateVelocity;
-            
-        if (!_bounced)
-        {
-            _lateVelocity *= postBounceSpeedMultiplier;
-        }
-        _bounced = true;
+        
         gameObject.GetComponent<LineRenderer>().enabled = false;
         lifetime = additionalLifetimeOnBounce;
+        _lateVelocity = Vector2.Reflect(_lateVelocity, col.GetContact(0).normal).normalized * _lateVelocity.magnitude;
+        _rigidbody.velocity = _lateVelocity;
         if (ArcProjectileLauncher.Instance.ControlledProjectile != null && 
             ArcProjectileLauncher.Instance.ControlledProjectile.gameObject != null && 
             ArcProjectileLauncher.Instance.ControlledProjectile.gameObject == gameObject)
         {
-            ArcProjectileLauncher.Instance.ControlledProjectile = null;
+            ArcProjectileLauncher.Instance.RemoveControl();
         }
-        
-        _lateVelocity = Vector2.Reflect(_lateVelocity, col.GetContact(0).normal).normalized * _lateVelocity.magnitude;
-        _rigidbody.velocity = _lateVelocity;
     }
 
     private static Vector3[] Vector2ToVector3Array(IEnumerable<Vector2> input)

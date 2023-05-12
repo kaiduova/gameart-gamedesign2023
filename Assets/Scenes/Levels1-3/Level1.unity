@@ -13135,7 +13135,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505078264}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.447569, y: -1.5, z: -10}
+  m_LocalPosition: {x: -2.2374706, y: -1.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14019,24 +14019,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &991764068 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 289424014014278782, guid: 837f58232350c454b8a65ae079420f5b, type: 3}
-  m_PrefabInstance: {fileID: 1503784130}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &991764073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 991764068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7269ff529c6410584215b7ddb0d0c36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Rigidbody2D: {fileID: 0}
 --- !u!1 &1017501894
 GameObject:
   m_ObjectHideFlags: 0
@@ -29314,18 +29296,10 @@ PrefabInstance:
       propertyPath: GhostHandObject
       value: 
       objectReference: {fileID: 1760296172}
-    - target: {fileID: 314506997793441468, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
-      propertyPath: ShockwaveCharge
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 314506997793441471, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 314506998771321696, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 1145840560, guid: d9f61b0b4f0a2af4ba50492fab425040, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
 --- !u!1 &744273256797246060
