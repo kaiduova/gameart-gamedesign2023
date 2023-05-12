@@ -12,10 +12,9 @@ public class PlayerController : InputMonoBehaviour {
 
     public enum PlayerStates { 
         NeutralMovement, 
-        Hacking, 
-        HackingBox,
-        Shockwave,
         StateDelay,
+
+        ControllingBullet,
 
         SummoningGhostHand,
         GhostHandMode,
@@ -27,7 +26,7 @@ public class PlayerController : InputMonoBehaviour {
 
     [Header("Internally Referenced Components")]
     [SerializeField] Rigidbody2D _rigidbody2D;
-    [SerializeField] BoxCollider2D _boxCollider2D;
+    [SerializeField] CircleCollider2D _circleCollider2D;
     
     //Used by bounce pad.
     public Rigidbody2D Rigidbody2D => _rigidbody2D;
@@ -89,9 +88,7 @@ public class PlayerController : InputMonoBehaviour {
     public int PlayerHealth;
     public float PlayerRespawnDelay;
 
-    //Shockwave
-    public GameObject Shockwave;
-    public Slider ShockwaveCharge;
+
 
     //Boxes
     public GameObject currentHackedBox;
@@ -122,12 +119,12 @@ public class PlayerController : InputMonoBehaviour {
     
     [SerializeField] private float additionalJumpBounceForce;
 
-
+    public float controlBulletInputBuffer;
 
 
     private void Awake() {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        _boxCollider2D = GetComponent<BoxCollider2D>();
+        _circleCollider2D = GetComponent<CircleCollider2D>();
         groundCheck = transform.GetChild(0).GetComponent<Transform>();
     }
 
@@ -137,17 +134,15 @@ public class PlayerController : InputMonoBehaviour {
         PlayerHealth = 3;
 
 
-        Shockwave.SetActive(false);
         PlayerCanvas.SetActive(false);
 
         CurrentState = PlayerStates.NeutralMovement;
     }
 
    
-
     private void PlayerAnimation() {
-        //if (HorizontalInput < 0) transform.eulerAngles = new Vector3(0, 180, 0);
-        //if (HorizontalInput > 0) transform.eulerAngles = new Vector3(0, 0, 0);
+        if (HorizontalInput < 0) transform.eulerAngles = new Vector3(0, 180, 0);
+        if (HorizontalInput > 0) transform.eulerAngles = new Vector3(0, 0, 0);
 
         if (!(PlayerCanvas.activeInHierarchy)) return;
         PlayerCanvas.transform.eulerAngles = new Vector3(0, 0, 0);
@@ -241,7 +236,8 @@ public class PlayerController : InputMonoBehaviour {
             if (CurrentInput.GetKeyDownRT) Instantiate(playerBullet, playerPivotPoint.position, Quaternion.identity);
         }*/
 
-        if (CurrentState == PlayerStates.Hacking) playerPivotPoint.gameObject.SetActive(false);
+
+
     }
 
     private void PlayerHealthSystem() {
@@ -275,11 +271,6 @@ public class PlayerController : InputMonoBehaviour {
         }
     }
 
-    public void ShockwaveReset() {
-        Shockwave.SetActive(false);
-        _rigidbody2D.gravityScale = 3;
-        CurrentState = PlayerController.PlayerStates.NeutralMovement;
-    }
 
     private void ControllerHackedBlock(GameObject currentHackedBlock) {
         Rigidbody2D currentHackedBlockRigidBody2D = currentHackedBlock.GetComponent<Rigidbody2D>();
@@ -318,7 +309,7 @@ public class PlayerController : InputMonoBehaviour {
     private void FixedUpdate() {
         if (CurrentState 
             is PlayerStates.NeutralMovement
-            or PlayerStates.Hacking
+            or PlayerStates.ControllingBullet
             or PlayerStates.SummoningGhostHand
             or PlayerStates.GhostHandMode
             or PlayerStates.DismissingGhostHand) {
@@ -331,26 +322,54 @@ public class PlayerController : InputMonoBehaviour {
         PlayerHealthSystem();
 
         if (CurrentState == PlayerStates.NeutralMovement
-            || CurrentState == PlayerStates.Hacking
             || CurrentState == PlayerStates.SummoningGhostHand
             || CurrentState == PlayerStates.GhostHandMode
             || CurrentState == PlayerStates.DismissingGhostHand)
         { HorizontalInput = CurrentInput.LeftStick.x; }
 
-        if (CurrentState is PlayerStates.NeutralMovement or PlayerStates.Hacking or PlayerStates.SummoningGhostHand) {
+        if (CurrentState is PlayerStates.NeutralMovement or PlayerStates.SummoningGhostHand) {
             ReticleRotation_ProjectileFiring();
             UltimateJump();
         }
+
         if (CurrentState == PlayerStates.NeutralMovement) {
             _currentMovementSpeed = _movementSpeed;
-            if (CurrentInput.GetKeyDownY) CurrentState = PlayerStates.Shockwave;
 
             SummonInputDuration = 0;
             PlayerCanvas.SetActive(false);
 
-            if (PlayerCurrentlyGrounded()) if (CurrentInput.GetKeyRB) {
+
+
+
+
+
+            if (PlayerCurrentlyGrounded() && CurrentInput.GetKeyRT)
+            {
+                controlBulletInputBuffer = 0;
+                controlBulletInputBuffer += Time.deltaTime;
+
+                //if (controlBulletInputBuffer > 0.2f) print("Controlling Bullet");
+                //else if (CurrentInput.GetKeyUpRT) controlBulletInputBuffer = 0;
+
+                //CurrentState = PlayerStates.ControllingBullet;
+            }
+
+
+
+            if (PlayerCurrentlyGrounded() && CurrentInput.GetKeyRB) {
                 PlayerCanvas.SetActive(true);
                 CurrentState = PlayerStates.SummoningGhostHand;
+            }
+        }
+
+        if (CurrentState == PlayerStates.ControllingBullet)
+        {
+            _currentMovementSpeed = GhostHandMovementSpeed;
+
+
+            if (CurrentInput.GetKeyRT || !PlayerCurrentlyGrounded())
+            {
+                CurrentState = PlayerStates.NeutralMovement;
             }
         }
 
@@ -362,7 +381,7 @@ public class PlayerController : InputMonoBehaviour {
             if (CurrentInput.GetKeyUpRB || !PlayerCurrentlyGrounded())  CurrentState = PlayerStates.NeutralMovement;
             
             if (CurrentInput.GetKeyRB) {
-                SummonInputDuration += Time.deltaTime;
+                SummonInputDuration += Time.deltaTime * 2;
                 if (SummonInputDuration > 1) {
                     SummonInputDuration = 0;
                     GhostHandObject.SetActive(true);
@@ -395,7 +414,7 @@ public class PlayerController : InputMonoBehaviour {
             if (CurrentInput.GetKeyUpRB || !PlayerCurrentlyGrounded()) CurrentState = PlayerStates.GhostHandMode;
 
             if (CurrentInput.GetKeyRB) {
-                SummonInputDuration += Time.deltaTime;
+                SummonInputDuration += Time.deltaTime * 2;
                 if (SummonInputDuration > 1) {
                     SummonInputDuration = 0;
                     ghostHand.CurrentState = GhostHand.GhostHandStates.Dismissing;
@@ -434,26 +453,15 @@ public class PlayerController : InputMonoBehaviour {
             }
         }
 
-        if (CurrentState == PlayerStates.Shockwave) {
-            Shockwave.SetActive(true);
-
-            HorizontalInput = 0;
-            _rigidbody2D.gravityScale = 0;
-            _rigidbody2D.velocity = new Vector2(0, 0);
-        }
-
-        if (CurrentState == PlayerStates.HackingBox) {
-            HorizontalInput = CurrentInput.LeftStick.x;
-            VerticalInput = CurrentInput.LeftStick.y;
-            ControllerHackedBlock(currentHackedBox);
-        }
-
         if (CurrentState == PlayerStates.StateDelay) {
             HorizontalInput = 0;
             _rigidbody2D.velocity = new Vector2(0, 0);
             PlayerRespawnDelay -= Time.deltaTime;
             if (PlayerRespawnDelay < 0) {
                 PlayerRespawnDelay = 0;
+
+
+
                 CurrentState = PlayerStates.NeutralMovement;
             }
         }

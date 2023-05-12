@@ -22,6 +22,7 @@ public class GhostHand : InputMonoBehaviour {
     [SerializeField] private SpriteRenderer _spriteRenderer;
 
     [Header("Externally Referenced Components")]
+    [SerializeField] private PlayerController _playerController;
     [SerializeField] private Sprite _openHand;
     [SerializeField] private Sprite _closedHand;
     public GameObject currentBlock;
@@ -64,6 +65,7 @@ public class GhostHand : InputMonoBehaviour {
     private void Awake() {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
     private void Start() {
@@ -81,8 +83,8 @@ public class GhostHand : InputMonoBehaviour {
     }
 
     private void GhostHandAnimation() {
-        if (_rightStickHorizontalInput < 0) transform.eulerAngles = new Vector3(0, 180, 0);
-        if (_rightStickHorizontalInput > 0) transform.eulerAngles = new Vector3(0, 0, 0);
+        if (_playerController.HorizontalInput < 0) transform.eulerAngles = new Vector3(0, 180, 0);
+        if (_playerController.HorizontalInput > 0) transform.eulerAngles = new Vector3(0, 0, 0);
     }
 
     private void GhostHandMovement()  {

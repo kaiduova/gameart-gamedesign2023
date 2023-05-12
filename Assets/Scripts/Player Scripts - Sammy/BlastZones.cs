@@ -2,18 +2,18 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class BlastZones : MonoBehaviour
-{
+public class BlastZones : MonoBehaviour {
+
+    [Header("Externally Referenced Components")]
+    [SerializeField] private GameObject _player;
+    [SerializeField] private PlayerController _playerController;
+    public Animator PlayerAnim;
+    public GameObject GhostHand; 
     public Transform LinkedSpawnPoint;
-    [SerializeField] GameObject _player;
-    [SerializeField] PlayerController _playerController;
-
-    [SerializeField] private float _respawnDelay = 1f;
-
-
-
     public Animator OOBMask;
 
+    [Header("Blast Zone Attributes")]
+    [SerializeField] private float _respawnDelay = 2f;
 
     private IEnumerator ResetScene()
     {
@@ -21,14 +21,13 @@ public class BlastZones : MonoBehaviour
         _playerController.PlayerRespawnDelay = _respawnDelay;
         _playerController.CurrentState = PlayerController.PlayerStates.StateDelay;
         yield return new WaitForSeconds(1);
+        if (GhostHand.activeInHierarchy) {
+            GhostHand.SetActive(false);
+            PlayerAnim.SetBool("ghostHandMode", false);
+        }
         _player.transform.position = LinkedSpawnPoint.position;
         _playerController.PlayerHealth--;
     }
-
-
-
-
-
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.layer == 6) { //Collides with player
@@ -40,24 +39,8 @@ public class BlastZones : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
+    private void Awake() {
         _player = GameObject.FindGameObjectWithTag("Player");
         _playerController = _player.GetComponent<PlayerController>();
-    }
-
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

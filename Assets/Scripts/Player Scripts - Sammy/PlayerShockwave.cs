@@ -22,6 +22,6 @@ public class PlayerShockwave : MonoBehaviour {
 
 
     private void ResetPlayer() {
-        _playerController.ShockwaveReset();
+        //_playerController.ShockwaveReset();
     }
 }

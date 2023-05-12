@@ -8,6 +8,7 @@ TagManager:
   - HackableBlock
   - PlayerBullet
   - GhostHand
+  - GhostHandCollider
   layers:
   - Default
   - TransparentFX

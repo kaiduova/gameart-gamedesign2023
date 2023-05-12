@@ -1,7 +1,6 @@
 using UnityEngine;
 using Cinemachine;
 
-
 public class ChainBlock : MonoBehaviour {
 
     /* PascalCase - ClassNames, PublicMemberVariables, ProtectedMemberVariables, Methods & Functions
@@ -15,6 +14,7 @@ public class ChainBlock : MonoBehaviour {
 
     [Header("Externally Referenced Components")]
     [SerializeField] private PhysicsMaterial2D _chainBlockPhysicsMaterial2D;
+    public CinemachineImpulseSource ScreenShake;
 
     [Header("Current State")]
     public ChainBlockStates CurrentState;
@@ -25,8 +25,6 @@ public class ChainBlock : MonoBehaviour {
     [Header("Linked Camera Trigger Attributes")]
     [SerializeField] private GameObject _linkedCameraTrigger;
     [SerializeField] private float _triggerDisableDelay;
-
-    public CinemachineImpulseSource ScreenShake;
 
     private void CallScreenShake() {
         ScreenShake.GenerateImpulse();
@@ -53,7 +51,6 @@ public class ChainBlock : MonoBehaviour {
     }
 
     private void Update() {
-
         if (CurrentState == ChainBlockStates.Chained) {
             if (!(_rigidbody2D != null)) return;
             Destroy(_rigidbody2D);
@@ -72,6 +69,14 @@ public class ChainBlock : MonoBehaviour {
 
         if (CurrentState == ChainBlockStates.Static) {
             if (ScreenShake != null) CallScreenShake();
+            transform.position = new Vector3(transform.position.x, yStoppingPoint);
+            if (!(_rigidbody2D != null)) return;
+            Destroy(_rigidbody2D);
+            CurrentState = ChainBlockStates.Deactivated;
+        }
+
+        if (CurrentState == ChainBlockStates.Deactivated) {
+            transform.position = new Vector3(transform.position.x, yStoppingPoint);
             if (_linkedCameraTrigger != null) {
                 _triggerDisableDelay -= Time.deltaTime;
                 if (_triggerDisableDelay <= 0) {
@@ -79,12 +84,6 @@ public class ChainBlock : MonoBehaviour {
                     _triggerDisableDelay = 0;
                 }
             }
-            transform.position = new Vector3(transform.position.x, yStoppingPoint);
-            if (!(_rigidbody2D != null)) return;
-            Destroy(_rigidbody2D);
-            CurrentState = ChainBlockStates.Deactivated;
         }
-
-        if (CurrentState == ChainBlockStates.Deactivated) transform.position = new Vector3(transform.position.x, yStoppingPoint);
     }
 }
