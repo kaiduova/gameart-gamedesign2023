@@ -4,10 +4,7 @@
 public class DeflectingBlock : MonoBehaviour {
 
     [HideInInspector] public Rigidbody2D Rigidbody2D;
-
     [SerializeField] private GameObject _highlight;
-
-
 
     private void OnTriggerStay2D(Collider2D collision) {
         if (collision.CompareTag("GhostHandCollider")) _highlight.SetActive(true);
@@ -19,7 +16,7 @@ public class DeflectingBlock : MonoBehaviour {
 
     private void Awake() {
         Rigidbody2D = GetComponent<Rigidbody2D>();
-        _highlight = transform.GetChild(1).gameObject;
+        _highlight = transform.GetChild(0).gameObject;
     }
 
     private void Start() {

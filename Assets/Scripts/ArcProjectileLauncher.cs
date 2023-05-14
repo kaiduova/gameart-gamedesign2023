@@ -24,7 +24,7 @@ public class ArcProjectileLauncher : InputMonoBehaviour
     [SerializeField]
     private GameObject spawnObject, playerAnimation;
 
-    private float _cooldown;
+    [HideInInspector] public float Cooldown; //changed to public by Sammy so player anim can only animate when bullet fires
 
     public Rigidbody2D ControlledProjectile { get => controlledProjectile; set => controlledProjectile = value; }
 
@@ -74,8 +74,8 @@ public class ArcProjectileLauncher : InputMonoBehaviour
 
     private void Update()
     {
-        _cooldown -= Time.deltaTime;
-        if (controlledProjectile == null && CurrentInput.GetKeyDownRT && _cooldown < 0f && _playerController.CurrentState == PlayerController.PlayerStates.NeutralMovement)
+        Cooldown -= Time.deltaTime;
+        if (controlledProjectile == null && CurrentInput.GetKeyDownRT && Cooldown < 0f && _playerController.CurrentState == PlayerController.PlayerStates.NeutralMovement)
         {
             Vector2 direction;
             direction = CurrentInput.RightStick;
@@ -83,7 +83,7 @@ public class ArcProjectileLauncher : InputMonoBehaviour
             {
                 direction = playerAnimation.transform.eulerAngles.y == 0f ? Vector2.left : Vector2.right;
             }
-            _cooldown = cooldown;
+            Cooldown = cooldown;
             controlledProjectile = Fire(spawnObject.transform.position, direction);
         }
 

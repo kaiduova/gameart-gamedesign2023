@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Input;
+using System.Collections;
 
 public class PlayerController : InputMonoBehaviour {
 
@@ -15,6 +16,7 @@ public class PlayerController : InputMonoBehaviour {
         StateDelay,
 
         ControllingBullet,
+        Knockback,
 
         SummoningGhostHand,
         GhostHandMode,
@@ -122,6 +124,11 @@ public class PlayerController : InputMonoBehaviour {
     public float controlBulletInputBuffer;
 
 
+    public IEnumerator Knockback(float knockBackDirection) {
+        _rigidbody2D.velocity = new Vector2(knockBackDirection, ((_jumpForce / 3) * 2));
+        yield return null;
+    }
+
     private void Awake() {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _circleCollider2D = GetComponent<CircleCollider2D>();
@@ -153,7 +160,7 @@ public class PlayerController : InputMonoBehaviour {
         float speedDifference = maxSpeed - _rigidbody2D.velocity.x;
         float accelerationRate = (Mathf.Abs(maxSpeed) > 0.01f) ? _accelerationIntensity : _deccelerationIntensity;
         float speedApplied = Mathf.Pow(Mathf.Abs(speedDifference) * accelerationRate, _movementPower) * Mathf.Sign(speedDifference);
-        _rigidbody2D.AddForce(speedApplied * Vector2.right); 
+        _rigidbody2D.AddForce(speedApplied * Vector2.right * _rigidbody2D.mass); 
     }
 
     public bool PlayerCurrentlyGrounded() { 
@@ -272,6 +279,8 @@ public class PlayerController : InputMonoBehaviour {
     }
 
 
+
+
     private void ControllerHackedBlock(GameObject currentHackedBlock) {
         Rigidbody2D currentHackedBlockRigidBody2D = currentHackedBlock.GetComponent<Rigidbody2D>();
         currentHackedBlockRigidBody2D.gravityScale = 0;
@@ -338,11 +347,6 @@ public class PlayerController : InputMonoBehaviour {
             SummonInputDuration = 0;
             PlayerCanvas.SetActive(false);
 
-
-
-
-
-
             if (PlayerCurrentlyGrounded() && CurrentInput.GetKeyRT)
             {
                 controlBulletInputBuffer = 0;
@@ -359,6 +363,15 @@ public class PlayerController : InputMonoBehaviour {
             if (PlayerCurrentlyGrounded() && CurrentInput.GetKeyRB) {
                 PlayerCanvas.SetActive(true);
                 CurrentState = PlayerStates.SummoningGhostHand;
+            }
+        }
+
+        if (CurrentState == PlayerStates.Knockback)
+        {
+            if (PlayerCurrentlyGrounded())
+            {
+                PlayerHealth--;
+                CurrentState = PlayerStates.NeutralMovement;
             }
         }
 

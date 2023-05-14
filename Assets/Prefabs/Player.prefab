@@ -185,7 +185,7 @@ RectTransform:
   m_Children:
   - {fileID: 2025923245}
   m_Father: {fileID: 314506997793441464}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5364,7 +5364,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 325}
   m_SizeDelta: {x: 1920, y: 1079.8456}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &314506997456347452
@@ -5389,6 +5389,7 @@ GameObject:
   - component: {fileID: 314506997793441468}
   - component: {fileID: 314506997793441465}
   - component: {fileID: 5119038805788417198}
+  - component: {fileID: 309002475}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -5508,7 +5509,7 @@ MonoBehaviour:
   PlayerCanvas: {fileID: 314506997082068797}
   GhostHandObject: {fileID: 0}
   GaugeFill: {fileID: 314506997800014492}
-  GhostHandMovementSpeed: 1.5
+  GhostHandMovementSpeed: 2.5
   SummonDuration: 0
   SummonInputDuration: 0
   _ghostHandBufferOutroDurationReset: 1
@@ -5516,6 +5517,7 @@ MonoBehaviour:
   _ghostHandInputBufferDuration: 0
   _ghostHandInputBufferDurationReset: 0.2
   additionalJumpBounceForce: 0
+  controlBulletInputBuffer: 0
 --- !u!114 &314506997793441465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5529,7 +5531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 7323082832646916083, guid: 6328a6a943c95b545b4349dd1e3ecfd8, type: 3}
-  expectedVelocity: 8
+  expectedVelocity: 5
   turnRate: 0.02
   cooldown: 0.5
   maxRange: 10
@@ -5538,6 +5540,7 @@ MonoBehaviour:
   gaugeFill: {fileID: 437759092}
   spawnObject: {fileID: 314506998703193418}
   playerAnimation: {fileID: 314506998771321698}
+  Cooldown: 0
 --- !u!120 &5119038805788417198
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -5635,6 +5638,22 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!58 &309002475
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314506997793441471}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.5}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &314506997800014494
 GameObject:
   m_ObjectHideFlags: 0
@@ -5770,7 +5789,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.34509805, g: 0.34509805, b: 0.98823535, a: 0}
+  m_Color: {r: 0, g: 0, b: 0.5, a: 0.5019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5804,7 +5823,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &314506997988783355
 Transform:
   m_ObjectHideFlags: 0
@@ -15594,6 +15613,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 314506997793441471}
   _playerController: {fileID: 314506997793441468}
+  _arcLauncher: {fileID: 314506997793441465}
   _animator: {fileID: 314506998771321697}
   DustJumpRunEffect: {fileID: 0}
   JumpEffect: {fileID: 314506998607724500}
