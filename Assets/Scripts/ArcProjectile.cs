@@ -49,7 +49,7 @@ public class ArcProjectile : InputMonoBehaviour
             Destroy(gameObject);
         }
         
-        var decimalRange = (ArcProjectileLauncher.Instance.transform.position - transform.position).magnitude / ArcProjectileLauncher.Instance.MaxRange;
+        var decimalRange = (ArcProjectileLauncher.Instance.transform.position - transform.position).magnitude / ArcProjectileLauncher.Instance.ProjControlDuration;
         gaugeFill.fillAmount = 1 - decimalRange;
         
         Predict();

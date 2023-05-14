@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Input;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(LineRenderer))]
@@ -10,7 +11,7 @@ public class ArcProjectileLauncher : InputMonoBehaviour
 {
     [SerializeField] private GameObject projectile;
 
-    [SerializeField] private float expectedVelocity, turnRate, cooldown, maxRange;
+    [SerializeField] private float expectedVelocity, turnRate, cooldown, projControlDuration;
 
     [SerializeField]
     private Rigidbody2D controlledProjectile;
@@ -24,16 +25,16 @@ public class ArcProjectileLauncher : InputMonoBehaviour
     [SerializeField]
     private GameObject spawnObject, playerAnimation;
 
-    [HideInInspector] public float Cooldown; //changed to public by Sammy so player anim can only animate when bullet fires
+    private float _cooldown, _projControlTimer;
 
     public Rigidbody2D ControlledProjectile { get => controlledProjectile; set => controlledProjectile = value; }
 
     public static ArcProjectileLauncher Instance { get; private set; }
 
-    public float MaxRange
+    public float ProjControlDuration
     {
-        get => maxRange;
-        set => maxRange = value;
+        get => projControlDuration;
+        set => projControlDuration = value;
     }
 
     private PlayerController _playerController;
@@ -69,13 +70,15 @@ public class ArcProjectileLauncher : InputMonoBehaviour
         var proj = Instantiate(projectile, origin, Quaternion.identity);
         var rigidbodyProj = proj.GetComponent<Rigidbody2D>();
         rigidbodyProj.velocity = expectedVelocity * direction.normalized;
+        _projControlTimer = projControlDuration;
         return rigidbodyProj;
     }
 
     private void Update()
     {
-        Cooldown -= Time.deltaTime;
-        if (controlledProjectile == null && CurrentInput.GetKeyDownRT && Cooldown < 0f && _playerController.CurrentState == PlayerController.PlayerStates.NeutralMovement)
+        _cooldown -= Time.deltaTime;
+        _projControlTimer -= Time.deltaTime;
+        if (controlledProjectile == null && CurrentInput.GetKeyDownRT && _cooldown < 0f && _playerController.CurrentState == PlayerController.PlayerStates.NeutralMovement)
         {
             Vector2 direction;
             direction = CurrentInput.RightStick;
@@ -83,18 +86,18 @@ public class ArcProjectileLauncher : InputMonoBehaviour
             {
                 direction = playerAnimation.transform.eulerAngles.y == 0f ? Vector2.left : Vector2.right;
             }
-            Cooldown = cooldown;
+            _cooldown = cooldown;
             controlledProjectile = Fire(spawnObject.transform.position, direction);
         }
 
         if (controlledProjectile != null)
         {
-            var decimalRange = (controlledProjectile.transform.position - transform.position).magnitude / MaxRange;
+            var decimalTimeRemaining = _projControlTimer / ProjControlDuration;
             gaugeBg.enabled = true;
             gaugeFill.enabled = true;
-            gaugeFill.fillAmount = 1 - decimalRange;
+            gaugeFill.fillAmount = 1 - decimalTimeRemaining;
             
-            if (CurrentInput.GetKeyUpRT || (controlledProjectile.transform.position - transform.position).sqrMagnitude > MaxRange * MaxRange)
+            if (CurrentInput.GetKeyUpRT || (controlledProjectile.transform.position - transform.position).sqrMagnitude > ProjControlDuration * ProjControlDuration)
             {
                 RemoveControl();
             }
