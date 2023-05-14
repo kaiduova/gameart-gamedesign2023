@@ -25,17 +25,14 @@ public class ArcProjectileLauncher : InputMonoBehaviour
     [SerializeField]
     private GameObject spawnObject, playerAnimation;
 
-    private float _cooldown, _projControlTimer;
+    public float Cooldown { get; private set; }
+    private float _projControlTimer;
 
     public Rigidbody2D ControlledProjectile { get => controlledProjectile; set => controlledProjectile = value; }
 
     public static ArcProjectileLauncher Instance { get; private set; }
 
-    public float ProjControlDuration
-    {
-        get => projControlDuration;
-        set => projControlDuration = value;
-    }
+    public float ProjControlDuration => projControlDuration;
 
     private PlayerController _playerController;
     
@@ -76,9 +73,9 @@ public class ArcProjectileLauncher : InputMonoBehaviour
 
     private void Update()
     {
-        _cooldown -= Time.deltaTime;
+        Cooldown -= Time.deltaTime;
         _projControlTimer -= Time.deltaTime;
-        if (controlledProjectile == null && CurrentInput.GetKeyDownRT && _cooldown < 0f && _playerController.CurrentState == PlayerController.PlayerStates.NeutralMovement)
+        if (controlledProjectile == null && CurrentInput.GetKeyDownRT && Cooldown < 0f && _playerController.CurrentState == PlayerController.PlayerStates.NeutralMovement)
         {
             Vector2 direction;
             direction = CurrentInput.RightStick;
@@ -86,18 +83,13 @@ public class ArcProjectileLauncher : InputMonoBehaviour
             {
                 direction = playerAnimation.transform.eulerAngles.y == 0f ? Vector2.left : Vector2.right;
             }
-            _cooldown = cooldown;
+            Cooldown = cooldown;
             controlledProjectile = Fire(spawnObject.transform.position, direction);
         }
 
         if (controlledProjectile != null)
         {
-            var decimalTimeRemaining = _projControlTimer / ProjControlDuration;
-            gaugeBg.enabled = true;
-            gaugeFill.enabled = true;
-            gaugeFill.fillAmount = 1 - decimalTimeRemaining;
-            
-            if (CurrentInput.GetKeyUpRT || (controlledProjectile.transform.position - transform.position).sqrMagnitude > ProjControlDuration * ProjControlDuration)
+            if (CurrentInput.GetKeyUpRT || _projControlTimer < 0f)
             {
                 RemoveControl();
             }

@@ -27,6 +27,8 @@ public class ArcProjectile : InputMonoBehaviour
     
     [SerializeField]
     private Image gaugeBg, gaugeFill;
+    
+    private float _projControlTimer;
 
     private void Awake()
     {
@@ -39,18 +41,20 @@ public class ArcProjectile : InputMonoBehaviour
     {
         gaugeBg.enabled = true;
         gaugeFill.enabled = true;
+        _projControlTimer = ArcProjectileLauncher.Instance.ProjControlDuration;
     }
 
     private void Update()
     {
         lifetime -= Time.deltaTime;
+        _projControlTimer -= Time.deltaTime;
         if (lifetime <= 0f)
         {
             Destroy(gameObject);
         }
         
-        var decimalRange = (ArcProjectileLauncher.Instance.transform.position - transform.position).magnitude / ArcProjectileLauncher.Instance.ProjControlDuration;
-        gaugeFill.fillAmount = 1 - decimalRange;
+        var decimalTimeRemaining = _projControlTimer / ArcProjectileLauncher.Instance.ProjControlDuration;
+        gaugeFill.fillAmount = decimalTimeRemaining;
         
         Predict();
     }

@@ -5534,13 +5534,12 @@ MonoBehaviour:
   expectedVelocity: 5
   turnRate: 0.02
   cooldown: 0.5
-  maxRange: 10
+  projControlDuration: 3
   controlledProjectile: {fileID: 0}
   gaugeBg: {fileID: 664228246}
   gaugeFill: {fileID: 437759092}
   spawnObject: {fileID: 314506998703193418}
   playerAnimation: {fileID: 314506998771321698}
-  Cooldown: 0
 --- !u!120 &5119038805788417198
 LineRenderer:
   m_ObjectHideFlags: 0

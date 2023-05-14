@@ -13195,7 +13195,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505078264}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.444416, y: -1.5, z: -10}
+  m_LocalPosition: {x: -3.7555256, y: -1.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -29341,10 +29341,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 314506997793441468, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
-      propertyPath: ghostHand
-      value: 
-      objectReference: {fileID: 1760296174}
-    - target: {fileID: 314506997793441468, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
       propertyPath: _heart1Image
       value: 
       objectReference: {fileID: 854053573}
@@ -29356,10 +29352,6 @@ PrefabInstance:
       propertyPath: _heart3Image
       value: 
       objectReference: {fileID: 170862952}
-    - target: {fileID: 314506997793441468, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
-      propertyPath: GhostHandObject
-      value: 
-      objectReference: {fileID: 1760296172}
     - target: {fileID: 314506997793441471, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
       propertyPath: m_Name
       value: Player
