@@ -69,6 +69,7 @@ public class EatingEnemy : MonoBehaviour
 
         gaugeBG.enabled = false;
         gaugeFill.enabled = false;
+        _canRotate = true;
 
 
         _playerController = _player.GetComponent<PlayerController>();
