@@ -13634,7 +13634,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505078264}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.7555256, y: -2.5, z: -10}
+  m_LocalPosition: {x: 0.4666958, y: -2.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14133,6 +14133,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 314506997793441471, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
   m_PrefabInstance: {fileID: 1147001401}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &991243825 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 314506997793441468, guid: 7bc3f8d0a99e0824a95440b742c37e1b, type: 3}
+  m_PrefabInstance: {fileID: 1147001401}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991243821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d57e0d2ccfadb348804191006476167, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &991684503
 GameObject:
   m_ObjectHideFlags: 0
@@ -31439,22 +31450,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: BouncePad
       objectReference: {fileID: 0}
-    - target: {fileID: 4781276210343158258, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4781276210343158264, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
-      propertyPath: player
+      propertyPath: _player
       value: 
       objectReference: {fileID: 991243821}
     - target: {fileID: 4781276210343158264, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
-      propertyPath: reviveTime
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4781276210343158264, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
-      propertyPath: postSwallowCooldown
-      value: 2
-      objectReference: {fileID: 0}
+      propertyPath: _playerController
+      value: 
+      objectReference: {fileID: 991243825}
     - target: {fileID: 4781276210343158264, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: patrolPathMarkers.Array.data[0]
       value: 
@@ -31514,22 +31517,6 @@ PrefabInstance:
     - target: {fileID: 4781276210343158265, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4781276210343158267, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
-      propertyPath: normalBounceForce
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 4781276210343158268, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
-      propertyPath: m_Mass
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 4781276210343158271, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
-      propertyPath: Dead
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4781276210343158271, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
-      propertyPath: MaxHealth
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}

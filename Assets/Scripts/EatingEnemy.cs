@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.UI;
 using static PlayerController;
 
 public enum EatingEnemyState
@@ -43,6 +44,10 @@ public class EatingEnemy : MonoBehaviour
 
     private float _reviveTimer;
 
+    private bool _canRotate;
+
+    [SerializeField] private Image gaugeBG, gaugeFill;
+
 
     [SerializeField] private Animator _eatingEnemyAnim;
 
@@ -62,8 +67,27 @@ public class EatingEnemy : MonoBehaviour
         _health = GetComponent<UniversalHealthSystem>();
         _bouncePad = GetComponent<BouncePad>();
 
+        gaugeBG.enabled = false;
+        gaugeFill.enabled = false;
+
 
         _playerController = _player.GetComponent<PlayerController>();
+    }
+
+    private void RotateAnimation(bool invert)
+    {
+        if (invert)
+        {
+            var inverted = new Quaternion
+            {
+                eulerAngles = new Vector3(0, 180, 0)
+            };
+            _eatingEnemyAnim.gameObject.transform.localRotation = inverted;
+        }
+        else
+        {
+            _eatingEnemyAnim.gameObject.transform.localRotation = Quaternion.identity;
+        }
     }
 
     private void Update()
@@ -108,6 +132,22 @@ public class EatingEnemy : MonoBehaviour
                         ? Vector3.left
                         : Vector3.right);
                 }
+
+                gaugeBG.enabled = false;
+                gaugeFill.enabled = false;
+
+                if (_canRotate)
+                {
+                    if (_rigidbody.velocity.x > 0f)
+                    {
+                        RotateAnimation(true);
+                    }
+                    else
+                    {
+                        RotateAnimation(false);
+                    }
+                }
+
                 break;
             case EatingEnemyState.Attack:
                 gameObject.layer = 8;
@@ -120,10 +160,22 @@ public class EatingEnemy : MonoBehaviour
                     _rigidbody.velocity = chaseSpeed * Vector3.left;
                 }
                 
+                gaugeBG.enabled = false;
+                gaugeFill.enabled = false;
+                
                 if (transform.position.x < furthestReachablePointMarkers.Max(point => point.transform.position.x)
                     && _player.transform.position.x > transform.position.x)
                 {
                     _rigidbody.velocity = chaseSpeed * Vector3.right;
+                }
+                
+                if (_rigidbody.velocity.x > 0f)
+                {
+                    RotateAnimation(true);
+                }
+                else
+                {
+                    RotateAnimation(false);
                 }
                 
                 break;
@@ -134,6 +186,8 @@ public class EatingEnemy : MonoBehaviour
                 if (_startedSwallowCoroutine) return;
                 StartCoroutine(Swallow(swallowDuration));
                 _startedSwallowCoroutine = true;
+                gaugeBG.enabled = false;
+                gaugeFill.enabled = false;
                 break;
             case EatingEnemyState.Bounce:
                 gameObject.layer = 3;
@@ -142,6 +196,9 @@ public class EatingEnemy : MonoBehaviour
                 {
                     _health.CurrentHealth = _health.MaxHealth;
                 }
+                gaugeBG.enabled = true;
+                gaugeFill.enabled = true;
+                gaugeFill.fillAmount = _reviveTimer / reviveTime;
                 break;
         }
     }
@@ -158,6 +215,7 @@ public class EatingEnemy : MonoBehaviour
     {
         _player.SetActive(false);
         CallScreenShake();
+        _canRotate = false;
         _rigidbody.velocity = Vector2.zero;
         //Play animations
         yield return new WaitForSeconds(duration);
@@ -170,6 +228,8 @@ public class EatingEnemy : MonoBehaviour
         //Play more animations
         State = EatingEnemyState.Default;
         _postSwallowCooldownTimer = postSwallowCooldown;
+        yield return new WaitForSeconds(0.5f);
+        _canRotate = true;
     }
 
     private void CalculatePlayerKnockback()
