@@ -161,7 +161,7 @@ public class GhostHand : InputMonoBehaviour {
                 }
             }
 
-            if (CurrentInput.GetKeyDownRB) CurrentState = GhostHandStates.DroppingBlock;
+            if (CurrentInput.GetKeyUpRB) CurrentState = GhostHandStates.DroppingBlock;
         }
 
         if (CurrentState == GhostHandStates.DroppingBlock) {

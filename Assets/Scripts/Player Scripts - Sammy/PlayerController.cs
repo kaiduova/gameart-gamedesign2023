@@ -364,7 +364,7 @@ public class PlayerController : InputMonoBehaviour {
 
 
 
-            if (PlayerCurrentlyGrounded() && CurrentInput.GetKeyRB) {
+            if (PlayerCurrentlyGrounded() && CurrentInput.GetKeyLB) {
                 PlayerCanvas.SetActive(true);
                 CurrentState = PlayerStates.SummoningGhostHand;
             }
@@ -395,9 +395,9 @@ public class PlayerController : InputMonoBehaviour {
             GaugeFill.fillAmount = SummonInputDuration;
             _currentMovementSpeed = GhostHandMovementSpeed;
 
-            if (CurrentInput.GetKeyUpRB || !PlayerCurrentlyGrounded())  CurrentState = PlayerStates.NeutralMovement;
+            if (CurrentInput.GetKeyUpLB || !PlayerCurrentlyGrounded())  CurrentState = PlayerStates.NeutralMovement;
             
-            if (CurrentInput.GetKeyRB) {
+            if (CurrentInput.GetKeyLB) {
                 SummonInputDuration += Time.deltaTime * 2;
                 if (SummonInputDuration > 1) {
                     SummonInputDuration = 0;
@@ -413,7 +413,7 @@ public class PlayerController : InputMonoBehaviour {
             PlayerCanvas.SetActive(false);
             _currentMovementSpeed = GhostHandMovementSpeed;
 
-            if (PlayerCurrentlyGrounded() && CurrentInput.GetKeyRB) {
+            if (PlayerCurrentlyGrounded() && CurrentInput.GetKeyLB) {
                 _ghostHandInputBufferDuration += Time.deltaTime;
                 if (_ghostHandInputBufferDuration >= _ghostHandInputBufferDurationReset) {
                     PlayerCanvas.SetActive(true);
@@ -428,9 +428,9 @@ public class PlayerController : InputMonoBehaviour {
             _currentMovementSpeed = GhostHandMovementSpeed;
             GaugeFill.fillAmount = SummonInputDuration;
 
-            if (CurrentInput.GetKeyUpRB || !PlayerCurrentlyGrounded()) CurrentState = PlayerStates.GhostHandMode;
+            if (CurrentInput.GetKeyUpLB || !PlayerCurrentlyGrounded()) CurrentState = PlayerStates.GhostHandMode;
 
-            if (CurrentInput.GetKeyRB) {
+            if (CurrentInput.GetKeyLB) {
                 SummonInputDuration += Time.deltaTime * 2;
                 if (SummonInputDuration > 1) {
                     SummonInputDuration = 0;
