@@ -12,23 +12,38 @@ public class PlaceableCameraTrigger : MonoBehaviour {
 
     [Header("Externally Referenced Components")]
     public CameraController CameraController;
+    [SerializeField] private CompositeCollider2D _linkedCameraConfiner;
+
+    [Header("Camera Trigger Type")]
+    [SerializeField] private bool _triggerType;
+    [TextArea] [SerializeField] private string _triggerTypeNote = "TRUE = Camera Trigger, used to frame shots\n" +
+                                                                  "FALSE = Confiner Trigger, used to swap the camera's confining bounds";
 
     [Header("Trigger Attributes")]
     public float DesiredOthroSize;
 
     private void OnTriggerStay2D(Collider2D collision) {
         if (collision.gameObject.layer == 6) { //Player Layer
-            CameraController.PassedOrthoSize = DesiredOthroSize;
-            CameraController.NewFollowPos = _linkedCameraFocalPoint;
-            CameraController.CurrentState = CameraStates.FramedShot;
+            if (_triggerType)
+            {
+                CameraController.PassedOrthoSize = DesiredOthroSize;
+                CameraController.NewFollowPos = _linkedCameraFocalPoint;
+                CameraController.CurrentState = CameraStates.FramingShot;
+            }
+            else if (!_triggerType) if (_linkedCameraConfiner != null) CameraController.CinemachineConfiner.m_BoundingShape2D = _linkedCameraConfiner;
+            
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
-        if (collision.gameObject.layer == 6) CameraController.CurrentState = CameraStates.FollowingPlayer;
+        if (collision.gameObject.layer == 6) {
+            if (_triggerType) CameraController.CurrentState = CameraStates.FollowingPlayer;
+            else if (!_triggerType) CameraController.CinemachineConfiner.m_BoundingShape2D = null;
+        }
     }
 
     private void Awake() {
-        _linkedCameraFocalPoint = transform.GetChild(0).GetComponent<Transform>();
+        if (_triggerType) _linkedCameraFocalPoint = transform.GetChild(0).GetComponent<Transform>();
+        else if (!_triggerType) _linkedCameraConfiner = GetComponent<CompositeCollider2D>();
     }
 }

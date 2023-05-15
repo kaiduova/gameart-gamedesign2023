@@ -1,0 +1,491 @@
+fileFormatVersion: 2
+guid: 88eadbaa8b790a947926c777d6fb8349
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 325
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: blocks_lv2&3_0
+      rect:
+        serializedVersion: 2
+        x: 346
+        y: 4814
+        width: 1744
+        height: 1019
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43a1ac1826067a94b9370a9f91a5fb14
+      internalID: -1708124408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blocks_lv2&3_4
+      rect:
+        serializedVersion: 2
+        x: 2417
+        y: 4862
+        width: 1744
+        height: 916
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f556357ef28768c40b177bfaf4228e42
+      internalID: 1416899971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blocks_lv2&3_6
+      rect:
+        serializedVersion: 2
+        x: 4544
+        y: 4851
+        width: 2278
+        height: 923
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ed8092644d97d54b8c8068198eac1d2
+      internalID: -593453909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blocks_lv2&3_7
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 3664
+        width: 2278
+        height: 1020
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c19c6151b3c43c14b81bc40d8f69d7ed
+      internalID: 954727704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blocks_lv2&3_8
+      rect:
+        serializedVersion: 2
+        x: 3127
+        y: 3679
+        width: 2781
+        height: 904
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 763e7dec82d357846879ec269069dff6
+      internalID: -676489676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blocks_lv2&3_12
+      rect:
+        serializedVersion: 2
+        x: 2958
+        y: 3907
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebd557f77a678484d8be0024b752be2f
+      internalID: 1319500923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blocks_lv2&3_13
+      rect:
+        serializedVersion: 2
+        x: 4425
+        y: 3665
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc11782bf63d91e4d98fbedd3c18c9ca
+      internalID: 141675892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blocks_lv2&3_14
+      rect:
+        serializedVersion: 2
+        x: 4436
+        y: 3665
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7353d79a81c92f43aa216659c5c5518
+      internalID: -560995174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blocks_lv2&3_15
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 2431
+        width: 2780
+        height: 1012
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f681c03662c2ef4f932da2c5516c488
+      internalID: 728991317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blocks_lv2&3_18
+      rect:
+        serializedVersion: 2
+        x: 4194
+        y: 2023
+        width: 861
+        height: 1423
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e8a344e5d5b86d48a6a622326cd0579
+      internalID: -1447400961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blocks_lv2&3_19
+      rect:
+        serializedVersion: 2
+        x: 5349
+        y: 2023
+        width: 801
+        height: 1423
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f898d924e88590a4b9059545476f2fd5
+      internalID: 1823242814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blocks_lv2&3_22
+      rect:
+        serializedVersion: 2
+        x: 5981
+        y: 243
+        width: 796
+        height: 1413
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84edc5e8cf98e5244b768941c9eeaea4
+      internalID: 572467116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blocks_lv2&3_23
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 1318
+        width: 3300
+        height: 900
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38982398904f2f34593de0b65bf069b8
+      internalID: -769488430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blocks_lv2&3_29
+      rect:
+        serializedVersion: 2
+        x: 4874
+        y: 238
+        width: 798
+        height: 1422
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee13019c75a59f143a8d141b0623784c
+      internalID: -737146634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blocks_lv2&3_35
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 206
+        width: 3300
+        height: 1019
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b75c083bbfa2f54783abf50175cda97
+      internalID: -744794685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 2c9e4dbeeaddc5947a0323ea8fdfbc64
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      blocks_lv2&3_17: 196220346
+      blocks_lv2&3_22: 572467116
+      blocks_lv2&3_24: 1736480640
+      blocks_lv2&3_5: 466485773
+      blocks_lv2&3_27: -59892503
+      blocks_lv2&3_32: 379384043
+      blocks_lv2&3_2: -290856407
+      blocks_lv2&3_16: -950690319
+      blocks_lv2&3_30: 651910582
+      blocks_lv2&3_25: 1088215219
+      blocks_lv2&3_15: 728991317
+      blocks_lv2&3_8: -676489676
+      blocks_lv2&3_33: -1317546604
+      blocks_lv2&3_14: -560995174
+      blocks_lv2&3_7: 954727704
+      blocks_lv2&3_10: 2020549894
+      blocks_lv2&3_9: -774954692
+      blocks_lv2&3_31: -1803301138
+      blocks_lv2&3_3: -1353760234
+      blocks_lv2&3_28: -487827330
+      blocks_lv2&3_37: 745661358
+      blocks_lv2&3_36: -1278917233
+      blocks_lv2&3_26: -965391992
+      blocks_lv2&3_11: -1684382586
+      blocks_lv2&3_23: -769488430
+      blocks_lv2&3_39: -1282736657
+      blocks_lv2&3_1: -1222788615
+      blocks_lv2&3_21: -1160105298
+      blocks_lv2&3_29: -737146634
+      blocks_lv2&3_40: -1442299260
+      blocks_lv2&3_13: 141675892
+      blocks_lv2&3_35: -744794685
+      blocks_lv2&3_18: -1447400961
+      blocks_lv2&3_12: 1319500923
+      blocks_lv2&3_34: 1996536855
+      blocks_lv2&3_0: -1708124408
+      blocks_lv2&3_6: -593453909
+      blocks_lv2&3_20: 1774094827
+      blocks_lv2&3_19: 1823242814
+      blocks_lv2&3_38: 1477524232
+      blocks_lv2&3_4: 1416899971
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

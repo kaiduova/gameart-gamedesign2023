@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour {
     public enum CameraStates {
         FollowingPlayer,
         GhostHandActive,
-        FramedShot
+        FramingShot
     }
 
     [Header("Internal Components")]
@@ -29,6 +29,22 @@ public class CameraController : MonoBehaviour {
     [SerializeField] private float _ghostHandOrthoSize;
     [SerializeField] private float _zoomSpeed;
     public float PassedOrthoSize;
+
+
+
+
+
+    public CinemachineConfiner CinemachineConfiner;
+
+    [Header("Camera Confiners")]
+    [SerializeField] private CompositeCollider2D _level1Confiner;
+    [SerializeField] private CompositeCollider2D _level2Confiner;
+
+    [SerializeField] private CompositeCollider2D[] _level3Confiners;
+
+
+
+
 
     private void Awake() {
         _playerPos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
@@ -65,10 +81,10 @@ public class CameraController : MonoBehaviour {
             if (!GhostHand.activeInHierarchy) CurrentState = CameraStates.FollowingPlayer;
         }
 
-        if (CurrentState == CameraStates.FramedShot) {
+        if (CurrentState == CameraStates.FramingShot) {
             VirtualCamera.Follow = NewFollowPos;
             CameraResising(PassedOrthoSize);
-            if (GhostHand.activeInHierarchy) CurrentState = CameraStates.FramedShot;
+            if (GhostHand.activeInHierarchy) CurrentState = CameraStates.FramingShot;
 
         }
     }

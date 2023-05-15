@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class EatingEnemyAnimation : MonoBehaviour
 {
@@ -11,9 +12,13 @@ public class EatingEnemyAnimation : MonoBehaviour
 
     [SerializeField] private Animator _animator;
 
+    [SerializeField] private GameObject _player;
 
-
-
+    private void FlipEnemy()
+    {
+        if (transform.position.x > _player.transform.position.x || transform.position.x == _player.transform.position.x) transform.eulerAngles = new Vector3(0, 0, 0);
+        if (transform.position.x < _player.transform.position.x) transform.eulerAngles = new Vector3(0, 180, 0);
+    }
 
 
     void Start()
@@ -24,6 +29,7 @@ public class EatingEnemyAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        FlipEnemy();
         
         if (_eatingEnemy.State == EatingEnemyState.Default)
         {
