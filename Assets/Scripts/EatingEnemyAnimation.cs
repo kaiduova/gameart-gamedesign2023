@@ -36,6 +36,7 @@ public class EatingEnemyAnimation : MonoBehaviour
             _animator.SetBool("Patrolling", true);
             _animator.SetBool("ChasingPlayer", false);
             _animator.SetBool("ChewingPlayer", false);
+            _animator.SetBool("BouncePad", false);
 
         }
 
@@ -43,17 +44,24 @@ public class EatingEnemyAnimation : MonoBehaviour
         {
             _animator.SetBool("Patrolling", false);
             _animator.SetBool("ChasingPlayer", true);
+            _animator.SetBool("ChewingPlayer", false);
+            _animator.SetBool("BouncePad", false);
         }
 
         if (_eatingEnemy.State == EatingEnemyState.Swallowed)
         {
+            _animator.SetBool("Patrolling", false);
             _animator.SetBool("ChasingPlayer", false);
             _animator.SetBool("ChewingPlayer", true);
+            _animator.SetBool("BouncePad", false);
         }
 
 
         if (_eatingEnemy.State == EatingEnemyState.Bounce)
         {
+            _animator.SetBool("Patrolling", false);
+            _animator.SetBool("ChasingPlayer", false);
+            _animator.SetBool("ChewingPlayer", false);
             _animator.SetBool("BouncePad", true);
         }
 

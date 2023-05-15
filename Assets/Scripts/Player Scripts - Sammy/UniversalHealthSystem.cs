@@ -10,8 +10,15 @@ public class UniversalHealthSystem : MonoBehaviour {
     public float MaxHealth;
     public bool Dead;
 
+    [SerializeField]
+    private ParticleSystem particles;
+
     public void TakeDamage(float damageRecieved) {
         CurrentHealth -= damageRecieved;
+        if (particles != null)
+        {
+            particles.Play();
+        }
     }
 
     private void Start() {
