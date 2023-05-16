@@ -27,7 +27,7 @@ public class EatingEnemy : MonoBehaviour
     public float ReviveTime { get => reviveTime; set => reviveTime = value; }
 
     [SerializeField]
-    private GameObject[] patrolPathMarkers, furthestReachablePointMarkers;
+    private GameObject[] patrolPathMarkers, furthestReachablePointMarkers, secondPatrolPathMarkerSet, secondFurthestReachablePointSet;
 
 
     [SerializeField]
@@ -49,6 +49,8 @@ public class EatingEnemy : MonoBehaviour
     private float _reviveTimer;
 
     private bool _canRotate;
+
+    public bool useSecondSet;
 
     [SerializeField] private Image gaugeBG, gaugeFill;
 
@@ -113,6 +115,11 @@ public class EatingEnemy : MonoBehaviour
     {
         print(State);
 
+        if (useSecondSet)
+        {
+            patrolPathMarkers = secondPatrolPathMarkerSet;
+            furthestReachablePointMarkers = secondFurthestReachablePointSet;
+        }
 
         _postSwallowCooldownTimer -= Time.deltaTime;
         ReviveTimer -= Time.deltaTime;
@@ -123,7 +130,7 @@ public class EatingEnemy : MonoBehaviour
             if (_health.Dead)
             {
                 State = EatingEnemyState.Bounce;
-                _rigidbody.velocity = Vector2.zero;
+                _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
                 _bouncePad.canBounce = true;
             }
             else if (Vector3.SqrMagnitude(_player.transform.position - transform.position) < engagementRange * engagementRange
@@ -159,9 +166,9 @@ public class EatingEnemy : MonoBehaviour
                 }
                 else
                 {
-                    _rigidbody.velocity = speed * (patrolPathMarkers[nextPoint].transform.position.x < transform.position.x
+                    _rigidbody.velocity = new Vector2((speed * (patrolPathMarkers[nextPoint].transform.position.x < transform.position.x
                         ? Vector3.left
-                        : Vector3.right);
+                        : Vector3.right)).x, _rigidbody.velocity.y);
                 }
 
                 gaugeBG.enabled = false;
@@ -184,7 +191,7 @@ public class EatingEnemy : MonoBehaviour
 
             case EatingEnemyState.PlayerNoticed:
                 {
-                    _rigidbody.velocity = Vector2.zero;
+                    _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
 
                     _playerNoticedDelay += Time.deltaTime;
                     if (_playerNoticedDelay >= _playerNoticedDelayReset)
@@ -201,11 +208,11 @@ public class EatingEnemy : MonoBehaviour
                 gameObject.layer = 8;
                 ReviveTimer = ReviveTime;
                 //Chase within furthest reachable point markers.
-                _rigidbody.velocity = Vector3.zero;
+                _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
                 if (transform.position.x > furthestReachablePointMarkers.Min(point => point.transform.position.x)
                     && _player.transform.position.x < transform.position.x)
                 {
-                    _rigidbody.velocity = chaseSpeed * Vector3.left;
+                    _rigidbody.velocity = new Vector2((chaseSpeed * Vector3.left).x, _rigidbody.velocity.y);
                 }
                 
                 gaugeBG.enabled = false;
@@ -214,7 +221,7 @@ public class EatingEnemy : MonoBehaviour
                 if (transform.position.x < furthestReachablePointMarkers.Max(point => point.transform.position.x)
                     && _player.transform.position.x > transform.position.x)
                 {
-                    _rigidbody.velocity = chaseSpeed * Vector3.right;
+                    _rigidbody.velocity = new Vector2((chaseSpeed * Vector3.right).x, _rigidbody.velocity.y);
                 }
                 
                 if (_rigidbody.velocity.x > 0f)
@@ -241,7 +248,7 @@ public class EatingEnemy : MonoBehaviour
                 break;
             case EatingEnemyState.Bounce:
                 gameObject.layer = 3;
-                _rigidbody.velocity = Vector2.zero;
+                _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
                 if (ReviveTimer <= 0f)
                 {
                     _health.CurrentHealth = _health.MaxHealth;
@@ -254,7 +261,7 @@ public class EatingEnemy : MonoBehaviour
 
             case EatingEnemyState.WakeUp:
                 {
-                    _rigidbody.velocity = Vector2.zero;
+                    _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
 
                     _wakeUpDelay += Time.deltaTime;
                     if (_wakeUpDelay >= _wakeUpRelayReset) {
@@ -282,7 +289,7 @@ public class EatingEnemy : MonoBehaviour
         _player.SetActive(false);
         CallScreenShake();
         _canRotate = false;
-        _rigidbody.velocity = Vector2.zero;
+        _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
         //Play animations
         EatingEnemyAnim.SetBool("Chew", true);
         yield return new WaitForSeconds(duration);
