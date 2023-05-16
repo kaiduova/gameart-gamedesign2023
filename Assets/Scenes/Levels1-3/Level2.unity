@@ -234,6 +234,10 @@ MonoBehaviour:
   _ghostHandOrthoSize: 10
   _zoomSpeed: 2.5
   PassedOrthoSize: 0
+  CinemachineConfiner: {fileID: 0}
+  _level1Confiner: {fileID: 0}
+  _level2Confiner: {fileID: 0}
+  _level3Confiners: []
 --- !u!1 &27756983
 GameObject:
   m_ObjectHideFlags: 0
@@ -35897,6 +35901,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _linkedCameraFocalPoint: {fileID: 1034048783}
   CameraController: {fileID: 26549107}
+  _linkedCameraConfiner: {fileID: 0}
+  _triggerType: 0
+  _triggerTypeNote: 'TRUE = Camera Trigger, used to frame shots
+
+    FALSE = Confiner
+    Trigger, used to swap the camera''s confining bounds'
   DesiredOthroSize: 10
 --- !u!61 &2079169946
 BoxCollider2D:
@@ -36264,6 +36274,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 494844076, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 991243821}
     - target: {fileID: 4781276210343158258, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: m_Name
       value: BouncePad
