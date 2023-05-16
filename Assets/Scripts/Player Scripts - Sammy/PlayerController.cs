@@ -29,7 +29,7 @@ public class PlayerController : InputMonoBehaviour {
 
     [Header("Internally Referenced Components")]
     [SerializeField] Rigidbody2D _rigidbody2D;
-    [SerializeField] CircleCollider2D _circleCollider2D;
+    [SerializeField] BoxCollider2D _boxCollider2D;
     
     //Used by bounce pad.
     public Rigidbody2D Rigidbody2D => _rigidbody2D;
@@ -147,7 +147,7 @@ public class PlayerController : InputMonoBehaviour {
 
         transform.position += new Vector3(0, _movementSpeed * Time.deltaTime);
         //_rigidbody2D.velocity = new Vector2(0, _jumpForce);
-        _circleCollider2D.enabled = false;
+        _boxCollider2D.enabled = false;
 
         yield return new WaitForSeconds(0.25f);
         transform.position += new Vector3(0, -_jumpForce * Time.deltaTime);
@@ -164,7 +164,7 @@ public class PlayerController : InputMonoBehaviour {
 
     private void Awake() {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        _circleCollider2D = GetComponent<CircleCollider2D>();
+        _boxCollider2D = GetComponent<BoxCollider2D>();
         groundCheck = transform.GetChild(0).GetComponent<Transform>();
     }
 
@@ -289,7 +289,8 @@ public class PlayerController : InputMonoBehaviour {
         else if (PlayerHealth < 1) {
             PlayerHealth = 0;
             CurrentState = PlayerStates.Dead;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            StartCoroutine(DeathScreenAnimation());
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         switch (PlayerHealth) {
@@ -426,14 +427,14 @@ public class PlayerController : InputMonoBehaviour {
 
         if (CurrentState == PlayerStates.SummoningGhostHand) {
             PlayerCanvas.SetActive(true);
-            GaugeFill.fillAmount = SummonInputDuration;
+            GaugeFill.fillAmount = SummonInputDuration * 2;
             _currentMovementSpeed = GhostHandMovementSpeed;
 
             if (CurrentInput.GetKeyUpLB || !PlayerCurrentlyGrounded())  CurrentState = PlayerStates.NeutralMovement;
             
             if (CurrentInput.GetKeyLB) {
                 SummonInputDuration += Time.deltaTime * 2;
-                if (SummonInputDuration > 1) {
+                if (SummonInputDuration > 0.5f) {
                     SummonInputDuration = 0;
                     GhostHandObject.SetActive(true);
                     ghostHand.CurrentState = GhostHand.GhostHandStates.Summoning;
@@ -460,13 +461,13 @@ public class PlayerController : InputMonoBehaviour {
         if (CurrentState == PlayerStates.DismissingGhostHand) {
             PlayerCanvas.SetActive(true);
             _currentMovementSpeed = GhostHandMovementSpeed;
-            GaugeFill.fillAmount = SummonInputDuration;
+            GaugeFill.fillAmount = SummonInputDuration * 2;
 
             if (CurrentInput.GetKeyUpLB || !PlayerCurrentlyGrounded()) CurrentState = PlayerStates.GhostHandMode;
 
             if (CurrentInput.GetKeyLB) {
                 SummonInputDuration += Time.deltaTime * 2;
-                if (SummonInputDuration > 1) {
+                if (SummonInputDuration > 0.5f) {
                     SummonInputDuration = 0;
                     ghostHand.CurrentState = GhostHand.GhostHandStates.Dismissing;
                     CurrentState = PlayerStates.GhostHandBufferOutro;

@@ -118,7 +118,7 @@ public class EatingEnemy : MonoBehaviour
         ReviveTimer -= Time.deltaTime;
         _bouncePad.canBounce = false;
 
-        if (State != EatingEnemyState.Swallowed)
+        if (State != EatingEnemyState.Swallowed && State != EatingEnemyState.WakeUp)
         {
             if (_health.Dead)
             {
@@ -142,7 +142,7 @@ public class EatingEnemy : MonoBehaviour
             else
             {
                 playerNoticed = false;
-                if (!_health.Dead && State != EatingEnemyState.WakeUp) State = EatingEnemyState.Default;
+                State = EatingEnemyState.Default;
             }
         }
         
@@ -245,7 +245,7 @@ public class EatingEnemy : MonoBehaviour
                 if (ReviveTimer <= 0f)
                 {
                     _health.CurrentHealth = _health.MaxHealth;
-                    State = EatingEnemyState.WakeUp;
+                    StartCoroutine(WakeUp(1.1f));
                 }
                 gaugeBG.enabled = true;
                 gaugeFill.enabled = true;
@@ -267,7 +267,7 @@ public class EatingEnemy : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D col)
+    private void OnCollisionStay2D(Collision2D col)
     {
         if (col.gameObject == _player && !_startedSwallowCoroutine && State == EatingEnemyState.Attack)
         {
@@ -297,6 +297,13 @@ public class EatingEnemy : MonoBehaviour
         _postSwallowCooldownTimer = postSwallowCooldown;
         yield return new WaitForSeconds(0.5f);
         _canRotate = true;
+    }
+
+    private IEnumerator WakeUp(float delay)
+    {
+        State = EatingEnemyState.WakeUp;
+        yield return new WaitForSeconds(delay);
+        State = EatingEnemyState.Default;
     }
 
     private void CalculatePlayerKnockback()

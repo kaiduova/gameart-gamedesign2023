@@ -25124,6 +25124,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7880086145613324869, guid: d6de74e447c592547b72988bba2bf6c1, type: 3}
+      propertyPath: m_Mass
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6de74e447c592547b72988bba2bf6c1, type: 3}
 --- !u!1 &170862950
@@ -42938,10 +42942,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 494844076, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
-      propertyPath: _player
-      value: 
-      objectReference: {fileID: 309002465}
     - target: {fileID: 4781276210343158258, guid: 4d2223b8f6225de4290cd21b7c62e9f6, type: 3}
       propertyPath: m_Name
       value: BouncePad

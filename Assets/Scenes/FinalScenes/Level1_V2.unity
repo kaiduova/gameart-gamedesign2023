@@ -211,7 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ConfineMode: 0
   m_BoundingVolume: {fileID: 0}
-  m_BoundingShape2D: {fileID: 0}
+  m_BoundingShape2D: {fileID: 27756985}
   m_ConfineScreenEdges: 1
   m_Damping: 0
 --- !u!114 &26549107
@@ -26282,7 +26282,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505078264}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.5, y: -8, z: -10}
+  m_LocalPosition: {x: -6.666641, y: -3.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -26385,7 +26385,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 20
+  m_SortingOrder: 22
   m_Sprite: {fileID: -1637523970, guid: eb43e8bbe27de9148bc43d74439da295, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -47307,7 +47307,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8138109668780318367, guid: c7dd2618bdd0fb242abab784aa82a119, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 27.5
+      value: 27.4
       objectReference: {fileID: 0}
     - target: {fileID: 8138109668780318367, guid: c7dd2618bdd0fb242abab784aa82a119, type: 3}
       propertyPath: m_LocalPosition.y
