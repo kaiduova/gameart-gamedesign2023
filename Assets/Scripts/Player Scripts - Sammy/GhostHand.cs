@@ -58,6 +58,7 @@ public class GhostHand : InputMonoBehaviour {
                 if (!(currentBlock == null)) return;
                 currentBlock = collision.gameObject;
                 collision.gameObject.transform.SetParent(transform, true);
+                collision.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
             }
         }
     }  
@@ -183,8 +184,9 @@ public class GhostHand : InputMonoBehaviour {
                 blockRigidbody2D.gravityScale = 3;
                 blockRigidbody2D.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
                 blockRigidbody2D.interpolation = RigidbodyInterpolation2D.Interpolate;
-                blockRigidbody2D.freezeRotation = true;
                 currentBlock.transform.SetParent(null, true);
+                currentBlock.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX;
+                blockRigidbody2D.freezeRotation = true;
                 currentBlock = null;
 
                 _spriteRenderer.sprite = _openHand;
