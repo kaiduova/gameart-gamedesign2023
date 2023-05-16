@@ -24,9 +24,9 @@ public class BouncePad : MonoBehaviour
         DeflectingBlock deflectingBlock = null;
         if (!(col.gameObject.TryGetComponent(out playerController) || col.gameObject.TryGetComponent(out deflectingBlock))) return;
         if (col.GetContact(0).normal.y > -0.9f) return;
+        if (!canBounce) return;
         if (playerController != null)
         {
-            if (!canBounce) return;
             playerController.Rigidbody2D.velocity = new Vector2(0, normalBounceForce);
            // _controller.EatingEnemyAnim.SetTrigger("Bounced");
         }
