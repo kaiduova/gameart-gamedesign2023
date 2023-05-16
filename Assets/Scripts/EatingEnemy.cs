@@ -11,7 +11,11 @@ public enum EatingEnemyState
     Default,
     Attack,
     Swallowed,
-    Bounce
+    Bounce,
+    WakeUp,
+
+
+    PlayerNoticed
 }
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(UniversalHealthSystem))] 
@@ -49,13 +53,25 @@ public class EatingEnemy : MonoBehaviour
     [SerializeField] private Image gaugeBG, gaugeFill;
 
 
-    [SerializeField] private Animator _eatingEnemyAnim;
+    [SerializeField] public Animator EatingEnemyAnim;
 
     //Added by Sammy
     [SerializeField] private GameObject _player;
     [SerializeField] private PlayerController _playerController;
     [SerializeField] private float _knockbackIntensity;
     public CinemachineImpulseSource ScreenShake;
+
+    public float _playerNoticedDelay;
+    public float _playerNoticedDelayReset;
+
+    public float _wakeUpDelay;
+    public float _wakeUpRelayReset;
+
+    public bool playerNoticed;
+
+    public GameObject SpitPoint;
+
+    public GameObject GhostHand;
 
     private void CallScreenShake() {
         ScreenShake.GenerateImpulse();
@@ -83,16 +99,21 @@ public class EatingEnemy : MonoBehaviour
             {
                 eulerAngles = new Vector3(0, 180, 0)
             };
-            _eatingEnemyAnim.gameObject.transform.localRotation = inverted;
+            //EatingEnemyAnim.gameObject.transform.localRotation = inverted; //Changed by sammy, needs to rotate children objects too
+            transform.localRotation = inverted;
         }
         else
         {
-            _eatingEnemyAnim.gameObject.transform.localRotation = Quaternion.identity;
+            //EatingEnemyAnim.gameObject.transform.localRotation = Quaternion.identity;
+            transform.localRotation = Quaternion.identity; 
         }
     }
 
     private void Update()
     {
+        print(State);
+
+
         _postSwallowCooldownTimer -= Time.deltaTime;
         ReviveTimer -= Time.deltaTime;
         _bouncePad.canBounce = false;
@@ -108,11 +129,20 @@ public class EatingEnemy : MonoBehaviour
             else if (Vector3.SqrMagnitude(_player.transform.position - transform.position) < engagementRange * engagementRange
                 && _postSwallowCooldownTimer < 0f)
             {
-                State = EatingEnemyState.Attack;
+                //State = EatingEnemyState.Attack;
+
+                //Go to state delay, wait for animation then go to attack
+
+
+
+
+                if (!playerNoticed) State = EatingEnemyState.PlayerNoticed;
+                else State = EatingEnemyState.Attack;
             }
             else
             {
-                State = EatingEnemyState.Default;
+                playerNoticed = false;
+                if (!_health.Dead && State != EatingEnemyState.WakeUp) State = EatingEnemyState.Default;
             }
         }
         
@@ -150,6 +180,23 @@ public class EatingEnemy : MonoBehaviour
                 }
 
                 break;
+
+
+            case EatingEnemyState.PlayerNoticed:
+                {
+                    _rigidbody.velocity = Vector2.zero;
+
+                    _playerNoticedDelay += Time.deltaTime;
+                    if (_playerNoticedDelay >= _playerNoticedDelayReset)
+                    {
+                        _playerNoticedDelay = 0;
+                        playerNoticed = true;
+                        State = EatingEnemyState.Attack;
+                    }
+
+                }
+                break;
+
             case EatingEnemyState.Attack:
                 gameObject.layer = 8;
                 ReviveTimer = ReviveTime;
@@ -181,6 +228,8 @@ public class EatingEnemy : MonoBehaviour
                 
                 break;
             case EatingEnemyState.Swallowed:
+                playerNoticed = false;
+
                 gameObject.layer = 8;
                 ReviveTimer = ReviveTime;
                 //Idle movement and animation.
@@ -196,10 +245,24 @@ public class EatingEnemy : MonoBehaviour
                 if (ReviveTimer <= 0f)
                 {
                     _health.CurrentHealth = _health.MaxHealth;
+                    State = EatingEnemyState.WakeUp;
                 }
                 gaugeBG.enabled = true;
                 gaugeFill.enabled = true;
                 gaugeFill.fillAmount = _reviveTimer / reviveTime;
+                break;
+
+            case EatingEnemyState.WakeUp:
+                {
+                    _rigidbody.velocity = Vector2.zero;
+
+                    _wakeUpDelay += Time.deltaTime;
+                    if (_wakeUpDelay >= _wakeUpRelayReset) {
+                        _wakeUpDelay = 0;
+                        playerNoticed = false;
+                        State = EatingEnemyState.Default;
+                    }
+                }
                 break;
         }
     }
@@ -214,18 +277,21 @@ public class EatingEnemy : MonoBehaviour
 
     private IEnumerator Swallow(float duration)
     {
+        if (GhostHand.activeInHierarchy) GhostHand.SetActive(false);
+
         _player.SetActive(false);
         CallScreenShake();
         _canRotate = false;
         _rigidbody.velocity = Vector2.zero;
         //Play animations
+        EatingEnemyAnim.SetBool("Chew", true);
         yield return new WaitForSeconds(duration);
-        _eatingEnemyAnim.SetTrigger("SpittingOutPlayer");
         _player.SetActive(true);
         _playerController.CurrentState = PlayerStates.Knockback;
-        _player.transform.position = new Vector3(_player.transform.position.x, _player.transform.position.y + 0.5f, _player.transform.position.z);
+        _player.transform.position = new Vector3(SpitPoint.transform.position.x, SpitPoint.transform.position.y, _player.transform.position.z);
         CalculatePlayerKnockback();
         _startedSwallowCoroutine = false;
+        EatingEnemyAnim.SetBool("Chew", false);
         //Play more animations
         State = EatingEnemyState.Default;
         _postSwallowCooldownTimer = postSwallowCooldown;

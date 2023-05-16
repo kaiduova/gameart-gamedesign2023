@@ -80,5 +80,6 @@ public class PlayerAnimation : InputMonoBehaviour {
         }
 
         if (_playerController.CurrentState == PlayerStates.GhostHandBufferOutro) _animator.SetBool("ghostHandMode", false);
+
     }
 }

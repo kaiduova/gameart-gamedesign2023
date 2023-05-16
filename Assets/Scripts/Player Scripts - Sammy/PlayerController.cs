@@ -17,6 +17,7 @@ public class PlayerController : InputMonoBehaviour {
 
         ControllingBullet,
         Knockback,
+        Dead,
 
         SummoningGhostHand,
         GhostHandMode,
@@ -123,6 +124,38 @@ public class PlayerController : InputMonoBehaviour {
 
     public float controlBulletInputBuffer;
 
+
+
+
+    public GameObject DeathScreen;
+
+    public CameraController cameraController;
+
+    public Animator _animator;
+
+
+    private IEnumerator DeathScreenAnimation() {
+        HorizontalInput = 0;
+        VerticalInput = 0;
+        _rigidbody2D.velocity = Vector3.zero;
+
+        DeathScreen.SetActive(true);
+        _animator.SetTrigger("death");
+        cameraController.CurrentState = CameraController.CameraStates.Static;
+
+        yield return new WaitForSeconds(0.5f);
+
+        transform.position += new Vector3(0, _movementSpeed * Time.deltaTime);
+        //_rigidbody2D.velocity = new Vector2(0, _jumpForce);
+        _circleCollider2D.enabled = false;
+
+        yield return new WaitForSeconds(0.25f);
+        transform.position += new Vector3(0, -_jumpForce * Time.deltaTime);
+        //_rigidbody2D.velocity = new Vector2(0, -_jumpForce * 5);
+
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 
     public IEnumerator Knockback(float knockBackDirection) {
         _rigidbody2D.velocity = new Vector2(knockBackDirection, ((_jumpForce / 3) * 2));
@@ -251,6 +284,7 @@ public class PlayerController : InputMonoBehaviour {
         if (PlayerHealth > 3) PlayerHealth = 3;
         else if (PlayerHealth < 1) {
             PlayerHealth = 0;
+            CurrentState = PlayerStates.Dead;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
@@ -466,15 +500,15 @@ public class PlayerController : InputMonoBehaviour {
             }
         }
 
+        //if (CurrentState == PlayerStates.Dead) StartCoroutine(DeathScreenAnimation());
+        
+
         if (CurrentState == PlayerStates.StateDelay) {
             HorizontalInput = 0;
             _rigidbody2D.velocity = new Vector2(0, 0);
             PlayerRespawnDelay -= Time.deltaTime;
             if (PlayerRespawnDelay < 0) {
                 PlayerRespawnDelay = 0;
-
-
-
                 CurrentState = PlayerStates.NeutralMovement;
             }
         }

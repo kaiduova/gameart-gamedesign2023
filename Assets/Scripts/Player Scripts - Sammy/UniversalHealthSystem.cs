@@ -40,6 +40,8 @@ public class UniversalHealthSystem : MonoBehaviour {
     public static void TryDealDamage(GameObject go, float value)
     {
         if (!go.TryGetComponent<UniversalHealthSystem>(out var health)) return;
+        if (go.CompareTag("Enemy")) go.GetComponent<EatingEnemy>().EatingEnemyAnim.SetTrigger("Hurt");
+
         health.TakeDamage(value);
     }
 

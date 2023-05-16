@@ -28,6 +28,7 @@ public class BouncePad : MonoBehaviour
         {
             if (!canBounce) return;
             playerController.Rigidbody2D.velocity += new Vector2(0, normalBounceForce);
+            _controller.EatingEnemyAnim.SetTrigger("Bounced");
         }
         else
         {
@@ -35,6 +36,7 @@ public class BouncePad : MonoBehaviour
             {
                 _controller.ReviveTimer = _controller.ReviveTime;
                 outRigidbody.velocity += new Vector2(0, normalBounceForce);
+                _controller.EatingEnemyAnim.SetTrigger("Bounced");
             }
         }
     }

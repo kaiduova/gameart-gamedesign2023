@@ -10,7 +10,8 @@ public class CameraController : MonoBehaviour {
     public enum CameraStates {
         FollowingPlayer,
         GhostHandActive,
-        FramingShot
+        FramingShot,
+        Static
     }
 
     [Header("Internal Components")]
@@ -85,7 +86,8 @@ public class CameraController : MonoBehaviour {
             VirtualCamera.Follow = NewFollowPos;
             CameraResising(PassedOrthoSize);
             if (GhostHand.activeInHierarchy) CurrentState = CameraStates.FramingShot;
-
         }
+
+        if (CurrentState == CameraStates.Static) VirtualCamera.Follow = null;
     }
 }
