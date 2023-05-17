@@ -11,9 +11,6 @@ public class ArcProjectile : InputMonoBehaviour
     [SerializeField]
     private float postBounceSpeedMultiplier, lifetime, additionalLifetimeOnBounce, damage;
 
-    [SerializeField]
-    private Material uncontrolledMaterial;
-
     private Rigidbody2D _rigidbody;
 
     private LineRenderer _lineRenderer;
@@ -46,7 +43,7 @@ public class ArcProjectile : InputMonoBehaviour
 
     private void Update()
     {
-        Quaternion rotation = Quaternion.LookRotation(_rigidbody.velocity, Vector3.forward);
+        Quaternion rotation = Quaternion.LookRotation(_rigidbody.velocity);
         transform.rotation = rotation;
 
 
@@ -65,7 +62,6 @@ public class ArcProjectile : InputMonoBehaviour
 
     public void IncreaseSpeedAndRemoveControl()
     {
-        //GetComponent<MeshRenderer>().material = uncontrolledMaterial;
         _rigidbody.velocity *= postBounceSpeedMultiplier;
         gaugeBg.enabled = false;
         gaugeFill.enabled = false;
