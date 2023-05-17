@@ -26,6 +26,10 @@ public class ChainBlock : MonoBehaviour {
     [SerializeField] private GameObject _linkedCameraTrigger;
     [SerializeField] private float _triggerDisableDelay;
 
+
+    [Header("Enemy References")]
+    public EatingEnemy EatingEnemy;
+
     private void CallScreenShake() {
         ScreenShake.GenerateImpulse();
     }
@@ -77,6 +81,7 @@ public class ChainBlock : MonoBehaviour {
 
         if (CurrentState == ChainBlockStates.Deactivated) {
             transform.position = new Vector3(transform.position.x, yStoppingPoint);
+            if (EatingEnemy != null) EatingEnemy.useSecondSet = true;
             if (_linkedCameraTrigger != null) {
                 _triggerDisableDelay -= Time.deltaTime;
                 if (_triggerDisableDelay <= 0) {

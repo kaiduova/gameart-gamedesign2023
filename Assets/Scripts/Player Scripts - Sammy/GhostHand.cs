@@ -52,6 +52,10 @@ public class GhostHand : InputMonoBehaviour {
     [SerializeField] private float _ghostHandHeight;
     private Camera _camera;
 
+
+
+    [SerializeField] private Animator _animator;
+
     private void OnTriggerStay2D(Collider2D collision) {
         if (collision.tag == "HackableBlock") {
             if (CurrentState == GhostHandStates.GrabbingBlock) {
@@ -67,11 +71,11 @@ public class GhostHand : InputMonoBehaviour {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Start() {
         _camera = Camera.main;
-        GhostHandAnimation();
         _spriteRenderer.sprite = _openHand;
         _ghostHandWidth = _spriteRenderer.bounds.extents.x;
         _ghostHandHeight = _spriteRenderer.bounds.extents.y;
@@ -79,11 +83,11 @@ public class GhostHand : InputMonoBehaviour {
 
     protected override void OnEnable() { //Kai help please - this messes with your input stuff but otherwise works
         base.OnEnable(); //Sammy don't delete this you stupid cretin
-        GhostHandAnimation();
+        GhostHandRotation();
         transform.position = SummonPoint.position;
     }
 
-    private void GhostHandAnimation() {
+    private void GhostHandRotation() {
         if (_playerController.HorizontalInput < 0) transform.eulerAngles = new Vector3(0, 180, 0);
         if (_playerController.HorizontalInput > 0) transform.eulerAngles = new Vector3(0, 0, 0);
     }
@@ -127,16 +131,26 @@ public class GhostHand : InputMonoBehaviour {
             _rigidbody2D.velocity = new Vector2(0, 0);
         }
 
+        if (CurrentState == GhostHandStates.Dismissing) _animator.SetTrigger("dismiss");
+
         if (CurrentState == GhostHandStates.SearchingForBlock) {
             _rightStickHorizontalInput = CurrentInput.RightStick.x;
             _rightStickVerticalInput = CurrentInput.RightStick.y;
 
-            _spriteRenderer.sprite = _openHand;
+            //_spriteRenderer.sprite = _openHand;
+            _animator.SetBool("holdingBlock", false);
+
+
             if (CurrentInput.GetKeyDownRB) CurrentState = GhostHandStates.GrabbingBlock;
         }
 
         if (CurrentState == GhostHandStates.GrabbingBlock) {
-            _spriteRenderer.sprite = _closedHand;
+
+            _animator.SetBool("holdingBlock", true);
+
+            //_spriteRenderer.sprite = _closedHand;
+
+
             _rightStickHorizontalInput = 0;
             _rightStickHorizontalInput = 0;
             _rigidbody2D.velocity = new Vector2(0, 0);
@@ -189,7 +203,9 @@ public class GhostHand : InputMonoBehaviour {
                 blockRigidbody2D.freezeRotation = true;
                 currentBlock = null;
 
-                _spriteRenderer.sprite = _openHand;
+                //_spriteRenderer.sprite = _openHand;
+                _animator.SetBool("holdingBlock", false);
+
                 CurrentState = GhostHandStates.SearchingForBlock;
             }
         }

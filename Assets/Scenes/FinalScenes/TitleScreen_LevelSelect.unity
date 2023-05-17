@@ -934,9 +934,9 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 847315556}
-  m_Text: 'Wendy Bao
+  m_Text: 'Yidong Bao (Winter)
 
-    Chloe Lin'
+    Chuan Lin (Chloe)'
   m_OffsetZ: 0
   m_CharacterSize: 0.1
   m_LineSpacing: 1
@@ -1406,7 +1406,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1096130612}
-  m_Text: 'Wendy Bao
+  m_Text: 'Yidong Bao (Winter)
 
 '
   m_OffsetZ: 0

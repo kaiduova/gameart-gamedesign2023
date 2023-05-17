@@ -60,6 +60,7 @@ GameObject:
   - component: {fileID: 711398582620101074}
   - component: {fileID: 711398582620101072}
   - component: {fileID: 711398582620101075}
+  - component: {fileID: 1760296178}
   m_Layer: 0
   m_Name: GhostHand
   m_TagString: GhostHand
@@ -124,7 +125,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 40
-  m_Sprite: {fileID: 706920061, guid: 2bd05138cccbd7b4a9498103ccc4de1d, type: 3}
+  m_Sprite: {fileID: -702769273, guid: 6a0084d0376eb684890496a1a61addfc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -186,6 +187,27 @@ MonoBehaviour:
   _screenBoundariesOther: {x: 0, y: 0}
   _ghostHandWidth: 0
   _ghostHandHeight: 0
+  _animator: {fileID: 0}
+--- !u!95 &1760296178
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 711398582620101073}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 00b56ff2b45b7bd4e83db789700e9f01, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &711398582988062605
 GameObject:
   m_ObjectHideFlags: 0

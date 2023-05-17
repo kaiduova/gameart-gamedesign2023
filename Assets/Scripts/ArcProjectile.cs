@@ -46,6 +46,10 @@ public class ArcProjectile : InputMonoBehaviour
 
     private void Update()
     {
+        Quaternion rotation = Quaternion.LookRotation(_rigidbody.velocity, Vector3.forward);
+        transform.rotation = rotation;
+
+
         lifetime -= Time.deltaTime;
         _projControlTimer -= Time.deltaTime;
         if (lifetime <= 0f)
@@ -61,7 +65,7 @@ public class ArcProjectile : InputMonoBehaviour
 
     public void IncreaseSpeedAndRemoveControl()
     {
-        GetComponent<MeshRenderer>().material = uncontrolledMaterial;
+        //GetComponent<MeshRenderer>().material = uncontrolledMaterial;
         _rigidbody.velocity *= postBounceSpeedMultiplier;
         gaugeBg.enabled = false;
         gaugeFill.enabled = false;
