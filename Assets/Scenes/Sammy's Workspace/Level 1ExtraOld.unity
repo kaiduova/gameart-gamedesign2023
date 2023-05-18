@@ -192,6 +192,7 @@ GameObject:
   - component: {fileID: 224103290}
   - component: {fileID: 224103292}
   - component: {fileID: 224103293}
+  - component: {fileID: 224103294}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -219,7 +220,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -304,7 +305,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71df41690b6a4cb4b9323ce2332b3ee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _boxCollider2D: {fileID: 0}
+  _animator: {fileID: 0}
+  Player: {fileID: 0}
+  EnemyCurrentState: 0
   EnemyID: 1
+--- !u!95 &224103294
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224103289}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &261222154
 GameObject:
   m_ObjectHideFlags: 0
@@ -614,7 +639,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -678,33 +703,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d57e0d2ccfadb348804191006476167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RB: {fileID: 0}
-  BC: {fileID: 0}
-  playerCurrentState: 
+  _rigidbody2D: {fileID: 0}
+  _boxCollider2D: {fileID: 0}
+  playerBullet: {fileID: 4159155555341605986, guid: 5506d0772d4837043a8ad1c4f4db0324, type: 3}
+  CurrentState: 0
+  _heart1Image: {fileID: 0}
+  _heart2Image: {fileID: 0}
+  _heart3Image: {fileID: 0}
+  _heartFull: {fileID: 0}
+  _heartEmpty: {fileID: 0}
+  groundCheck: {fileID: 1234171859}
+  groundCheckSize: {x: 0.8, y: 0.2}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  groundCheck: {fileID: 1234171859}
-  checkRadius: 0.2
-  currentlyGrounded: 0
-  movementSpeed: 5
-  accelerationIntensity: 10
-  deccelerationIntensity: 20
-  horizontalInput: 0
-  jumpForce: 10
-  jumpBufferReset: 0.2
-  jumpBufferWindow: 0
-  coyoteTimeReset: 0.2
-  coyoteTimeWindow: 0
-  currentlyJumping: 0
+  _currentMovementSpeed: 0
+  _movementSpeed: 5
+  _jumpPeakMovementSpeed: 7.5
+  _accelerationIntensity: 10
+  _deccelerationIntensity: 20
+  HorizontalInput: 0
+  VerticalInput: 0
+  _jumpForce: 12.5
+  _maxJumpDuration: 0.5
+  _jumpDuration: 0
   _fallGravityMultiplier: 6
-  _gravityReset: 3
   _maxFallSpeed: 10
+  _coyoteTimeWindow: 0.2
+  _jumpBufferWindow: 0.2
   playerPivotPoint: {fileID: 759555147}
-  playerBullet: {fileID: 4159155555341605986, guid: 5506d0772d4837043a8ad1c4f4db0324, type: 3}
   playerReticle: {fileID: 2127699208}
-  reticleRotation: {x: 0, y: 0, z: 0}
-  _playerCurrentState: 0
+  PlayerHealth: 0
+  PlayerRespawnDelay: 0
+  currentHackedBox: {fileID: 0}
+  PhysicsMaterial2D: {fileID: 0}
+  ghostHand: {fileID: 0}
+  PlayerCanvas: {fileID: 0}
+  GhostHandObject: {fileID: 0}
+  GaugeFill: {fileID: 0}
+  GhostHandMovementSpeed: 0
+  SummonDuration: 0
+  SummonInputDuration: 0
+  _ghostHandBufferOutroDurationReset: 0
+  _ghostHandBufferIntroDurationReset: 0
+  _ghostHandInputBufferDuration: 0
+  _ghostHandInputBufferDurationReset: 0
+  additionalJumpBounceForce: 0
+  controlBulletInputBuffer: 0
+  DeathScreen: {fileID: 0}
+  cameraController: {fileID: 0}
+  _animator: {fileID: 0}
 --- !u!61 &682150670
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -772,7 +820,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -873,7 +921,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -993,7 +1041,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4183,6 +4231,7 @@ GameObject:
   - component: {fileID: 1580770350}
   - component: {fileID: 1580770352}
   - component: {fileID: 1580770353}
+  - component: {fileID: 1580770354}
   m_Layer: 0
   m_Name: LoomerEnemyDummy
   m_TagString: Untagged
@@ -4210,7 +4259,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4295,7 +4344,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71df41690b6a4cb4b9323ce2332b3ee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _boxCollider2D: {fileID: 0}
+  _animator: {fileID: 0}
+  Player: {fileID: 0}
+  EnemyCurrentState: 0
   EnemyID: 1
+--- !u!95 &1580770354
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580770349}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1624519256
 GameObject:
   m_ObjectHideFlags: 0
@@ -4333,7 +4406,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4500,7 +4573,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

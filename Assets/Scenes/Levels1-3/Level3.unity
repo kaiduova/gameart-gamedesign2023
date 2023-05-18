@@ -234,6 +234,10 @@ MonoBehaviour:
   _ghostHandOrthoSize: 10
   _zoomSpeed: 5
   PassedOrthoSize: 0
+  CinemachineConfiner: {fileID: 0}
+  _level1Confiner: {fileID: 0}
+  _level2Confiner: {fileID: 0}
+  _level3Confiners: []
 --- !u!1 &27756983
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,7 +393,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -23527,7 +23531,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -23652,11 +23656,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aa01986c16c57044b0c9e4d2f754ea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LinkedSpawnPoint: {fileID: 261535621}
   _player: {fileID: 0}
   _playerController: {fileID: 0}
-  _respawnDelay: 1
+  PlayerAnim: {fileID: 0}
+  GhostHand: {fileID: 0}
+  LinkedSpawnPoint: {fileID: 261535621}
   OOBMask: {fileID: 0}
+  _respawnDelay: 1
 --- !u!61 &414629973
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -23718,7 +23724,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -24054,6 +24060,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Rigidbody2D: {fileID: 0}
+  _highlight: {fileID: 0}
 --- !u!50 &506305449
 Rigidbody2D:
   serializedVersion: 4
@@ -24121,7 +24128,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -24270,6 +24277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Rigidbody2D: {fileID: 0}
+  _highlight: {fileID: 0}
 --- !u!50 &636569167
 Rigidbody2D:
   serializedVersion: 4
@@ -24337,7 +24345,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -24795,7 +24803,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -57788,7 +57796,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -57889,6 +57897,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody2D: {fileID: 1760296173}
   _spriteRenderer: {fileID: 0}
+  _playerController: {fileID: 0}
   _openHand: {fileID: 837477617, guid: 4f980782c256ef04a8583506132a28d3, type: 3}
   _closedHand: {fileID: 482406881, guid: 4f980782c256ef04a8583506132a28d3, type: 3}
   currentBlock: {fileID: 0}
@@ -57904,6 +57913,7 @@ MonoBehaviour:
   _screenBoundariesOther: {x: 0, y: 0}
   _ghostHandWidth: 0
   _ghostHandHeight: 0
+  _animator: {fileID: 0}
 --- !u!212 &1760296175
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -57924,7 +57934,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -58097,6 +58107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Rigidbody2D: {fileID: 0}
+  _highlight: {fileID: 0}
 --- !u!50 &1845057660
 Rigidbody2D:
   serializedVersion: 4
@@ -58164,7 +58175,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -58519,6 +58530,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _linkedCameraFocalPoint: {fileID: 1034048783}
   CameraController: {fileID: 26549107}
+  _linkedCameraConfiner: {fileID: 0}
+  _triggerType: 0
+  _triggerTypeNote: 'TRUE = Camera Trigger, used to frame shots
+
+    FALSE = Confiner
+    Trigger, used to swap the camera''s confining bounds'
   DesiredOthroSize: 16
 --- !u!61 &2079169946
 BoxCollider2D:
@@ -58566,7 +58583,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -59043,7 +59060,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
