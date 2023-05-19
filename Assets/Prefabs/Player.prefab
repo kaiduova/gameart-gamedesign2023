@@ -5639,7 +5639,7 @@ MonoBehaviour:
   _heart1Image: {fileID: 0}
   _heart2Image: {fileID: 0}
   _heart3Image: {fileID: 0}
-  _heartFull: {fileID: -911200816, guid: b97217ce387a9544bbdd89499ef8e347, type: 3}
+  _heartFull: {fileID: -828622356, guid: 5f983ce6bde86c447a8381ff6bbff017, type: 3}
   _heartEmpty: {fileID: -1702158891, guid: b97217ce387a9544bbdd89499ef8e347, type: 3}
   groundCheck: {fileID: 314506998884372978}
   groundCheckSize: {x: 0.8, y: 0.2}
@@ -15740,7 +15740,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 21
+  m_SortingOrder: 15
   m_Sprite: {fileID: 1145840560, guid: d9f61b0b4f0a2af4ba50492fab425040, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

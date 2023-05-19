@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e048067b6c1d3be49bd769be021309f4
+guid: 9103fdd0c47995e42b7bdd8005539920
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 6_1
+      name: heartFull_0
       rect:
         serializedVersion: 2
-        x: 715
-        y: 287
-        width: 434
-        height: 170
+        x: 845
+        y: 422
+        width: 216
+        height: 192
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,8 +131,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 443751136fb0e7243b849e0479e43ea2
-      internalID: -2076671742
+      spriteID: 3f119e10f963bbc448c4c7e046b1ae61
+      internalID: -1208275624
       vertices: []
       indices: 
       edges: []
@@ -140,7 +140,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 0f34b29226f7b7342ac0743952193fd0
+    spriteID: 1b2214e2d83950a43a533eb8c0e56d45
     internalID: 0
     vertices: []
     indices: 
@@ -148,10 +148,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      6_1: -2076671742
-      6_3: 1658060781
-      6_0: 1211378350
-      6_2: 2103391849
+      heartFull_0: -1208275624
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
