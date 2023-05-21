@@ -24,26 +24,25 @@ public class PlaceableCameraTrigger : MonoBehaviour {
 
     private void OnTriggerStay2D(Collider2D collision) {
         if (collision.gameObject.layer == 6) { //Player Layer
-            if (_triggerType)
-            {
+            if (_triggerType) {
                 CameraController.PassedOrthoSize = DesiredOthroSize;
                 CameraController.NewFollowPos = _linkedCameraFocalPoint;
                 CameraController.CurrentState = CameraStates.FramingShot;
             }
-            else if (!_triggerType) if (_linkedCameraConfiner != null) CameraController.CinemachineConfiner.m_BoundingShape2D = _linkedCameraConfiner;
-            
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (!_triggerType) CameraController.CinemachineConfiner.m_BoundingShape2D = _linkedCameraConfiner;
+    }
+   
     private void OnTriggerExit2D(Collider2D collision) {
         if (collision.gameObject.layer == 6) {
             if (_triggerType) CameraController.CurrentState = CameraStates.FollowingPlayer;
-            else if (!_triggerType) CameraController.CinemachineConfiner.m_BoundingShape2D = null;
         }
     }
 
     private void Awake() {
         if (_triggerType) _linkedCameraFocalPoint = transform.GetChild(0).GetComponent<Transform>();
-        else if (!_triggerType) _linkedCameraConfiner = GetComponent<CompositeCollider2D>();
     }
 }

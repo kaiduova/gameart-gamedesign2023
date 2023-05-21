@@ -75,6 +75,11 @@ public class EatingEnemy : MonoBehaviour
 
     public GameObject GhostHand;
 
+    public bool PermaBounce;
+
+    public Animator _animator;
+
+
     private void CallScreenShake() {
         ScreenShake.GenerateImpulse();
     }
@@ -114,6 +119,14 @@ public class EatingEnemy : MonoBehaviour
     private void Update()
     {
         print(State);
+
+        if (PermaBounce)
+        {
+            State = EatingEnemyState.Bounce;
+            _animator.SetTrigger("PermaBounce");
+            reviveTime = ReviveTime;
+        }
+
 
         if (useSecondSet)
         {

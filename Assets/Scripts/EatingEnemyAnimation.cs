@@ -83,5 +83,6 @@ public class EatingEnemyAnimation : MonoBehaviour
 
         }
 
+
     }
 }

@@ -1,0 +1,245 @@
+fileFormatVersion: 2
+guid: 0f17f77dbf492414b8cc2dde5d05aca0
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 200
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: LongPole_28
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 936
+        width: 3186
+        height: 612
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad0b721148afbc04182df4113b36b890
+      internalID: -10290784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 4aa206d5ddb8b0547ab793c6d273c127
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      LongPole_27: 1795963020
+      LongPole_64: 1098206405
+      LongPole_15: 1497680094
+      LongPole_2: 572464350
+      LongPole_46: 793238592
+      LongPole_78: -2023935621
+      LongPole_73: -1335625244
+      LongPole_60: 1475398849
+      LongPole_67: 1337462372
+      LongPole_70: 890174950
+      LongPole_22: -516596650
+      LongPole_39: 2021171579
+      LongPole_88: 1377575067
+      LongPole_37: -220049745
+      LongPole_44: -1074851186
+      LongPole_17: -495846645
+      LongPole_11: 1770839564
+      LongPole_24: 2109260480
+      LongPole_41: -1963399330
+      LongPole_59: -907124384
+      LongPole_30: 1935409074
+      LongPole_23: -2036218994
+      LongPole_65: -456292357
+      LongPole_18: -300504418
+      LongPole_10: -883027208
+      LongPole_58: -207762999
+      LongPole_36: 670532288
+      LongPole_52: -534304934
+      LongPole_1: -155600794
+      LongPole_56: -1418775536
+      LongPole_4: -529863084
+      LongPole_53: 884934775
+      LongPole_43: -328486486
+      LongPole_86: 1708144431
+      LongPole_32: -513021306
+      LongPole_13: 226642052
+      LongPole_7: 1141859906
+      LongPole_81: -1980250017
+      LongPole_19: -2094858273
+      LongPole_26: 747632585
+      LongPole_33: 476380399
+      LongPole_5: 1393722356
+      LongPole_40: 289066920
+      LongPole_28: -10290784
+      LongPole_3: -136076347
+      LongPole_0: -60492391
+      LongPole_72: 1283232177
+      LongPole_55: -51618003
+      LongPole_79: -796926172
+      LongPole_9: -1698813843
+      LongPole_42: -743391608
+      LongPole_57: 686008075
+      LongPole_48: -65016279
+      LongPole_75: 1114843946
+      LongPole_8: 176872589
+      LongPole_54: 1272483301
+      LongPole_62: -1205303656
+      LongPole_14: 1002552826
+      LongPole_25: -394358272
+      LongPole_61: -1650877330
+      LongPole_12: -1025160464
+      LongPole_87: 898579633
+      LongPole_45: 215743730
+      LongPole_66: -46264322
+      LongPole_20: -1467745402
+      LongPole_38: 1444139026
+      LongPole_80: -293897092
+      LongPole_35: -365128
+      LongPole_29: -1126379072
+      LongPole_34: 1936033402
+      LongPole_47: 368173473
+      LongPole_68: 2172710
+      LongPole_74: -1210373551
+      LongPole_6: 1660162217
+      LongPole_31: 1872429129
+      LongPole_51: -1147522298
+      LongPole_85: -1181827068
+      LongPole_16: -1402286098
+      LongPole_69: 614299235
+      LongPole_21: -2048893660
+      LongPole_82: -366124000
+      LongPole_77: 1950020386
+      LongPole_83: 1528032609
+      LongPole_50: 219683026
+      LongPole_49: 1011315170
+      LongPole_76: 325383296
+      LongPole_84: -1753401218
+      LongPole_71: 835360099
+      LongPole_63: -1845323237
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

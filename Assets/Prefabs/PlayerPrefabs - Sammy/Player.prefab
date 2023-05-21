@@ -57,7 +57,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -151,17 +151,24 @@ MonoBehaviour:
   _rigidbody2D: {fileID: 2691081084503107542}
   _boxCollider2D: {fileID: 2691081084503107537}
   playerBullet: {fileID: 6968081164900119494, guid: 61257caa1508b704fb12af8d0122297d, type: 3}
-  PlayerCurrentState: 0
+  CurrentState: 0
+  _heart1Image: {fileID: 0}
+  _heart2Image: {fileID: 0}
+  _heart3Image: {fileID: 0}
+  _heartFull: {fileID: 0}
+  _heartEmpty: {fileID: 0}
   groundCheck: {fileID: 2691081085561761950}
   groundCheckSize: {x: 0.8, y: 0.2}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  _currentMovementSpeed: 0
   _movementSpeed: 5
   _jumpPeakMovementSpeed: 7.5
-  _currentMovementSpeed: 0
   _accelerationIntensity: 10
   _deccelerationIntensity: 20
+  HorizontalInput: 0
+  VerticalInput: 0
   _jumpForce: 12.5
   _maxJumpDuration: 0.5
   _jumpDuration: 0
@@ -171,6 +178,26 @@ MonoBehaviour:
   _jumpBufferWindow: 0.2
   playerPivotPoint: {fileID: 2691081086321845726}
   playerReticle: {fileID: 2691081085446523232}
+  PlayerHealth: 0
+  PlayerRespawnDelay: 0
+  currentHackedBox: {fileID: 0}
+  PhysicsMaterial2D: {fileID: 0}
+  ghostHand: {fileID: 0}
+  PlayerCanvas: {fileID: 0}
+  GhostHandObject: {fileID: 0}
+  GaugeFill: {fileID: 0}
+  GhostHandMovementSpeed: 0
+  SummonDuration: 0
+  SummonInputDuration: 0
+  _ghostHandBufferOutroDurationReset: 0
+  _ghostHandBufferIntroDurationReset: 0
+  _ghostHandInputBufferDuration: 0
+  _ghostHandInputBufferDurationReset: 0
+  additionalJumpBounceForce: 0
+  controlBulletInputBuffer: 0
+  DeathScreen: {fileID: 0}
+  cameraController: {fileID: 0}
+  _animator: {fileID: 0}
 --- !u!1 &2691081085446523232
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,7 +250,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
