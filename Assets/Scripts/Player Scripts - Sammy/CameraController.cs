@@ -37,12 +37,6 @@ public class CameraController : MonoBehaviour {
 
     public CinemachineConfiner CinemachineConfiner;
 
-    [Header("Camera Confiners")]
-    [SerializeField] private CompositeCollider2D _level1Confiner;
-    [SerializeField] private CompositeCollider2D _level2Confiner;
-
-    [SerializeField] private CompositeCollider2D[] _level3Confiners;
-
 
 
 

@@ -12,7 +12,8 @@ public class PlaceableCameraTrigger : MonoBehaviour {
 
     [Header("Externally Referenced Components")]
     public CameraController CameraController;
-    [SerializeField] private CompositeCollider2D _linkedCameraConfiner;
+    [SerializeField] private CompositeCollider2D _currentCameraConfiner;
+    [SerializeField] private CompositeCollider2D _cameraConfinerToChangeTo;
 
     [Header("Camera Trigger Type")]
     [SerializeField] private bool _triggerType;
@@ -33,12 +34,13 @@ public class PlaceableCameraTrigger : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (!_triggerType) CameraController.CinemachineConfiner.m_BoundingShape2D = _linkedCameraConfiner;
+        if (!_triggerType) CameraController.CinemachineConfiner.m_BoundingShape2D = _cameraConfinerToChangeTo;
     }
    
     private void OnTriggerExit2D(Collider2D collision) {
         if (collision.gameObject.layer == 6) {
             if (_triggerType) CameraController.CurrentState = CameraStates.FollowingPlayer;
+            if (!_triggerType) CameraController.CinemachineConfiner.m_BoundingShape2D = _currentCameraConfiner;
         }
     }
 
