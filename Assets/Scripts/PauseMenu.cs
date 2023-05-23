@@ -8,7 +8,7 @@ public class PauseMenu : InputMonoBehaviour
     private bool _paused;
 
     [SerializeField]
-    private Image pauseMenuImage;
+    private Image pauseMenuImage, backgroundImage;
     
     [SerializeField]
     private int level1Index, level2Index, level3Index;
@@ -16,6 +16,7 @@ public class PauseMenu : InputMonoBehaviour
     private void Start()
     {
         pauseMenuImage.enabled = false;
+        backgroundImage.enabled = false;
     }
 
     private void Update()
@@ -28,6 +29,7 @@ public class PauseMenu : InputMonoBehaviour
         if (_paused)
         {
             pauseMenuImage.enabled = true;
+            backgroundImage.enabled = true;
             Time.timeScale = 0;
             if (CurrentInput.DPad == Vector2.left)
             {
@@ -48,7 +50,8 @@ public class PauseMenu : InputMonoBehaviour
         else
         {
             pauseMenuImage.enabled = false;
-            Time.timeScale = 0;
+            backgroundImage.enabled = false;
+            Time.timeScale = 1;
         }
     }
 }

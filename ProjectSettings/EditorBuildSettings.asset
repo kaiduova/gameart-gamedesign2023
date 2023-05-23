@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/FinalScenes/TitleScreen_LevelSelect.unity
     guid: 1cd52b2d37c253742851785029c16338
   - enabled: 1
+    path: Assets/Scenes/FinalScenes/Level1_V3.unity
+    guid: 4c312c4c7df758e44aa87e3a1bd9fe3e
+  - enabled: 0
     path: Assets/Scenes/FinalScenes/Level1_V2.unity
     guid: 847ce536d47fcd1498aa31e690f86287
   - enabled: 1

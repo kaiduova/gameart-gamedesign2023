@@ -40,7 +40,7 @@ public class PlaceableCameraTrigger : MonoBehaviour {
     private void OnTriggerExit2D(Collider2D collision) {
         if (collision.gameObject.layer == 6) {
             if (_triggerType) CameraController.CurrentState = CameraStates.FollowingPlayer;
-            if (!_triggerType) CameraController.CinemachineConfiner.m_BoundingShape2D = _currentCameraConfiner;
+            //if (!_triggerType) CameraController.CinemachineConfiner.m_BoundingShape2D = _currentCameraConfiner;
         }
     }
 
