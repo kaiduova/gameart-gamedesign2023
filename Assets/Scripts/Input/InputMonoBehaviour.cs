@@ -84,6 +84,12 @@ namespace Input
         public bool GetKeyDownRightStickPress;
 
         public bool GetKeyUpRightStickPress;
+
+        public bool GetKeyDownStart;
+
+        public bool GetKeyUpStart;
+
+        public bool GetKeyStart;
     }
     
     /// <summary>
@@ -106,6 +112,7 @@ namespace Input
         private InputAction _rt;
         private InputAction _leftStickPress;
         private InputAction _rightStickPress;
+        private InputAction _start;
 
         protected virtual void OnEnable()
         {
@@ -123,6 +130,7 @@ namespace Input
             _rt = _input.Player.RT;
             _leftStickPress = _input.Player.LeftStickPress;
             _rightStickPress = _input.Player.RightStickPress;
+            _start = _input.Player.Start;
             _leftStick.Enable();
             _rightStick.Enable();
             _dPad.Enable();
@@ -136,6 +144,7 @@ namespace Input
             _rt.Enable();
             _leftStickPress.Enable();
             _rightStickPress.Enable();
+            _start.Enable();
         }
         protected virtual void LateUpdate()
         {
@@ -155,6 +164,7 @@ namespace Input
                 GetKeyRT = _rt.IsPressed(),
                 GetKeyLeftStickPress = _leftStickPress.IsPressed(),
                 GetKeyRightStickPress = _rightStickPress.IsPressed(),
+                GetKeyStart = _start.IsPressed(),
                 GetKeyDownA = _a.WasPressedThisFrame(),
                 GetKeyDownB = _b.WasPressedThisFrame(),
                 GetKeyDownX = _x.WasPressedThisFrame(),
@@ -165,6 +175,7 @@ namespace Input
                 GetKeyDownRT = _rt.WasPressedThisFrame(),
                 GetKeyDownLeftStickPress = _leftStickPress.WasPressedThisFrame(),
                 GetKeyDownRightStickPress = _rightStickPress.WasPressedThisFrame(),
+                GetKeyDownStart = _start.WasPressedThisFrame(),
                 GetKeyUpA = _a.WasReleasedThisFrame(),
                 GetKeyUpB = _b.WasReleasedThisFrame(),
                 GetKeyUpX = _x.WasReleasedThisFrame(),
@@ -174,7 +185,8 @@ namespace Input
                 GetKeyUpLT = _lt.WasReleasedThisFrame(),
                 GetKeyUpRT = _rt.WasReleasedThisFrame(),
                 GetKeyUpLeftStickPress = _leftStickPress.WasReleasedThisFrame(),
-                GetKeyUpRightStickPress = _rightStickPress.WasReleasedThisFrame()
+                GetKeyUpRightStickPress = _rightStickPress.WasReleasedThisFrame(),
+                GetKeyUpStart = _start.WasReleasedThisFrame()
             };
         }
 
@@ -193,6 +205,7 @@ namespace Input
             _rt.Disable();
             _leftStickPress.Disable();
             _rightStickPress.Disable();
+            _start.Disable();
         }
     }
 }

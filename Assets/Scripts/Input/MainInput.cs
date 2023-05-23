@@ -143,6 +143,15 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Start"",
+                    ""type"": ""Button"",
+                    ""id"": ""80eadd14-cbdc-4615-972c-62464a8f4404"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -519,6 +528,17 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
                     ""action"": ""Right Stick Press"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""65af278b-ae1a-4df4-ac13-076560ea47ee"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse;Gamepad;Joystick;Touch;XR"",
+                    ""action"": ""Start"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -601,6 +621,7 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
         m_Player_RT = m_Player.FindAction("RT", throwIfNotFound: true);
         m_Player_LeftStickPress = m_Player.FindAction("Left Stick Press", throwIfNotFound: true);
         m_Player_RightStickPress = m_Player.FindAction("Right Stick Press", throwIfNotFound: true);
+        m_Player_Start = m_Player.FindAction("Start", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -673,6 +694,7 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_RT;
     private readonly InputAction m_Player_LeftStickPress;
     private readonly InputAction m_Player_RightStickPress;
+    private readonly InputAction m_Player_Start;
     public struct PlayerActions
     {
         private @MainInput m_Wrapper;
@@ -690,6 +712,7 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
         public InputAction @RT => m_Wrapper.m_Player_RT;
         public InputAction @LeftStickPress => m_Wrapper.m_Player_LeftStickPress;
         public InputAction @RightStickPress => m_Wrapper.m_Player_RightStickPress;
+        public InputAction @Start => m_Wrapper.m_Player_Start;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -738,6 +761,9 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
                 @RightStickPress.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightStickPress;
                 @RightStickPress.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightStickPress;
                 @RightStickPress.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightStickPress;
+                @Start.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStart;
+                @Start.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStart;
+                @Start.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStart;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -781,6 +807,9 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
                 @RightStickPress.started += instance.OnRightStickPress;
                 @RightStickPress.performed += instance.OnRightStickPress;
                 @RightStickPress.canceled += instance.OnRightStickPress;
+                @Start.started += instance.OnStart;
+                @Start.performed += instance.OnStart;
+                @Start.canceled += instance.OnStart;
             }
         }
     }
@@ -845,5 +874,6 @@ public partial class @MainInput : IInputActionCollection2, IDisposable
         void OnRT(InputAction.CallbackContext context);
         void OnLeftStickPress(InputAction.CallbackContext context);
         void OnRightStickPress(InputAction.CallbackContext context);
+        void OnStart(InputAction.CallbackContext context);
     }
 }
