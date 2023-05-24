@@ -25,7 +25,7 @@ public class EatingEnemy : MonoBehaviour {
     public float ReviveTime { get => reviveTime; set => reviveTime = value; }
 
     [SerializeField]
-    private GameObject[] patrolPathMarkers, furthestReachablePointMarkers, secondPatrolPathMarkerSet, secondFurthestReachablePointSet;
+    private GameObject[] patrolPathMarkers, furthestReachablePointMarkers, secondPatrolPathMarkerSet, secondFurthestReachablePointSet, lights;
 
 
     [SerializeField]
@@ -176,6 +176,10 @@ public class EatingEnemy : MonoBehaviour {
         switch (State)
         {
             case EatingEnemyState.Default:
+                foreach (var enemyLight in lights)
+                {
+                    enemyLight.SetActive(true);
+                }
                 gameObject.layer = 8;
                 ReviveTimer = ReviveTime;
                 //Move between patrol path markers.
@@ -212,6 +216,10 @@ public class EatingEnemy : MonoBehaviour {
 
             case EatingEnemyState.PlayerNoticed:
                 {
+                    foreach (var enemyLight in lights)
+                    {
+                        enemyLight.SetActive(true);
+                    }
                     _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
 
                     _playerNoticedDelay += Time.deltaTime;
@@ -226,6 +234,10 @@ public class EatingEnemy : MonoBehaviour {
                 break;
 
             case EatingEnemyState.Attack:
+                foreach (var enemyLight in lights)
+                {
+                    enemyLight.SetActive(true);
+                }
                 gameObject.layer = 8;
                 ReviveTimer = ReviveTime;
                 //Chase within furthest reachable point markers.
@@ -257,6 +269,10 @@ public class EatingEnemy : MonoBehaviour {
                 
                 break;
             case EatingEnemyState.Swallowed:
+                foreach (var enemyLight in lights)
+                {
+                    enemyLight.SetActive(true);
+                }
                 playerNoticed = false;
 
                 gameObject.layer = 8;
@@ -272,15 +288,26 @@ public class EatingEnemy : MonoBehaviour {
 
                 break;
             case EatingEnemyState.Bounce:
+                foreach (var enemyLight in lights)
+                {
+                    enemyLight.SetActive(false);
+                }
                 gameObject.layer = 3;
                 _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
-                if (ReviveTimer <= 0f)
+                if (ReviveTimer <= 0f && _health.MaxHealth != 0)
                 {
                     _health.CurrentHealth = _health.MaxHealth;
                     StartCoroutine(WakeUp(1.1f));
                 }
 
-                _enemyGaugeUI.SetActive(true);
+                if (_health.MaxHealth == 0)
+                {
+                    _enemyGaugeUI.SetActive(false);
+                }
+                else
+                {
+                    _enemyGaugeUI.SetActive(true);
+                }
                 //gaugeBG.enabled = true;
                 //gaugeFill.enabled = true;
 
@@ -289,6 +316,10 @@ public class EatingEnemy : MonoBehaviour {
 
             case EatingEnemyState.WakeUp:
                 {
+                    foreach (var enemyLight in lights)
+                    {
+                        enemyLight.SetActive(true);
+                    }
                     _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
 
                     _wakeUpDelay += Time.deltaTime;

@@ -28,17 +28,15 @@ public class BouncePad : MonoBehaviour
         if (playerController != null)
         {
             playerController.Rigidbody2D.velocity = new Vector2(0, normalBounceForce);
-           // _controller.EatingEnemyAnim.SetTrigger("Bounced");
+            print("bounce triggered");
+            _controller.EatingEnemyAnim.SetTrigger("Bounced");
         }
-        else
+        else if (deflectingBlock != null && deflectingBlock.TryGetComponent<Rigidbody2D>(out var outRigidbody))
         {
-            if (deflectingBlock != null && deflectingBlock.TryGetComponent<Rigidbody2D>(out var outRigidbody))
-            {
-                _controller.ReviveTimer = _controller.ReviveTime;
-                outRigidbody.velocity = new Vector2(0, normalBounceForce);
-                //_controller.EatingEnemyAnim.SetTrigger("Bounced");
-            }
+            _controller.ReviveTimer = _controller.ReviveTime;
+            outRigidbody.velocity = new Vector2(0, normalBounceForce);
+            print("bounce triggered");
+            _controller.EatingEnemyAnim.SetTrigger("Bounced");
         }
-        _controller.EatingEnemyAnim.SetTrigger("Bounced");
     }
 }

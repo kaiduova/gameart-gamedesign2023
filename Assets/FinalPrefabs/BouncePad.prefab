@@ -1154,6 +1154,9 @@ MonoBehaviour:
   - {fileID: 0}
   secondPatrolPathMarkerSet: []
   secondFurthestReachablePointSet: []
+  lights:
+  - {fileID: 4702371876761949528}
+  - {fileID: 7583219384877944362}
   tolerance: 0.1
   speed: 2.5
   chaseSpeed: 5
@@ -1164,8 +1167,8 @@ MonoBehaviour:
   reviveTime: 10
   nextPoint: 0
   useSecondSet: 0
-  gaugeBG: {fileID: 1541785831}
   gaugeFill: {fileID: 862269863}
+  _enemyGaugeUI: {fileID: 0}
   EatingEnemyAnim: {fileID: 494844075}
   _player: {fileID: 0}
   _playerController: {fileID: 0}
@@ -1177,7 +1180,8 @@ MonoBehaviour:
   _wakeUpRelayReset: 1.1
   playerNoticed: 0
   SpitPoint: {fileID: 1967623023}
-  GhostHand: {fileID: 0}
+  _ghostHandObject: {fileID: 0}
+  _ghostHand: {fileID: 0}
   PermaBounce: 0
   _animator: {fileID: 0}
 --- !u!114 &4781276210343158267
