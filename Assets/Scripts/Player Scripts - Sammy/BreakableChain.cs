@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using static ChainBlock;
 
 public class BreakableChain : MonoBehaviour {
@@ -14,6 +15,9 @@ public class BreakableChain : MonoBehaviour {
     public GameObject LinkedChainBlock;
     [SerializeField] private ChainBlock _linkedChainBlockScript;
 
+    [FormerlySerializedAs("light")] [SerializeField]
+    private GameObject chainLight;
+
     private void Awake() {
         _healthSystem = GetComponent<UniversalHealthSystem>();
         _linkedChainBlockScript = LinkedChainBlock.GetComponent<ChainBlock>();
@@ -25,5 +29,9 @@ public class BreakableChain : MonoBehaviour {
 
     private void Update() {
         if (_healthSystem.CurrentHealth <= 0 && _linkedChainBlockScript.CurrentState == ChainBlockStates.Chained) _linkedChainBlockScript.CurrentState = ChainBlockStates.FreeFall;
+        if (chainLight != null && _linkedChainBlockScript.CurrentState == ChainBlockStates.FreeFall)
+        {
+            chainLight.SetActive(false);
+        }
     }
 }
