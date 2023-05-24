@@ -21,7 +21,7 @@ public class PlayerBullet : MonoBehaviour {
         if (collision.gameObject.layer == 3) { //Ground
             if (collision.gameObject.tag == "HackableBlock") {
                 if (_playerController.PlayerCurrentlyGrounded()) { 
-                    _playerController.currentHackedBox = collision.gameObject;
+                    //_playerController.currentHackedBox = collision.gameObject;
                     //_playerController.CurrentState = PlayerController.PlayerStates.HackingBox;
                     Rigidbody2D rigidbody2D = _player.GetComponent<Rigidbody2D>();
                     Destroy(rigidbody2D);

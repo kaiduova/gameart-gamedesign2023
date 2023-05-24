@@ -29,7 +29,6 @@ public class LevelSelectManager : InputMonoBehaviour {
     [SerializeField] private MeshRenderer _level2MR;
     [SerializeField] private MeshRenderer _level3MR;
     [SerializeField] private MeshRenderer _creditsMR;
-    [SerializeField] private MeshRenderer _controlsMR;
     [SerializeField] private MeshRenderer _quitMR;
 
     [Header("Credits Select Attributes")]
@@ -76,25 +75,23 @@ public class LevelSelectManager : InputMonoBehaviour {
 
                 if (_cursorSR.bounds.Intersects(_playMR.bounds)) {
                     _playMR.GetComponent<TextMesh>().color = Color.red;
-                    //if (CurrentInput.GetKeyDownA) 
+                    if (CurrentInput.GetKeyDownA) SceneManager.LoadScene(1);
                 } else _playMR.GetComponent<TextMesh>().color = Color.white;
 
                 if (_cursorSR.bounds.Intersects(_level1MR.bounds)) {
                     _level1MR.GetComponent<TextMesh>().color = Color.red;
-                    //if (CurrentInput.GetKeyDownA) 
+                    if (CurrentInput.GetKeyDownA) SceneManager.LoadScene(1);
                 } else _level1MR.GetComponent<TextMesh>().color = Color.white;
 
                 if (_cursorSR.bounds.Intersects(_level2MR.bounds)) {
                     _level2MR.GetComponent<TextMesh>().color = Color.red;
-                    //if (CurrentInput.GetKeyDownA) 
+                    if (CurrentInput.GetKeyDownA) SceneManager.LoadScene(2);
                 } else _level2MR.GetComponent<TextMesh>().color = Color.white;
 
                 if (_cursorSR.bounds.Intersects(_level3MR.bounds)) {
                     _level3MR.GetComponent<TextMesh>().color = Color.red;
-                    //if (CurrentInput.GetKeyDownA) 
+                    if (CurrentInput.GetKeyDownA) SceneManager.LoadScene(3);
                 } else _level3MR.GetComponent<TextMesh>().color = Color.white;
-
-                //Controls
 
                 if (_cursorSR.bounds.Intersects(_creditsMR.bounds)) {
                     _creditsMR.GetComponent<TextMesh>().color = Color.red;

@@ -3,10 +3,6 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
-    /* PascalCase - ClassNames, PublicMemberVariables, ProtectedMemberVariables, Methods & Functions
-    camelCase - parameters, arguments, methodVariables, functionVariables
-    _camelCase - privateMemberVariables */
-
     public enum CameraStates {
         FollowingPlayer,
         GhostHandActive,
@@ -31,16 +27,6 @@ public class CameraController : MonoBehaviour {
     [SerializeField] private float _zoomSpeed;
     public float PassedOrthoSize;
 
-
-
-
-
-    public CinemachineConfiner CinemachineConfiner;
-
-
-
-
-
     private void Awake() {
         _playerPos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
@@ -63,7 +49,7 @@ public class CameraController : MonoBehaviour {
         }
     }
 
-    void Update() {
+    private void Update() {
         if (CurrentState == CameraStates.FollowingPlayer) {
             VirtualCamera.Follow = _playerPos;
             CameraResising(_playerOrthoSize);

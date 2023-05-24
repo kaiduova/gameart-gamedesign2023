@@ -1,27 +1,25 @@
-﻿using System;
-using System.Collections;
-using System.Linq;
-using UnityEngine;
+﻿using System.Linq;
 using Cinemachine;
+using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 using static PlayerController;
+using static GhostHand;
 
-public enum EatingEnemyState
-{
+public enum EatingEnemyState {
     Default,
     Attack,
     Swallowed,
     Bounce,
     WakeUp,
 
-
     PlayerNoticed
 }
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(UniversalHealthSystem))] 
 [RequireComponent(typeof(BouncePad))] 
-public class EatingEnemy : MonoBehaviour
-{
+public class EatingEnemy : MonoBehaviour {
+
     public EatingEnemyState State { get; set; }
     public float ReviveTimer { get => _reviveTimer; set => _reviveTimer = value; }
     public float ReviveTime { get => reviveTime; set => reviveTime = value; }
@@ -52,7 +50,10 @@ public class EatingEnemy : MonoBehaviour
 
     public bool useSecondSet;
 
-    [SerializeField] private Image gaugeBG, gaugeFill;
+    [SerializeField] private Image gaugeFill;
+    //[SerializeField] private Image gaugeBG, gaugeFill;
+
+    [SerializeField] private GameObject _enemyGaugeUI;
 
 
     [SerializeField] public Animator EatingEnemyAnim;
@@ -73,7 +74,8 @@ public class EatingEnemy : MonoBehaviour
 
     public GameObject SpitPoint;
 
-    public GameObject GhostHand;
+    [SerializeField] private GameObject _ghostHandObject;
+    [SerializeField] private GhostHand _ghostHand;
 
     public bool PermaBounce;
 
@@ -90,10 +92,14 @@ public class EatingEnemy : MonoBehaviour
         _health = GetComponent<UniversalHealthSystem>();
         _bouncePad = GetComponent<BouncePad>();
 
-        gaugeBG.enabled = false;
-        gaugeFill.enabled = false;
+        _enemyGaugeUI.SetActive(false);
+        //gaugeBG.enabled = false;
+        //gaugeFill.enabled = false;
+
         _canRotate = true;
 
+
+        _ghostHand = _ghostHandObject.GetComponent<GhostHand>();
 
         _playerController = _player.GetComponent<PlayerController>();
     }
@@ -184,8 +190,9 @@ public class EatingEnemy : MonoBehaviour
                         : Vector3.right)).x, _rigidbody.velocity.y);
                 }
 
-                gaugeBG.enabled = false;
-                gaugeFill.enabled = false;
+                _enemyGaugeUI.SetActive(false);
+                //gaugeBG.enabled = false;
+                //gaugeFill.enabled = false;
 
                 if (_canRotate)
                 {
@@ -227,10 +234,11 @@ public class EatingEnemy : MonoBehaviour
                 {
                     _rigidbody.velocity = new Vector2((chaseSpeed * Vector3.left).x, _rigidbody.velocity.y);
                 }
-                
-                gaugeBG.enabled = false;
-                gaugeFill.enabled = false;
-                
+
+                _enemyGaugeUI.SetActive(false);
+                //gaugeBG.enabled = false;
+                //gaugeFill.enabled = false;
+
                 if (transform.position.x < furthestReachablePointMarkers.Max(point => point.transform.position.x)
                     && _player.transform.position.x > transform.position.x)
                 {
@@ -256,8 +264,11 @@ public class EatingEnemy : MonoBehaviour
                 if (_startedSwallowCoroutine) return;
                 StartCoroutine(Swallow(swallowDuration));
                 _startedSwallowCoroutine = true;
-                gaugeBG.enabled = false;
-                gaugeFill.enabled = false;
+
+                _enemyGaugeUI.SetActive(false);
+                //gaugeBG.enabled = false;
+                //gaugeFill.enabled = false;
+
                 break;
             case EatingEnemyState.Bounce:
                 gameObject.layer = 3;
@@ -267,8 +278,11 @@ public class EatingEnemy : MonoBehaviour
                     _health.CurrentHealth = _health.MaxHealth;
                     StartCoroutine(WakeUp(1.1f));
                 }
-                gaugeBG.enabled = true;
-                gaugeFill.enabled = true;
+
+                _enemyGaugeUI.SetActive(true);
+                //gaugeBG.enabled = true;
+                //gaugeFill.enabled = true;
+
                 gaugeFill.fillAmount = _reviveTimer / reviveTime;
                 break;
 
@@ -297,8 +311,15 @@ public class EatingEnemy : MonoBehaviour
 
     private IEnumerator Swallow(float duration)
     {
-        if (GhostHand.activeInHierarchy) GhostHand.SetActive(false);
+        if (_ghostHandObject.activeInHierarchy)
+        {
+            _ghostHand.InitialiseTotemBlocks();
+            _ghostHandObject.SetActive(false);
+        }
 
+
+
+         
         _player.SetActive(false);
         CallScreenShake();
         _canRotate = false;

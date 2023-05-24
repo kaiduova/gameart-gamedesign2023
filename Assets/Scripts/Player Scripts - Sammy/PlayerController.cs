@@ -1,24 +1,19 @@
 //Written by Sammy
+using Input;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using Input;
 using System.Collections;
+using UnityEngine.SceneManagement;
+using static GhostHand;
 
 public class PlayerController : InputMonoBehaviour {
-
-    /* PascalCase - ClassNames, PublicMemberVariables, ProtectedMemberVariables, Methods & Functions
-    camelCase - parameters, arguments, methodVariables, functionVariables
-    _camelCase - privateMemberVariables */
 
     public enum PlayerStates { 
         NeutralMovement, 
         StateDelay,
-
         ControllingBullet,
         Knockback,
         Dead,
-
         SummoningGhostHand,
         GhostHandMode,
         DismissingGhostHand,
@@ -29,28 +24,9 @@ public class PlayerController : InputMonoBehaviour {
 
     [Header("Internally Referenced Components")]
     [SerializeField] Rigidbody2D _rigidbody2D;
-    [SerializeField] BoxCollider2D _boxCollider2D;
-    
-    //Used by bounce pad.
-    public Rigidbody2D Rigidbody2D => _rigidbody2D;
-    public float JumpBufferDuration => _jumpBufferDuration;
-    public float CoyoteTimeDuration => _coyoteTimeDuration;
-
-    
-    [Header("Externally Referenced Components")]
-    public GameObject playerBullet;
 
     [Header("Current State")]
     public PlayerStates CurrentState;
-
-
-    [Header("Player Health Components")]
-    [SerializeField] Image _heart1Image;
-    [SerializeField] Image _heart2Image;
-    [SerializeField] Image _heart3Image;
-
-    [SerializeField] Sprite _heartFull;
-    [SerializeField] Sprite _heartEmpty;
 
     [Header("Ground Check")]
     [SerializeField] Transform groundCheck;
@@ -81,81 +57,42 @@ public class PlayerController : InputMonoBehaviour {
     bool _currentlyJumping;
     Vector2 initialGravity;
 
-    //NEW UNORGANISED
-    public Transform playerPivotPoint;
-    public GameObject playerReticle;
-    Vector3 reticleRotation;
-
-
-    //Health
+    [Header("Player Health Components")]
     public int PlayerHealth;
     public float PlayerRespawnDelay;
+    [SerializeField] private Image _heart1Image;
+    [SerializeField] private Image _heart2Image;
+    [SerializeField] private Image _heart3Image;
+    [SerializeField] private Sprite _heartFull;
+    [SerializeField] private Sprite _heartEmpty;
 
+    [Header("Player Projectile Components")]
+    public GameObject PlayerBullet;
+    [SerializeField] private Transform _playerPivotPoint;
+    private Vector3 _reticleRotation;
 
-
-    //Boxes
-    public GameObject currentHackedBox;
-    public PhysicsMaterial2D PhysicsMaterial2D;
-
-
-    //Ghost Hand 
-    public GhostHand ghostHand;
-
-    public GameObject PlayerCanvas, GhostHandObject;
+    [Header("Ghost Hand Components")]
+    public GameObject GhostHandObject;
+    public GhostHand GhostHand;
+    public GameObject PlayerCanvas;
     public Image GaugeFill;
     public float GhostHandMovementSpeed; //Affects player not hand
-
-    public float SummonDuration;
-    public float SummonInputDuration;
-
-
+    private float _summonInputDuration;
     private float _ghostHandBufferOutroDuration;
-    [SerializeField] float _ghostHandBufferOutroDurationReset;
-
+    [SerializeField] private float _ghostHandBufferOutroDurationReset;
     private float _ghostHandBufferIntroDuration;
-    [SerializeField] float _ghostHandBufferIntroDurationReset;
+    [SerializeField] private float _ghostHandBufferIntroDurationReset;
+    private float _ghostHandInputBufferDuration;
+    [SerializeField] private float _ghostHandInputBufferDurationReset;
 
-    public  float _ghostHandInputBufferDuration;
-    [SerializeField] float _ghostHandInputBufferDurationReset;
-    
-    private bool _cancelNextJump;
-    
+    [Header("Kai's Additions")]
     [SerializeField] private float additionalJumpBounceForce;
-
     public float controlBulletInputBuffer;
-
-
-
-
-    public GameObject DeathScreen;
-
-    public CameraController cameraController;
-
-    public Animator _animator;
-
-
-    private IEnumerator DeathScreenAnimation() {
-        HorizontalInput = 0;
-        VerticalInput = 0;
-        _rigidbody2D.velocity = Vector3.zero;
-
-        DeathScreen.SetActive(true);
-        _animator.SetTrigger("death");
-        cameraController.CurrentState = CameraController.CameraStates.Static;
-
-        yield return new WaitForSeconds(0.5f);
-
-        transform.position += new Vector3(0, _movementSpeed * Time.deltaTime);
-        //_rigidbody2D.velocity = new Vector2(0, _jumpForce);
-        _boxCollider2D.enabled = false;
-
-        yield return new WaitForSeconds(0.25f);
-        transform.position += new Vector3(0, -_jumpForce * Time.deltaTime);
-        //_rigidbody2D.velocity = new Vector2(0, -_jumpForce * 5);
-
-        yield return new WaitForSeconds(2f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+    private bool _cancelNextJump;
+    //Used by Bounce Pad
+    public Rigidbody2D Rigidbody2D => _rigidbody2D;
+    public float JumpBufferDuration => _jumpBufferDuration;
+    public float CoyoteTimeDuration => _coyoteTimeDuration;
 
     public IEnumerator Knockback(float knockBackDirection) {
         _rigidbody2D.velocity = new Vector2(knockBackDirection, ((_jumpForce / 3) * 2));
@@ -164,26 +101,19 @@ public class PlayerController : InputMonoBehaviour {
 
     private void Awake() {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        _boxCollider2D = GetComponent<BoxCollider2D>();
         groundCheck = transform.GetChild(0).GetComponent<Transform>();
     }
 
     private void Start() {
         initialGravity = new Vector2(0, -Physics2D.gravity.y);
-
         PlayerHealth = 3;
-
-
         PlayerCanvas.SetActive(false);
-
         CurrentState = PlayerStates.NeutralMovement;
     }
-
    
     private void PlayerAnimation() {
         if (HorizontalInput < 0) transform.eulerAngles = new Vector3(0, 180, 0);
         if (HorizontalInput > 0) transform.eulerAngles = new Vector3(0, 0, 0);
-
         if (!(PlayerCanvas.activeInHierarchy)) return;
         PlayerCanvas.transform.eulerAngles = new Vector3(0, 0, 0);
     }
@@ -198,19 +128,12 @@ public class PlayerController : InputMonoBehaviour {
 
     public bool PlayerCurrentlyGrounded() { 
         RaycastHit2D hit = Physics2D.BoxCast(groundCheck.position, groundCheckSize, 0f, Vector2.zero, 0f, groundLayer);
-        if (hit.collider != null && hit.collider.TryGetComponent<BouncePad>(out var bouncePad) && bouncePad.canBounce)
-        {
-            _cancelNextJump = true;
-        }
-        else
-        {
-            _cancelNextJump = false;
-        }
+        if (hit.collider != null && hit.collider.TryGetComponent<BouncePad>(out var bouncePad) && bouncePad.canBounce) _cancelNextJump = true;
+        else _cancelNextJump = false;
         return Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0, groundLayer);
     }
 
     private void UltimateJump() {
-
         if (PlayerCurrentlyGrounded()) {
             _currentMovementSpeed = _movementSpeed;
             _coyoteTimeDuration = _coyoteTimeWindow;
@@ -220,17 +143,9 @@ public class PlayerController : InputMonoBehaviour {
         if ((CurrentInput.GetKeyDownA || CurrentInput.GetKeyDownLT)) _jumpBufferDuration = _jumpBufferWindow;
         else _jumpBufferDuration -= Time.deltaTime;
         
-        if (_jumpBufferDuration > 0 && _coyoteTimeDuration > 0)
-        {
-            if (_cancelNextJump)
-            {
-                _rigidbody2D.velocity += new Vector2(0, -_jumpForce);
-            }
-            else
-            {
-                _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _jumpForce);
-            }
-
+        if (_jumpBufferDuration > 0 && _coyoteTimeDuration > 0) {
+            if (_cancelNextJump) _rigidbody2D.velocity += new Vector2(0, -_jumpForce);
+            else _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _jumpForce);
             _currentlyJumping = true;
             _jumpBufferDuration = 0;
             _jumpDuration = 0;
@@ -262,26 +177,14 @@ public class PlayerController : InputMonoBehaviour {
 
     private void ReticleRotation_ProjectileFiring() {
         if (CurrentState == PlayerStates.NeutralMovement) {
-            if (CurrentInput.RightStick.x != 0 || CurrentInput.RightStick.y != 0) playerPivotPoint.gameObject.SetActive(true);
-            else playerPivotPoint.gameObject.SetActive(false);
-            if (playerPivotPoint.gameObject.activeInHierarchy) {
-                reticleRotation = new Vector3(CurrentInput.RightStick.x, CurrentInput.RightStick.y);
-                var appliedRotation = Quaternion.LookRotation(Vector3.forward, reticleRotation);
-                playerPivotPoint.rotation = appliedRotation;
-                //if (CurrentInput.GetKeyDownRT) Instantiate(playerBullet, playerPivotPoint.position, Quaternion.identity);
+            if (CurrentInput.RightStick.x != 0 || CurrentInput.RightStick.y != 0) _playerPivotPoint.gameObject.SetActive(true);
+            else _playerPivotPoint.gameObject.SetActive(false);
+            if (_playerPivotPoint.gameObject.activeInHierarchy) {
+                _reticleRotation = new Vector3(CurrentInput.RightStick.x, CurrentInput.RightStick.y);
+                var appliedRotation = Quaternion.LookRotation(Vector3.forward, _reticleRotation);
+                _playerPivotPoint.rotation = appliedRotation;
             }
-        }
-        
-        /*if (PlayerCurrentState == PlayerStates.neutralMovement) {
-            playerPivotPoint.gameObject.SetActive(true);
-            reticleRotation = new Vector3(CurrentInput.RightStick.x, CurrentInput.RightStick.y);
-            var appliedRotation = Quaternion.LookRotation(Vector3.forward, reticleRotation);
-            playerPivotPoint.rotation = appliedRotation;
-            if (CurrentInput.GetKeyDownRT) Instantiate(playerBullet, playerPivotPoint.position, Quaternion.identity);
-        }*/
-
-
-
+        }       
     }
 
     private void PlayerHealthSystem() {
@@ -289,8 +192,7 @@ public class PlayerController : InputMonoBehaviour {
         else if (PlayerHealth < 1) {
             PlayerHealth = 0;
             CurrentState = PlayerStates.Dead;
-            StartCoroutine(DeathScreenAnimation());
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         switch (PlayerHealth) {
@@ -315,44 +217,7 @@ public class PlayerController : InputMonoBehaviour {
                 _heart1Image.sprite = _heartEmpty;
             } break; 
         }
-    }
-
-
-
-
-    private void ControllerHackedBlock(GameObject currentHackedBlock) {
-        Rigidbody2D currentHackedBlockRigidBody2D = currentHackedBlock.GetComponent<Rigidbody2D>();
-        currentHackedBlockRigidBody2D.gravityScale = 0;
-
-        float horizontalMaxSpeed = HorizontalInput * (_movementSpeed * 2);
-        float horizontalSpeedDifference = horizontalMaxSpeed - currentHackedBlockRigidBody2D.velocity.x;
-        float horizontalAccelerationRate = (Mathf.Abs(horizontalMaxSpeed) > 0.01f) ? _accelerationIntensity : _deccelerationIntensity;
-        float horizontalSpeedApplied = Mathf.Pow(Mathf.Abs(horizontalSpeedDifference) * horizontalAccelerationRate, _movementPower) * Mathf.Sign(horizontalSpeedDifference);
-        currentHackedBlockRigidBody2D.AddForce(horizontalSpeedApplied * Vector2.right);
-
-        float verticalMaxSpeed = VerticalInput * (_movementSpeed *2);
-        float verticalSpeedDifference = verticalMaxSpeed - currentHackedBlockRigidBody2D.velocity.y;
-        float verticalAccelerationRate = (Mathf.Abs(verticalMaxSpeed) > 0.01f) ? _accelerationIntensity : _deccelerationIntensity;
-        float verticalSpeedApplied = Mathf.Pow(Mathf.Abs(verticalSpeedDifference) * verticalAccelerationRate, _movementPower) * Mathf.Sign(verticalSpeedDifference);
-        currentHackedBlockRigidBody2D.AddForce(verticalSpeedApplied * Vector2.up);
-
-        if (CurrentInput.GetKeyDownB) {
-            currentHackedBlockRigidBody2D.gravityScale = 3;
-            currentHackedBox = null;
-
-            gameObject.AddComponent<Rigidbody2D>();
-            _rigidbody2D = GetComponent<Rigidbody2D>();
-
-            _rigidbody2D.sharedMaterial = PhysicsMaterial2D;
-            _rigidbody2D.simulated = true;
-            _rigidbody2D.gravityScale = 3;
-            _rigidbody2D.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-            _rigidbody2D.interpolation = RigidbodyInterpolation2D.Interpolate;
-            _rigidbody2D.freezeRotation = true;
-            
-            CurrentState = PlayerStates.NeutralMovement;
-        }
-    }
+    } 
 
     private void FixedUpdate() {
         if (CurrentState 
@@ -382,22 +247,13 @@ public class PlayerController : InputMonoBehaviour {
 
         if (CurrentState == PlayerStates.NeutralMovement) {
             _currentMovementSpeed = _movementSpeed;
-
-            SummonInputDuration = 0;
+            _summonInputDuration = 0;
             PlayerCanvas.SetActive(false);
 
-            if (PlayerCurrentlyGrounded() && CurrentInput.GetKeyRT)
-            {
+            if (PlayerCurrentlyGrounded() && CurrentInput.GetKeyRT) {
                 controlBulletInputBuffer = 0;
                 controlBulletInputBuffer += Time.deltaTime;
-
-                //if (controlBulletInputBuffer > 0.2f) print("Controlling Bullet");
-                //else if (CurrentInput.GetKeyUpRT) controlBulletInputBuffer = 0;
-
-                //CurrentState = PlayerStates.ControllingBullet;
             }
-
-
 
             if (PlayerCurrentlyGrounded() && CurrentInput.GetKeyLB) {
                 PlayerCanvas.SetActive(true);
@@ -405,46 +261,38 @@ public class PlayerController : InputMonoBehaviour {
             }
         }
 
-        if (CurrentState == PlayerStates.Knockback)
-        {
-            if (PlayerCurrentlyGrounded())
-            {
+        if (CurrentState == PlayerStates.Knockback) {
+            if (PlayerCurrentlyGrounded()) {
                 PlayerHealth--;
                 CurrentState = PlayerStates.NeutralMovement;
             }
         }
 
-        if (CurrentState == PlayerStates.ControllingBullet)
-        {
+        if (CurrentState == PlayerStates.ControllingBullet) {
             _currentMovementSpeed = GhostHandMovementSpeed;
-
-
-            if (CurrentInput.GetKeyRT || !PlayerCurrentlyGrounded())
-            {
-                CurrentState = PlayerStates.NeutralMovement;
-            }
+            if (CurrentInput.GetKeyRT || !PlayerCurrentlyGrounded()) CurrentState = PlayerStates.NeutralMovement;
         }
 
         if (CurrentState == PlayerStates.SummoningGhostHand) {
             PlayerCanvas.SetActive(true);
-            GaugeFill.fillAmount = SummonInputDuration * 2;
+            GaugeFill.fillAmount = _summonInputDuration * 2;
             _currentMovementSpeed = GhostHandMovementSpeed;
 
             if (CurrentInput.GetKeyUpLB || !PlayerCurrentlyGrounded())  CurrentState = PlayerStates.NeutralMovement;
             
             if (CurrentInput.GetKeyLB) {
-                SummonInputDuration += Time.deltaTime * 2;
-                if (SummonInputDuration > 0.5f) {
-                    SummonInputDuration = 0;
+                _summonInputDuration += Time.deltaTime * 2;
+                if (_summonInputDuration > 0.5f) {
+                    _summonInputDuration = 0;
                     GhostHandObject.SetActive(true);
-                    ghostHand.CurrentState = GhostHand.GhostHandStates.Summoning;
+                    GhostHand.CurrentState = GhostHandStates.Summoning;
                     CurrentState = PlayerStates.GhostHandBufferIntro;
                 }
             }
         }
 
         if (CurrentState == PlayerStates.GhostHandMode) {
-            SummonInputDuration = 0;
+            _summonInputDuration = 0;
             PlayerCanvas.SetActive(false);
             _currentMovementSpeed = GhostHandMovementSpeed;
 
@@ -453,7 +301,7 @@ public class PlayerController : InputMonoBehaviour {
                 if (_ghostHandInputBufferDuration >= _ghostHandInputBufferDurationReset) {
                     PlayerCanvas.SetActive(true);
                     CurrentState = PlayerStates.DismissingGhostHand;
-                    if (ghostHand.currentBlock != null) ghostHand.CurrentState = GhostHand.GhostHandStates.DroppingBlock;
+                    if (GhostHand.currentBlock != null) GhostHand.CurrentState = GhostHandStates.DroppingBlock;
                 }
             } else _ghostHandInputBufferDuration = 0;
         }
@@ -461,15 +309,15 @@ public class PlayerController : InputMonoBehaviour {
         if (CurrentState == PlayerStates.DismissingGhostHand) {
             PlayerCanvas.SetActive(true);
             _currentMovementSpeed = GhostHandMovementSpeed;
-            GaugeFill.fillAmount = SummonInputDuration * 2;
+            GaugeFill.fillAmount = _summonInputDuration * 2;
 
             if (CurrentInput.GetKeyUpLB || !PlayerCurrentlyGrounded()) CurrentState = PlayerStates.GhostHandMode;
 
             if (CurrentInput.GetKeyLB) {
-                SummonInputDuration += Time.deltaTime * 2;
-                if (SummonInputDuration > 0.5f) {
-                    SummonInputDuration = 0;
-                    ghostHand.CurrentState = GhostHand.GhostHandStates.Dismissing;
+                _summonInputDuration += Time.deltaTime * 2;
+                if (_summonInputDuration > 0.5f) {
+                    _summonInputDuration = 0;
+                    GhostHand.CurrentState = GhostHandStates.Dismissing;
                     CurrentState = PlayerStates.GhostHandBufferOutro;
                 }
             }
@@ -478,14 +326,13 @@ public class PlayerController : InputMonoBehaviour {
         if (CurrentState == PlayerStates.GhostHandBufferIntro) {
             HorizontalInput = 0;
             _rigidbody2D.velocity = new Vector2(0, 0);
-
-            SummonInputDuration = 0;
+            _summonInputDuration = 0;
             PlayerCanvas.SetActive(false);
 
             _ghostHandBufferIntroDuration += Time.deltaTime;
             if(_ghostHandBufferIntroDuration >= _ghostHandBufferIntroDurationReset) {
                 _ghostHandBufferIntroDuration = 0;
-                ghostHand.CurrentState = GhostHand.GhostHandStates.SearchingForBlock;
+                GhostHand.CurrentState = GhostHandStates.SearchingForBlock;
                 CurrentState = PlayerStates.GhostHandMode;
             }
         }
@@ -493,8 +340,7 @@ public class PlayerController : InputMonoBehaviour {
         if (CurrentState == PlayerStates.GhostHandBufferOutro) {
             HorizontalInput = 0;
             _rigidbody2D.velocity = new Vector2(0, 0);
-
-            SummonInputDuration = 0;
+            _summonInputDuration = 0;
             PlayerCanvas.SetActive(false);
 
             _ghostHandBufferOutroDuration += Time.deltaTime;
@@ -504,9 +350,6 @@ public class PlayerController : InputMonoBehaviour {
                 CurrentState = PlayerStates.NeutralMovement;
             }
         }
-
-        //if (CurrentState == PlayerStates.Dead) StartCoroutine(DeathScreenAnimation());
-        
 
         if (CurrentState == PlayerStates.StateDelay) {
             HorizontalInput = 0;

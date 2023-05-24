@@ -4,10 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class GhostHand : InputMonoBehaviour {
 
-    /* PascalCase - ClassNames, PublicMemberVariables, ProtectedMemberVariables, Methods & Functions
-    camelCase - parameters, arguments, methodVariables, functionVariables
-    _camelCase - privateMemberVariables */
-
     public enum GhostHandStates {
         Summoning,
         SearchingForBlock,
@@ -20,6 +16,7 @@ public class GhostHand : InputMonoBehaviour {
     [Header("Internal Components")]
     [SerializeField] private Rigidbody2D _rigidbody2D;
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private Animator _animator;
 
     [Header("Externally Referenced Components")]
     [SerializeField] private PlayerController _playerController;
@@ -51,10 +48,6 @@ public class GhostHand : InputMonoBehaviour {
     [SerializeField] private float _ghostHandWidth;
     [SerializeField] private float _ghostHandHeight;
     private Camera _camera;
-
-
-
-    [SerializeField] private Animator _animator;
 
     private void OnTriggerStay2D(Collider2D collision) {
         if (collision.tag == "HackableBlock") {
@@ -105,6 +98,24 @@ public class GhostHand : InputMonoBehaviour {
         _rigidbody2D.AddForce(verticalSpeedApplied * Vector2.up);
     }
 
+    public void InitialiseTotemBlocks() {
+        if (currentBlock == null) return;
+        currentBlock.AddComponent<Rigidbody2D>();
+        Rigidbody2D blockRigidbody2D = currentBlock.GetComponent<Rigidbody2D>();
+        blockRigidbody2D.sharedMaterial = _blockPhysicsMaterial2D;
+        blockRigidbody2D.simulated = true;
+        blockRigidbody2D.mass = 10;
+        blockRigidbody2D.drag = 0;
+        blockRigidbody2D.angularDrag = 0;
+        blockRigidbody2D.gravityScale = 3;
+        blockRigidbody2D.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        blockRigidbody2D.interpolation = RigidbodyInterpolation2D.Interpolate;
+        currentBlock.transform.SetParent(null, true);
+        currentBlock.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX;
+        blockRigidbody2D.freezeRotation = true;
+        currentBlock = null;
+    }
+
     private void ScreenBoundaries() {
         _screenBoundaries = _camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0f));
         _screenBoundariesOther = _camera.ScreenToWorldPoint(Vector3.zero);
@@ -136,29 +147,18 @@ public class GhostHand : InputMonoBehaviour {
         if (CurrentState == GhostHandStates.SearchingForBlock) {
             _rightStickHorizontalInput = CurrentInput.RightStick.x;
             _rightStickVerticalInput = CurrentInput.RightStick.y;
-
-            //_spriteRenderer.sprite = _openHand;
             _animator.SetBool("holdingBlock", false);
-
-
             if (CurrentInput.GetKeyDownRB) CurrentState = GhostHandStates.GrabbingBlock;
         }
 
         if (CurrentState == GhostHandStates.GrabbingBlock) {
-
             _animator.SetBool("holdingBlock", true);
-
-            //_spriteRenderer.sprite = _closedHand;
-
-
             _rightStickHorizontalInput = 0;
             _rightStickHorizontalInput = 0;
             _rigidbody2D.velocity = new Vector2(0, 0);
-
             _grabDuration += Time.deltaTime;
             if (_grabDuration >= _grabDurationReset) {
                 _grabDuration = 0;
-
                 if (currentBlock != null) {
                     CurrentState = GhostHandStates.CarryingBlock;
                 } else CurrentState = GhostHandStates.SearchingForBlock;
@@ -168,14 +168,12 @@ public class GhostHand : InputMonoBehaviour {
         if (CurrentState == GhostHandStates.CarryingBlock) {
             _rightStickHorizontalInput = CurrentInput.RightStick.x;
             _rightStickVerticalInput = CurrentInput.RightStick.y;
-
             if (currentBlock != null) {
                 if (currentBlock.GetComponent<Rigidbody2D>()) {
                     Rigidbody2D blockRigidbody2D = currentBlock.GetComponent<Rigidbody2D>();
                     Destroy(blockRigidbody2D);
                 }
             }
-
             if (CurrentInput.GetKeyUpRB) CurrentState = GhostHandStates.DroppingBlock;
         }
 
@@ -183,29 +181,11 @@ public class GhostHand : InputMonoBehaviour {
             _rightStickHorizontalInput = 0;
             _rightStickHorizontalInput = 0;
             _rigidbody2D.velocity = new Vector2(0, 0);
-
             _dropDuration += Time.deltaTime;
             if (_dropDuration >= _dropDurationReset) {
                 _dropDuration = 0;
-
-                currentBlock.AddComponent<Rigidbody2D>();
-                Rigidbody2D blockRigidbody2D = currentBlock.GetComponent<Rigidbody2D>();
-                blockRigidbody2D.sharedMaterial = _blockPhysicsMaterial2D;
-                blockRigidbody2D.simulated = true;
-                blockRigidbody2D.mass = 10;
-                blockRigidbody2D.drag = 0;
-                blockRigidbody2D.angularDrag = 0;
-                blockRigidbody2D.gravityScale = 3;
-                blockRigidbody2D.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-                blockRigidbody2D.interpolation = RigidbodyInterpolation2D.Interpolate;
-                currentBlock.transform.SetParent(null, true);
-                currentBlock.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX;
-                blockRigidbody2D.freezeRotation = true;
-                currentBlock = null;
-
-                //_spriteRenderer.sprite = _openHand;
+                InitialiseTotemBlocks();
                 _animator.SetBool("holdingBlock", false);
-
                 CurrentState = GhostHandStates.SearchingForBlock;
             }
         }
