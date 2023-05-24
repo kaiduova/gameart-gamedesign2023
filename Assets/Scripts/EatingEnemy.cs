@@ -128,6 +128,7 @@ public class EatingEnemy : MonoBehaviour {
 
         if (PermaBounce)
         {
+            _enemyGaugeUI.SetActive(false);
             State = EatingEnemyState.Bounce;
             _animator.SetTrigger("PermaBounce");
             reviveTime = ReviveTime;

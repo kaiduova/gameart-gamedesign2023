@@ -25,6 +25,7 @@ public class LevelSelectManager : InputMonoBehaviour {
     [SerializeField] private GameObject _levelSelectHolder;
     [Space(10)]
     [SerializeField] private MeshRenderer _playMR;
+    [SerializeField] private MeshRenderer _tutorialMR;
     [SerializeField] private MeshRenderer _level1MR;
     [SerializeField] private MeshRenderer _level2MR;
     [SerializeField] private MeshRenderer _level3MR;
@@ -77,6 +78,11 @@ public class LevelSelectManager : InputMonoBehaviour {
                     _playMR.GetComponent<TextMesh>().color = Color.red;
                     if (CurrentInput.GetKeyDownA) SceneManager.LoadScene(1);
                 } else _playMR.GetComponent<TextMesh>().color = Color.white;
+
+                if (_cursorSR.bounds.Intersects(_tutorialMR.bounds)) {
+                    _tutorialMR.GetComponent<TextMesh>().color = Color.red;
+                    if (CurrentInput.GetKeyDownA) SceneManager.LoadScene(4);
+                } else _tutorialMR.GetComponent<TextMesh>().color = Color.white;
 
                 if (_cursorSR.bounds.Intersects(_level1MR.bounds)) {
                     _level1MR.GetComponent<TextMesh>().color = Color.red;
